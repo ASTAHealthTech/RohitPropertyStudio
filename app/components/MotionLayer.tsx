@@ -121,7 +121,12 @@ export function MotionLayer() {
       gsap.fromTo("main", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power1.out" });
 
       /* --- headlines --- */
+      // Phones: only the page's opening headline animates. Everything further down is
+      // simply there when you reach it, so nothing is ever waiting on a scroll trigger.
+      const phone = window.matchMedia("(max-width: 760px)").matches;
+
       document.querySelectorAll<HTMLElement>("[data-split]").forEach((element) => {
+        if (phone && !element.closest(".hero, .page-hero")) { gsap.set(element, { autoAlpha: 1 }); return; }
         const inners = splitWords(element);
         if (!inners.length) return;
         gsap.set(element, { autoAlpha: 1 });
@@ -183,6 +188,7 @@ export function MotionLayer() {
 
       /* --- media wipes --- */
       document.querySelectorAll<HTMLElement>("[data-clip]").forEach((element) => {
+        if (phone) return;
         gsap.fromTo(
           element,
           { clipPath: "inset(0 0 100% 0)" },
@@ -199,6 +205,7 @@ export function MotionLayer() {
       document.querySelectorAll<HTMLElement>("[data-scrub-words]").forEach((element) => {
         const inners = splitWords(element);
         if (!inners.length) return;
+        if (phone) { inners.forEach((inner) => inner.classList.add("is-lit")); return; }
         ScrollTrigger.create({
           trigger: element,
           start: "top 78%",

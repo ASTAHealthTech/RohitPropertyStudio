@@ -1,0 +1,75 @@
+/* ============================================================
+   Phones: less scrolling, same story.
+   Long stacks become swipe rows (the next card peeks in from the right, so the
+   gesture is obvious), spacing tightens, and decorative blocks shrink.
+   Nothing is hidden from the page's HTML — search engines read the same content.
+   ============================================================ */
+@media (max-width: 760px) {
+  .section { padding-block: 56px; }
+  .section--tight { padding-block: 40px; }
+  .head { margin-bottom: 26px; }
+
+  /* swipe rows */
+  .yards__stages, .vows__list, .corridors__list, .review-row, .review-row--three, .grid--4,
+  .pgallery, .section .shell > .pgrid, .rp-steps {
+    display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--shell-pad);
+    margin-inline: calc(var(--shell-pad) * -1); padding-inline: var(--shell-pad); padding-bottom: 6px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .yards__stages::-webkit-scrollbar, .vows__list::-webkit-scrollbar, .corridors__list::-webkit-scrollbar,
+  .review-row::-webkit-scrollbar, .grid--4::-webkit-scrollbar, .pgallery::-webkit-scrollbar,
+  .section .shell > .pgrid::-webkit-scrollbar, .rp-steps::-webkit-scrollbar { display: none; }
+  .yards__stages > *, .vows__list > *, .corridors__list > *, .review-row > *, .grid--4 > *,
+  .pgallery > *, .section .shell > .pgrid > *, .rp-steps > * {
+    flex: 0 0 84%; scroll-snap-align: start; min-width: 0;
+  }
+  .pgallery > * { flex-basis: 78%; }
+  /* cards inside a swipe row show at once: no waiting for a scroll reveal */
+  .js .yards__stages > [data-reveal], .js .vows__list > [data-reveal], .js .corridors__list > [data-reveal],
+  .js .review-row > [data-reveal], .js .grid--4 > [data-reveal] { opacity: 1; transform: none; }
+
+  /* the hundred yards: six compact cards */
+  .yards__stage { border: 1px solid var(--line); padding: 20px 18px 22px; align-content: start; }
+  .yards__stage h3 { font-size: 34px; }
+  .yards__stage p { font-size: 16px; }
+  .yards__shot { position: relative; inset: auto; aspect-ratio: 16 / 9; order: -1; margin: -20px -18px 6px; }
+
+  /* the three vows */
+  .vow { border: 1px solid var(--line); padding: 24px 20px 26px; gap: 10px; align-content: start; }
+  .vow h2 { font-size: 34px; }
+  .vow p { font-size: 16px; margin-top: 10px; }
+
+  /* the city */
+  .corridors { gap: 22px; }
+  .corridors__map { max-width: 250px; }
+  .corridors__list > * { border: 1px solid var(--line); padding: 18px; }
+
+  /* the record: one page, not a fan */
+  .record__pages { height: 300px; }
+  .record__pages .rpage--a, .record__pages .rpage--b { display: none; }
+
+  /* the person who signs */
+  .instructor__portrait { max-width: 230px; aspect-ratio: 1 / 1; }
+  .signature__ink { font-size: 50px; }
+
+  /* catalogue list: compact rows instead of tall cards */
+  .browser .pgrid { gap: 12px; }
+  .browser .pcard { grid-template-columns: 116px minmax(0, 1fr); grid-template-rows: auto; }
+  .browser .pcard__media { aspect-ratio: auto; height: 100%; min-height: 108px; }
+  .browser .pcard__body { padding: 12px 14px; gap: 4px; }
+  .browser .pcard__name { font-size: 20px; }
+  .browser .pcard__rera, .browser .pcard__kind { display: none; }
+  .browser__rest { max-height: 132px; overflow-y: auto; }
+
+  /* project page */
+  .pamen { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+  .pamen li { padding: 9px 0; font-size: 13px; }
+  .pdetails > div { padding: 10px 0; }
+  .page-hero { padding-top: calc(var(--header-h) + 44px); padding-bottom: 36px; }
+  .backdrop__plan { display: none; }
+}
+/* phones: blocks are simply there when you reach them — no scroll-triggered fades */
+@media (max-width: 760px) {
+  .js [data-reveal], .js [data-reveal-group] > * { opacity: 1 !important; transform: none !important; }
+}

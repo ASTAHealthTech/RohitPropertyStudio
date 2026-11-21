@@ -306,3 +306,12 @@ Owner direction: every page tells one story, not just motion. Three beats, in or
    report PDF or anything a buyer could take for a signed document.
 Inner pages stay light but not zero: `AmbientBackdrop` without a video draws a small plan
 (`.backdrop__plan`) behind the page title in about a second. Plans are always vector, never images.
+
+## Phones (styles/mobile.css, loaded last)
+
+Owner direction: less scrolling on phones, almost no scroll animation, same story. At <=760px the
+long stacks (journey stages, vows, area cards, reviews, learn cards, project gallery, related
+projects) become horizontal swipe rows with the next card peeking in; the catalogue list uses
+compact row cards; reveals are immediate (no scroll-triggered fades) and MotionLayer only
+animates the page's opening headline. Nothing is removed from the HTML. Home went from about
+20 phone screens to about 13 — keep new sections inside that budget.
