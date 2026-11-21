@@ -1,10 +1,9 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
 "use client";
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Menu, X } from "lucide-react";
-import { brand, navigation } from "../lib/siteContent";
+import { ArrowUpRight, Menu, Phone, X } from "lucide-react";
+import { company, mainNav } from "../lib/company";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -31,24 +30,24 @@ export function SiteHeader() {
 
   return (
     <header className={`site-header${stuck ? " is-stuck" : ""}`}>
-      <a className="site-brand" href="/" aria-label={`${brand.name}, home`}>
-        <span className="site-brand__mark" aria-hidden="true">RK</span>
+      <a className="site-brand" href="/" aria-label={`${company.name}, home`}>
+        <span className="site-brand__mark" aria-hidden="true">100</span>
         <span className="site-brand__text">
-          <strong>{brand.name}</strong>
-          <small>Real Estate Academy</small>
+          <strong>100 Yards</strong>
+          <small>Real estate advisory</small>
         </span>
       </a>
 
       <nav className="desktop-nav" aria-label="Primary">
-        {navigation.map((item) => (
-          <a key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined}>
+        {mainNav.map((item) => (
+          <a key={item.href} href={item.href} aria-current={pathname === item.href || pathname.startsWith(`${item.href}/`) ? "page" : undefined}>
             {item.label}
           </a>
         ))}
       </nav>
 
-      <a className="button button--gold button--sm header-cta" href="/contact#early-access-form" data-track="early_access_cta">
-        Join early access <ArrowUpRight size={15} aria-hidden="true" />
+      <a className="button button--gold button--sm header-cta" href={company.phoneHref} data-track="call_clicked">
+        <Phone size={15} aria-hidden="true" /> {company.phoneDisplay}
       </a>
 
       <button
@@ -63,11 +62,11 @@ export function SiteHeader() {
       </button>
 
       <div id="mobile-navigation" className={`mobile-nav${open ? " is-open" : ""}`} hidden={!open}>
-        {navigation.map((item) => (
+        {mainNav.map((item) => (
           <a key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</a>
         ))}
-        <a className="button button--gold" href="/contact#early-access-form" onClick={() => setOpen(false)} data-track="early_access_cta">
-          Join early access <ArrowUpRight size={16} aria-hidden="true" />
+        <a className="button button--gold" href="/contact#callback" onClick={() => setOpen(false)} data-track="callback_cta">
+          Request a call back <ArrowUpRight size={16} aria-hidden="true" />
         </a>
       </div>
     </header>

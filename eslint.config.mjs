@@ -30,6 +30,12 @@ const eslintConfig = defineConfig([
         ...globals.serviceworker,
       },
     },
+    rules: {
+      // The site uses plain <a> links on purpose (full page loads keep the route
+      // fade and the ad-attribution capture simple). The catch-all `[legacy]`
+      // redirect route also makes this rule misfire on every internal link.
+      "@next/next/no-html-link-for-pages": "off",
+    },
     settings: {
       react: {
         version: "detect",

@@ -1,8 +1,44 @@
-# CLAUDE.md — 100 Yards Academy site
+# CLAUDE.md — 100 Yards site
 
-Personal-brand and course site for **Rohitt Kumar Singh**, MD of Hundred Yards Realtor Pvt Ltd
-(100yards.in). Product: the "Basics of Real Estate" 49-slide visual course.
-Pre-launch — no price, no payment, no delivery yet.
+The company site for **100 Yards (Hundred Yards Realtor Pvt Ltd)**, replacing the WordPress
+site at 100yards.in. Company first; **Rohitt Kumar Singh** (MD, two t's) is the founder and
+the person who signs reports. Three jobs: sell property (catalogue + lead forms), sell the
+₹1,000 Property Intelligence Report, and teach (the Academy: course, Property Lab, Datalab).
+The course is still pre-launch — no course price or payment.
+
+## The 100 Yards layer (Nov 2026)
+
+- **Catalogue**: `app/lib/catalog/*.json` — 134 projects, 59 guide cards, 11 reviews, 21 logos,
+  gallery — extracted from the owner-supplied single-file HTML export of 100yards.in. Photos
+  are pre-sized WebP in `public/p/<slug>/`, served as plain `<img>` (no image-transform quota).
+  Regenerate from a new export; never hand-edit the JSON. `app/lib/company.ts` holds every
+  company fact (phones, address, RERA agent no., report price, nav, ad-tag IDs).
+- **Routes**: `/projects` (+`/[slug]`), `/areas` (+`/[slug]`), `/builders` (+`/[slug]`),
+  `/reports`, `/about` (company), `/rohitt` (the old About), `/learn`, `/blog`, `/gallery`,
+  `/commercial`, `/nri`, `/contact`, `/desk` (private). `app/[legacy]/page.tsx` permanently
+  redirects old WordPress addresses (`/<project-slug>/` → `/projects/<slug>`).
+- **Prices** on catalogue pages are the builders' published starting figures and always say so.
+  The Datalab rule is unchanged: NO rupee figures there.
+- **Leads**: every form is `LeadForm` (`kind` = project | visit | snapshot | report | nri |
+  commercial | callback) → `POST /api/lead` → D1 table `leads` (migration `0002_leads.sql`),
+  with campaign tags / gclid / fbclid and a 0–100 intent score. `/desk` + `/api/desk` are the
+  team's lead page, locked by the Worker secret `DESK_KEY` (closed when unset). The node test
+  suite cannot load `cloudflare:workers` routes — test them with
+  `wrangler dev --local --config dist/server/wrangler.json` after copying `migrations/` into
+  `dist/server/` and applying them with `wrangler d1 migrations apply ACADEMY_DB --local`.
+- **Reports**: ₹1,000. No online payment yet — the order form saves a lead and the team sends a
+  payment link on WhatsApp. Do not add a checkout without the owner's Razorpay keys.
+- **Opening sequence**: `OpeningSequence.tsx` (home only) is the one piece of motion defined
+  outside MotionLayer: pure CSS, ~4s, first visit only, skipped for reduced motion, Save-Data
+  and ad traffic (utm_/gclid/fbclid). MotionLayer holds the hero entrance while it plays.
+- **Homepage signature move** is the corridor map (`CorridorMap.tsx`, sticky + observer).
+  The pinned curriculum rail now lives only on the course page.
+- **Fonts**: the `next/font` variable classes must sit on `<html>`, not `<body>` — the tokens
+  read them at `:root`. In the sandbox, rewrite the Windows paths inside
+  `.vinext/fonts/*/style.css` to the sandbox path before building, or every font falls back.
+- **Before the domain switches**: the 59 guide bodies still live on WordPress. Export them and
+  build `/blog/[slug]` first, or those rankings are lost (today the cards link out and old
+  post addresses redirect to `/blog`).
 
 ## Stack
 
@@ -84,7 +120,7 @@ don't flatten a `data-split` headline to plain text. MotionLayer also owns the f
 `.scroll-progress` gold hairline and the route-change fade on `main`. The ticker marquee and
 `.backdrop__video` drift are pure CSS. Rules: 0.4–0.9s, `power2`/`power3` easing. No bounce,
 spin, elastic or rotation. Text never parallaxes. One signature move per page — the homepage
-has the pinned curriculum rail, and nothing else competes with it. Everything is skipped
+has the corridor map, and nothing else competes with it. Everything is skipped
 under `prefers-reduced-motion`.
 
 ## Media contract

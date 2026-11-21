@@ -174,6 +174,7 @@ export const navigation = [
   { label: "Course", href: "/course" },
   { label: "Property Lab", href: "/lab" },
   { label: "Datalab", href: "/datalab" },
+  { label: "Reports", href: "/reports" },
   { label: "About Rohitt", href: "/about" },
   { label: "Client Stories", href: "/stories" },
   { label: "Resources", href: "/resources" },
@@ -187,7 +188,7 @@ export const personJsonLd = {
   jobTitle: brand.role,
   worksFor: { "@type": "Organization", name: brand.company, url: brand.companyUrl },
   image: "/media/rohit-kumar-singh.jpg",
-  url: "/about",
+  url: "/rohitt",
   sameAs: [brand.facebook, brand.youtube, brand.aboutUrl],
 };
 

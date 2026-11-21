@@ -1,11 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 
-/** Appears once the visitor has passed the first screen, on every page. */
+/**
+ * Appears once the visitor has passed the first screen. On a project page it
+ * jumps to that project's enquiry form; everywhere else it asks for a call back.
+ */
 export function StickyCta() {
   const [shown, setShown] = useState(false);
+  const pathname = usePathname();
+  const onProject = /^\/projects\/[^/]+/.test(pathname);
+  const hidden = pathname === "/desk";
 
   useEffect(() => {
     const onScroll = () => {
@@ -17,17 +24,18 @@ export function StickyCta() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
+  if (hidden) return null;
   return (
     <a
       className={`sticky-cta${shown ? " is-shown" : ""}`}
-      href="/contact#early-access-form"
-      data-track="early_access_cta"
+      href={onProject ? "#enquire" : "/contact#callback"}
+      data-track={onProject ? "project_enquire_cta" : "callback_cta"}
       tabIndex={shown ? 0 : -1}
       aria-hidden={!shown}
     >
-      Join early access <ArrowUpRight size={15} aria-hidden="true" />
+      {onProject ? "Get price & plans" : "Request a call back"} <ArrowUpRight size={15} aria-hidden="true" />
     </a>
   );
 }

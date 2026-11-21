@@ -1,9 +1,10 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { whatsappLink } from "../lib/company";
 
 export function ClosingCta({
-  eyebrow = "Early access",
-  title = "Start with the language of property.",
-  copy = "Join the launch list for confirmed pricing, delivery and access details. No payment is collected today.",
+  eyebrow = "Talk to 100 Yards",
+  title = "The right property starts with the right conversation.",
+  copy = "Tell us your budget, area and timeline. One advisor calls you back with a shortlist, and the record of each project on it.",
 }: {
   eyebrow?: string;
   title?: string;
@@ -18,9 +19,14 @@ export function ClosingCta({
         </div>
         <div className="closing__action" data-reveal data-reveal-delay="1">
           <p>{copy}</p>
-          <a className="button button--gold" href="/contact#early-access-form" data-track="early_access_cta">
-            Join early access <ArrowUpRight size={17} aria-hidden="true" />
-          </a>
+          <div className="closing__buttons">
+            <a className="button button--gold" href="/contact#callback" data-track="callback_cta">
+              Request a call back <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+            <a className="text-link" href={whatsappLink("Hi, I would like to speak to a property advisor.")} target="_blank" rel="noreferrer" data-track="whatsapp_clicked">
+              <MessageCircle size={15} aria-hidden="true" /> WhatsApp us
+            </a>
+          </div>
         </div>
       </div>
     </section>

@@ -12,50 +12,93 @@ async function render(pathname = "/") {
   );
 }
 
-test("server-renders the home page without depending on JavaScript", async () => {
+test("server-renders the 100 Yards home page without depending on JavaScript", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
+  assert.match(html, /100 Yards/);
   assert.match(html, /Rohitt Kumar Singh/);
-  // The brand spells it with two t's. This catches any regression to one t
-  // (scoped to the name — the folder path in font URLs is not page content).
+  // The brand spells it with two t's. This catches any regression to one t.
   assert.doesNotMatch(html, /Rohit(?!t) Kumar Singh/);
-  assert.match(html, /Learn the/i);
-  assert.match(html, /of property before you sell, advise or invest/i);
+  assert.match(html, /Find the home/i);
+  assert.match(html, /the record\. Then decide/i);
   assert.match(html, /u-line/); // the self-drawing gold underline is present
   assert.match(html, /\/video\/hero\.mp4/); // hero film wired
   assert.match(html, /ticker__set/); // marquee track present
-  assert.match(html, /49-slide visual foundation/i);
-  assert.match(html, /See the actual material before launch/i);
-  assert.match(html, /A practical map for real property conversations/i);
-  assert.match(html, /What Hundred Yards clients say/i);
-  assert.match(html, /not a course learner/i);
+  assert.match(html, /PRM\/KA\/RERA\/1251\/310\/AG\/231030\/004229/); // RERA agent registration on screen
+  assert.match(html, /Where Bangalore is growing/i);
+  assert.match(html, /What 100 Yards clients say/i);
+  assert.match(html, /class="opening"/); // first-visit opening is in the markup, hidden until the script arms it
 });
 
-test("makes no course price, payment or guarantee claim before launch", async () => {
+test("makes no guarantee or advice claim, and takes no payment on the site", async () => {
   const html = await (await render()).text();
-  assert.doesNotMatch(html, /Buy now|Proceed to payment|guaranteed outcome/i);
-  assert.match(html, /No payment collected/i);
-  assert.match(html, /To be announced/i);
+  assert.doesNotMatch(html, /Buy now|Proceed to payment|guaranteed (returns|outcome)|assured returns/i);
+  assert.match(html, /never says buy or don(&#x27;|')t buy|It shows you the record/i);
 });
 
-test("market figures always name their source", async () => {
+test("homepage rupee figures are labelled as published listing prices", async () => {
   const html = await (await render()).text();
-  // A rupee figure is allowed only as sourced market context, never as a course price.
-  if (/₹\s?[\d,]+/.test(html)) {
-    assert.match(html, /Knight Frank|Reserve Bank of India/);
-    assert.match(html, /not a recommendation/i);
-  }
+  assert.match(html, /₹/);
+  assert.match(html, /published starting figures/i);
 });
 
 test("hero film plays over a canvas fallback that never disappears", async () => {
   const html = await (await render()).text();
-  // The generated canvas backdrop is always in the markup, so a missing or
-  // unplayable video file can never leave the hero empty.
   assert.match(html, /class="backdrop"/);
   assert.match(html, /backdrop__canvas/);
   assert.match(html, /<video[^>]*\/video\/hero\.mp4/);
+});
+
+test("server-renders every project in the catalogue browser", async () => {
+  const response = await render("/projects");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  const links = new Set(html.match(/href="\/projects\/[a-z0-9-]+"/g) ?? []);
+  assert.ok(links.size >= 130, `expected the whole catalogue in the HTML, found ${links.size}`);
+});
+
+test("a project page carries its facts, RERA pointer, forms and structured data", async () => {
+  const response = await render("/projects/lodha-beaumont-estate");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Lodha Beaumont Estate/);
+  assert.match(html, /PRM\/KA\/RERA\/1251\/472\/PR\/200726\/008829/);
+  assert.match(html, /rera\.karnataka\.gov\.in/);
+  assert.match(html, /RealEstateListing/);
+  assert.match(html, /id="enquire-form"/);
+  assert.match(html, /id="visit-form"/);
+  assert.match(html, /id="snapshot"/);
+  assert.match(html, /not legal, tax or investment advice/i);
+  assert.equal((await render("/projects/no-such-project")).status, 404);
+});
+
+test("area and builder pages render from the catalogue", async () => {
+  const area = await render("/areas/devanahalli");
+  assert.equal(area.status, 200);
+  const areaHtml = await area.text();
+  assert.match(areaHtml, /Projects in Devanahalli/i);
+  assert.match(areaHtml, /FAQPage/);
+  const builder = await render("/builders/prestige-group");
+  assert.equal(builder.status, 200);
+  assert.match(await builder.text(), /Prestige Group projects/i);
+});
+
+test("old 100yards.in project addresses redirect permanently", async () => {
+  const response = await render("/lodha-beaumont-estate");
+  assert.ok([301, 308].includes(response.status), `status ${response.status}`);
+  assert.match(response.headers.get("location") ?? "", /\/projects\/lodha-beaumont-estate$/);
+});
+
+// /api/lead and /api/desk import `cloudflare:workers`, which plain Node cannot
+// load — they are exercised against `wrangler dev` (see CLAUDE.md, "Leads").
+test("the lead desk page is private and unindexed", async () => {
+  const desk = await render("/desk");
+  assert.equal(desk.status, 200);
+  const html = await desk.text();
+  assert.match(html, /noindex/);
+  assert.match(html, /Team key/i);
 });
 
 test("server-renders the Bengaluru Datalab from the register seed", async () => {
@@ -69,8 +112,23 @@ test("server-renders the Bengaluru Datalab from the register seed", async () => 
   assert.doesNotMatch(html, /₹\s?[\d,]+/);
 });
 
+test("server-renders the reports page and the homepage pillar", async () => {
+  const response = await render("/reports");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Property Intelligence Report/i);
+  assert.match(html, /embassy-edge-specimen\.pdf/);
+  assert.match(html, /never says buy/i);
+  assert.match(html, /₹1,000/);
+  assert.match(html, /id="order-form"/);
+  assert.match(html, /No money is taken on this page/i);
+  const home = await (await render()).text();
+  assert.match(home, /Bengaluru Datalab/i);
+  assert.match(home, /href="\/reports#order"/);
+});
+
 test("server-renders the factual instructor page", async () => {
-  const response = await render("/about");
+  const response = await render("/rohitt");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Experience from the field, structured for the classroom/i);
@@ -79,12 +137,22 @@ test("server-renders the factual instructor page", async () => {
   assert.match(html, /Managing Director/i);
 });
 
+test("server-renders the company about page", async () => {
+  const response = await render("/about");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Hundred Yards Realtor Private Limited/);
+  assert.match(html, /Built on T·R·U·S·T/);
+  assert.match(html, /Karnataka RERA registered agent/i);
+});
+
 test("server-renders the split contact routes", async () => {
   const response = await render("/contact");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Choose the conversation you want to start/i);
-  assert.match(html, /Join the learning launch list/i);
+  assert.match(html, /Our property experts are one step away/i);
+  assert.match(html, /id="callback"/);
+  assert.match(html, /\+971 55 482 6069/);
   assert.match(html, /sales@100yards\.in/i);
   assert.match(html, /does not create an order or collect payment/i);
 });
@@ -128,10 +196,10 @@ test("the videos api degrades to an empty list when the feed is unreachable", as
   assert.match(data.channel, /youtube\.com/);
 });
 
-test("returns a course-focused not-found response", async () => {
+test("returns a helpful not-found response", async () => {
   const response = await render("/this-route-does-not-exist");
   assert.equal(response.status, 404);
   const html = await response.text();
-  assert.match(html, /This page is not part of the course/i);
-  assert.match(html, /Explore the course/i);
+  assert.match(html, /That address is not on our map/i);
+  assert.match(html, /Browse projects/i);
 });

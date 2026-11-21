@@ -1,44 +1,37 @@
-import { ArrowUpRight, Mail, MessageCircle, Phone, MonitorPlay } from "lucide-react";
-import { brand, course, navigation } from "../lib/siteContent";
+import { Mail, MessageCircle, Phone, MonitorPlay } from "lucide-react";
+import { areas } from "../lib/catalog";
+import { company, footerNav, whatsappLink } from "../lib/company";
 
-/**
- * The closing CTA section already asks for the signup, so the footer does not
- * repeat it. It carries the direct channels instead, which is what someone
- * scrolling this far actually wants.
- */
+/** The closing CTA already asks for the call back, so the footer carries the direct channels and the map of the site. */
 export function SiteFooter() {
   return (
     <footer className="site-footer surface-deep">
       <div className="site-footer__main shell">
         <div data-reveal>
-          <p className="eyebrow">Rohitt Real Estate Academy</p>
-          <h2>Foundational property literacy,<br />taught from the field.</h2>
+          <p className="eyebrow">100 Yards</p>
+          <h2>Find the home.<br />Check the record.</h2>
+          <p className="site-footer__addr">{company.legal}<br />{company.address}<br />{company.hours}</p>
         </div>
         <div className="site-footer__channels" data-reveal data-reveal-delay="1">
-          <a href={course.whatsapp} target="_blank" rel="noreferrer" data-track="whatsapp_clicked">
-            <MessageCircle size={16} aria-hidden="true" /> WhatsApp <strong>{brand.phoneDisplay}</strong>
+          <a href={whatsappLink("Hi, I would like to speak to a property advisor.")} target="_blank" rel="noreferrer" data-track="whatsapp_clicked">
+            <MessageCircle size={16} aria-hidden="true" /> WhatsApp <strong>{company.phoneDisplay}</strong>
           </a>
-          <a href={`mailto:${brand.email}`}>
-            <Mail size={16} aria-hidden="true" /> Email <strong>{brand.email}</strong>
-          </a>
-          <a href={brand.phoneHref}>
-            <Phone size={16} aria-hidden="true" /> Call <strong>{brand.phoneDisplay}</strong>
-          </a>
-          <a href={brand.youtube} target="_blank" rel="noreferrer" data-track="youtube_clicked">
-            <MonitorPlay size={16} aria-hidden="true" /> YouTube <strong>@RealtorRohitSingh</strong>
-          </a>
-          <a className="text-link" href={brand.companyUrl} target="_blank" rel="noreferrer" data-track="hundred_yards_clicked">
-            Visit Hundred Yards <ArrowUpRight size={14} aria-hidden="true" />
-          </a>
+          <a href={company.phoneHref} data-track="call_clicked"><Phone size={16} aria-hidden="true" /> India <strong>{company.phoneDisplay}</strong></a>
+          <a href={company.dubaiPhoneHref} data-track="call_clicked"><Phone size={16} aria-hidden="true" /> Dubai <strong>{company.dubaiPhoneDisplay}</strong></a>
+          <a href={`mailto:${company.email}`}><Mail size={16} aria-hidden="true" /> Email <strong>{company.email}</strong></a>
+          <a href={company.youtube} target="_blank" rel="noreferrer" data-track="youtube_clicked"><MonitorPlay size={16} aria-hidden="true" /> YouTube <strong>@RealtorRohitSingh</strong></a>
         </div>
       </div>
 
       <nav className="site-footer__nav shell" aria-label="Footer">
-        {navigation.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
+        {footerNav.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
+      </nav>
+      <nav className="site-footer__nav site-footer__nav--areas shell" aria-label="Areas">
+        {areas.map((area) => <a href={`/areas/${area.slug}`} key={area.slug}>Projects in {area.name}</a>)}
       </nav>
 
       <div className="site-footer__bottom shell">
-        <p>© {new Date().getFullYear()} {brand.name} · {brand.company} · {brand.location}</p>
+        <p>© {new Date().getFullYear()} {company.legal} · Karnataka RERA Agent Reg. No. {company.reraAgent}</p>
         <nav aria-label="Legal">
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>

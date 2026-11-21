@@ -8,12 +8,15 @@ import "./styles/home.css";
 import "./styles/pages.css";
 import "./styles/lab.css";
 import "./styles/datalab.css";
+import "./styles/catalog.css";
 import { EventTracker } from "./components/EventTracker";
 import { MotionLayer } from "./components/MotionLayer";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { StickyCta } from "./components/StickyCta";
-import { brand, course, courseJsonLd, personJsonLd } from "./lib/siteContent";
+import { Tracking } from "./components/Tracking";
+import { company, organizationJsonLd } from "./lib/company";
+import { personJsonLd } from "./lib/siteContent";
 
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "swap" });
 const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["latin"], display: "swap" });
@@ -23,27 +26,30 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
+  const title = "100 Yards | Real estate consultants in Bangalore";
+  const description = `${company.legal}: residential and commercial property advisory across Bangalore, Coimbatore, Dubai and Phuket. RERA numbers on every listing and signed property reports.`;
   return {
-    title: { default: `${course.title} — ${brand.name}`, template: `%s — ${brand.name}` },
-    description: course.description,
+    title: { default: title, template: "%s | 100 Yards" },
+    description,
     metadataBase: new URL(origin),
     openGraph: {
       type: "website",
-      title: `${course.title} — ${brand.name}`,
-      description: course.description,
-      siteName: brand.academy,
+      title,
+      description,
+      siteName: company.name,
       url: origin,
-      images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: `${course.title} — ${brand.name}` }],
+      locale: "en_IN",
+      images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: title }],
     },
-    twitter: { card: "summary_large_image", title: `${course.title} — ${brand.name}`, description: course.description, images: ["/brand/og.png"] },
+    twitter: { card: "summary_large_image", title, description, images: ["/brand/og.png"] },
   };
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const structuredData = JSON.stringify([personJsonLd, courseJsonLd]).replace(/</g, "\\u003c");
+  const structuredData = JSON.stringify([organizationJsonLd, personJsonLd]).replace(/</g, "\\u003c");
   return (
-    <html lang="en">
-      <body className={`${manrope.variable} ${playfair.variable}`}>
+    <html lang="en-IN" className={`${manrope.variable} ${playfair.variable}`}>
+      <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
         <a className="skip-link" href="#main-content">Skip to content</a>
         <MotionLayer />
@@ -52,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <SiteFooter />
         <StickyCta />
+        <Tracking />
       </body>
     </html>
   );

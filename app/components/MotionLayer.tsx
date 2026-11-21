@@ -112,6 +112,10 @@ export function MotionLayer() {
       return inners;
     };
 
+    // On a first visit the homepage plays its opening sequence (OpeningSequence.tsx)
+    // over the hero; hold the hero's own entrance until that overlay lifts.
+    const hold = document.documentElement.classList.contains("opening-on") ? 3.5 : 0;
+
     const context = gsap.context(() => {
       /* --- soft fade-through on route change --- */
       gsap.fromTo("main", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power1.out" });
@@ -129,6 +133,7 @@ export function MotionLayer() {
             duration: 0.86,
             ease: "power3.out",
             stagger: 0.035,
+            delay: hold && element.closest(".hero") ? hold : 0,
             scrollTrigger: { trigger: element, start: "top 92%", once: true },
           },
         );
@@ -138,7 +143,7 @@ export function MotionLayer() {
       gsap.fromTo(
         "[data-enter]",
         { autoAlpha: 0, y: 16 },
-        { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out", stagger: 0.07, delay: 0.22 },
+        { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out", stagger: 0.07, delay: 0.22 + hold },
       );
 
       /* --- counters --- */
