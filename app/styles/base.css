@@ -6,7 +6,7 @@ html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px)
 body {
   margin: 0; min-width: 320px; overflow-x: hidden;
   background: var(--carbon); color: var(--on-dark);
-  font-family: var(--sans); font-size: var(--t-body); line-height: 1.65;
+  font-family: var(--sans); font-size: var(--t-body); font-weight: 300; line-height: 1.65;
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
 }
 body.is-locked { overflow: hidden; }
@@ -18,20 +18,20 @@ a, button { -webkit-tap-highlight-color: transparent; }
 ::selection { background: var(--gold); color: var(--deep); }
 
 h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
-h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.028em; line-height: 1.03; text-wrap: balance; }
+h1, h2 { font-family: var(--serif); font-weight: 300; letter-spacing: -.018em; line-height: 1; text-wrap: balance; }
 h1 { font-size: var(--t-h1); }
 h2 { font-size: var(--t-h2); }
-h3 { font-size: var(--t-h3); font-weight: 800; line-height: 1.25; letter-spacing: -.01em; }
-h4 { font-size: var(--t-h4); font-weight: 800; line-height: 1.3; }
+h3 { font-family: var(--serif); font-size: var(--t-h3); font-weight: 400; line-height: 1.15; letter-spacing: 0; }
+h4 { font-size: var(--t-h4); font-weight: 500; line-height: 1.3; }
 p { max-width: 68ch; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
-strong, b { font-weight: 800; }
+strong, b { font-weight: 500; }
 
 :focus-visible { outline: 2px solid var(--accent, var(--gold)); outline-offset: 3px; border-radius: 1px; }
 .skip-link {
   position: fixed; z-index: 1000; top: 10px; left: 10px; transform: translateY(-200%);
   background: var(--gold); color: var(--deep); padding: 12px 18px;
-  font-size: var(--t-small); font-weight: 800; text-decoration: none;
+  font-size: var(--t-small); font-weight: 500; text-decoration: none;
 }
 .skip-link:focus { transform: none; }
 .sr-only {
@@ -49,7 +49,7 @@ strong, b { font-weight: 800; }
 .eyebrow {
   display: flex; align-items: center; gap: 11px;
   color: var(--accent, var(--gold));
-  font-size: var(--t-label); font-weight: 800; letter-spacing: .15em;
+  font-size: 11.5px; font-weight: 500; letter-spacing: .3em;
   line-height: 1.2; text-transform: uppercase;
 }
 .eyebrow::before { content: ""; flex: none; width: 26px; height: 1px; background: currentColor; }
@@ -67,7 +67,7 @@ strong, b { font-weight: 800; }
   min-height: 52px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   border: 1px solid var(--gold); padding: 14px 24px;
   background-color: transparent; background-repeat: no-repeat; background-position: 0 100%;
-  font-size: var(--t-small); font-weight: 800; letter-spacing: .01em; line-height: 1;
+  font-size: 12px; font-weight: 500; letter-spacing: .22em; line-height: 1; text-transform: uppercase;
   text-decoration: none; cursor: pointer;
   transition: color var(--d-base) var(--e-out), background-size var(--d-base) var(--e-out),
               border-color var(--d-base) var(--e-out), transform var(--d-fast) var(--e-out);
@@ -104,7 +104,7 @@ strong, b { font-weight: 800; }
 /* --- text link --- */
 .text-link {
   width: fit-content; display: inline-flex; align-items: center; gap: 8px;
-  padding-bottom: 5px; color: inherit; font-size: var(--t-small); font-weight: 800;
+  padding-bottom: 5px; color: inherit; font-size: var(--t-small); font-weight: 500;
   line-height: 1.3; text-decoration: none; background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat; background-position: 0 100%; background-size: 100% 1px;
   transition: color var(--d-base) var(--e-out), background-size var(--d-base) var(--e-out);

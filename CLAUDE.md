@@ -28,14 +28,33 @@ The course is still pre-launch — no course price or payment.
   `dist/server/` and applying them with `wrangler d1 migrations apply ACADEMY_DB --local`.
 - **Reports**: ₹1,000. No online payment yet — the order form saves a lead and the team sends a
   payment link on WhatsApp. Do not add a checkout without the owner's Razorpay keys.
-- **Opening sequence**: `OpeningSequence.tsx` (home only) is the one piece of motion defined
-  outside MotionLayer: pure CSS, ~4s, first visit only, skipped for reduced motion, Save-Data
-  and ad traffic (utm_/gclid/fbclid). MotionLayer holds the hero entrance while it plays.
-- **Homepage signature move** is the corridor map (`CorridorMap.tsx`, sticky + observer).
-  The pinned curriculum rail now lives only on the course page.
-- **Fonts**: the `next/font` variable classes must sit on `<html>`, not `<body>` — the tokens
-  read them at `:root`. In the sandbox, rewrite the Windows paths inside
-  `.vinext/fonts/*/style.css` to the sandbox path before building, or every font falls back.
+- **The world (Nov 2026 redesign, owner-approved direction "the last hundred yards")**: warm
+  black `#0d0c0a`, bone `#ede7db`, a thread of champagne `#cdb892`. Cormorant Garamond (light,
+  display) + Jost (light, text), both SELF-HOSTED in `public/fonts` with `@font-face` in
+  `tokens.css` — no `next/font`, no Google request, so sandbox screenshots match production.
+  The token is still named `--navy` for history; it is the one ink. Never bring back navy/gold
+  blocks, Manrope or Playfair. `styles/film.css` loads last and holds the scale and the scenes.
+- **Theme and promise**: the name is the idea — 100 Yards walks the buyer through the last
+  stretch (brief, shortlist, visit, record, terms, keys). The three assurances and six journey
+  steps live in `app/lib/company.ts`; they are promises the firm must keep, so change their
+  wording only with the MD's sign-off.
+- **Motion beyond MotionLayer** (deliberate exceptions, each self-contained and each with a
+  no-JS / mobile / reduced-motion layout that hides nothing):
+  `OpeningSequence.tsx` — first-visit count to 100 then a parting curtain, pure CSS, ~4s, skipped
+  for returning visitors, reduced motion, Save-Data and ad traffic (utm_/gclid/fbclid);
+  MotionLayer holds the hero entrance while it plays.
+  `film/HundredYards.tsx` — THE homepage signature: pinned, counter 0→100, six stages, images
+  wipe in. `film/ResidenceReel.tsx` — pinned sideways reel (native scroller on touch).
+  Both use `refreshPriority` so later ScrollTriggers measure correctly; keep that.
+  The record pages fan open with CSS on `data-reveal`. Rotation is allowed there and nowhere else.
+- **Question-based report**: `node scripts/report/make-question-report.mjs <catalogue-slug>
+  [--specimen] [--for "Buyer"]` prints a 23-page A4 PDF: cover, how-to-read, contents, 18
+  questions (one per page), site-visit checklist, review + signature. Questions 13–14 change
+  with the property type (apartment / plot / villa). Facts come from
+  `scripts/report/orders/<slug>.json` (official pulls), else the catalogue ("published
+  material"), else print "Pending official pull" — never invented. The cost page mirrors
+  `labData.ts` rates. `--specimen` watermarks and copies to `public/reports/<slug>-specimen.pdf`.
+  The older `make-report.mjs` (datalab register, 10-page) is superseded but kept.
 - **Before the domain switches**: the 59 guide bodies still live on WordPress. Export them and
   build `/blog/[slug]` first, or those rankings are lost (today the cards link out and old
   post addresses redirect to `/blog`).
@@ -120,7 +139,7 @@ don't flatten a `data-split` headline to plain text. MotionLayer also owns the f
 `.scroll-progress` gold hairline and the route-change fade on `main`. The ticker marquee and
 `.backdrop__video` drift are pure CSS. Rules: 0.4–0.9s, `power2`/`power3` easing. No bounce,
 spin, elastic or rotation. Text never parallaxes. One signature move per page — the homepage
-has the corridor map, and nothing else competes with it. Everything is skipped
+has the pinned hundred-yards scene (the corridor map is a quiet sticky list, not a second pin). Everything is skipped
 under `prefers-reduced-motion`.
 
 ## Media contract

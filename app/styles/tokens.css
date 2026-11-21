@@ -1,35 +1,44 @@
 /* ============================================================
-   Design tokens — 100 Yards Academy
+   Design tokens — 100 Yards
+   The world: warm black, bone paper, a thread of champagne. Thin serif display, light geometric sans.
    Single source of truth for colour, type, space and motion.
    ============================================================ */
+/* Self-hosted type (public/fonts). No Google Fonts request at build or at runtime. */
+@font-face { font-family: "Jost"; src: url("/fonts/jost-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-latin-300-normal.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-latin-300-italic.woff2") format("woff2"); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: swap; }
 :root {
   /* --- ground & surface ---
-     ONE navy. Every dark surface is the same ink so the site reads as a single
+     ONE ink (the variable is still called --navy for history). Every dark surface is the same warm black so the site reads as a single
      material — depth comes from hairlines and type, never from shade-shifting.
      The aliases below all resolve to it; do not reintroduce variants. */
-  --navy:        #101a2e;
+  --navy:        #0d0c0a;
   --deep:        var(--navy);
   --carbon:      var(--navy);
   --carbon-2:    var(--navy);
   --carbon-3:    var(--navy);
-  --silver:      #d0cfca;   /* primary light surface + dark-surface text */
-  --silver-2:    #e2e1dc;   /* raised light surface */
-  --gold:        #c6a15b;
-  --gold-hi:     #e3c78e;
-  --gold-deep:   #6f5526;   /* accessible gold on light surfaces */
+  --silver:      #ede7db;   /* primary light surface + dark-surface text */
+  --silver-2:    #f6f2ea;   /* raised light surface */
+  --gold:        #cdb892;
+  --gold-hi:     #e2d3b5;
+  --gold-deep:   #6b5a36;   /* accessible gold on light surfaces */
 
   /* --- text roles (dark surfaces) --- */
-  --on-dark:        #d8d7d2;
-  --on-dark-soft:   #a4a49f;
-  --on-dark-faint:  #74757a;
+  --on-dark:        #ede7db;
+  --on-dark-soft:   #bcb4a5;
+  --on-dark-faint:  #8d8577;
   /* --- text roles (light surfaces) --- */
-  --on-light:       #1b1d20;
-  --on-light-soft:  #55585d;
-  --on-light-faint: #82858a;
+  --on-light:       #14120f;
+  --on-light-soft:  #4a4439;
+  --on-light-faint: #6f6759;
 
   /* --- hairlines --- */
-  --line-dark:  #2a3752;
-  --line-light: #bcbab3;
+  --line-dark:  #36312a;
+  --line-light: #cfc6b4;
 
   /* --- semantic (bound per surface) --- */
   --ink: var(--on-dark);
@@ -40,20 +49,20 @@
   --accent: var(--gold);
 
   /* --- type --- */
-  --serif: var(--font-playfair), "Playfair Display", Georgia, serif;
-  --sans:  var(--font-manrope), Manrope, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --sans:  "Jost", "Helvetica Neue", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --t-micro: 11px;
   --t-label: 12.5px;
   --t-small: 14px;
-  --t-body:  16.5px;
+  --t-body:  17px;
   --t-lead:  clamp(17px, 1.35vw, 20px);
   --t-h4:    clamp(17px, 1.4vw, 20px);
-  --t-h3:    clamp(19px, 1.7vw, 23px);
-  --t-h2:    clamp(31px, 3.9vw, 56px);
-  --t-h1:    clamp(40px, 5.9vw, 84px);
-  --t-display: clamp(42px, 6.5vw, 94px);
-  --t-numeral: clamp(34px, 3.6vw, 54px);
+  --t-h3:    clamp(21px, 1.9vw, 27px);
+  --t-h2:    clamp(36px, 5vw, 84px);
+  --t-h1:    clamp(46px, 7.2vw, 124px);
+  --t-display: clamp(48px, 8.8vw, 164px);
+  --t-numeral: clamp(40px, 4.4vw, 72px);
 
   /* --- space --- */
   --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
@@ -86,4 +95,4 @@
 .surface-dark  { --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--carbon);  background: var(--ground); color: var(--ink); }
 .surface-raise { --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--carbon-2); background: var(--ground); color: var(--ink); }
 .surface-light { --ink: var(--on-light); --ink-soft: var(--on-light-soft); --ink-faint: var(--on-light-faint); --line: var(--line-light); --accent: var(--gold-deep); --ground: var(--silver); background: var(--ground); color: var(--ink); }
-.surface-gold  { --ink: #101827;         --ink-soft: #33301f;              --ink-faint: #554e38;              --line: #a8873f;           --accent: #101827;          --ground: var(--gold);   background: var(--ground); color: var(--ink); }
+.surface-gold  { --ink: #14120f;         --ink-soft: #3a3428;              --ink-faint: #5a5140;              --line: #a8956c;           --accent: #14120f;          --ground: var(--gold);   background: var(--ground); color: var(--ink); }

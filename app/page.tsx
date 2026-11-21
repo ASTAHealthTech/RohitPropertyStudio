@@ -1,38 +1,56 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowDown, ArrowUpRight, BadgeCheck, ChevronRight, FileText } from "lucide-react";
+import { ArrowDown, ArrowUpRight, BadgeCheck, ChevronRight } from "lucide-react";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
-import { ClosingCta } from "./components/ClosingCta";
 import { CorridorMap, type Corridor } from "./components/CorridorMap";
 import { OpeningSequence } from "./components/OpeningSequence";
-import { SectionVideo } from "./components/SectionVideo";
-import { ProjectCard } from "./components/catalog/ProjectCard";
+import { HundredYards, type YardStage } from "./components/film/HundredYards";
+import { ResidenceReel } from "./components/film/ResidenceReel";
 import { LeadFormSlot } from "./components/leads/LeadFormSlot";
 import { YouTubeRail } from "./components/lab/YouTubeRail";
-import { areas, builderLogos, builders, formatLakh, priceRange, projectsInArea, projectsLite, reviews } from "./lib/catalog";
-import { company, services, trustValues, whyUs } from "./lib/company";
+import { areas, builders, formatLakh, priceRange, projectsInArea, projectsLite, reviews } from "./lib/catalog";
+import { assurances, company, journey } from "./lib/company";
 import datalabRegistry from "./lib/datalab/projects.json";
 import { media } from "./lib/siteContent";
 
 export const metadata: Metadata = {
   title: { absolute: "100 Yards | Real estate consultants in Bangalore: projects, prices and property reports" },
-  description: `100 Yards (${company.legal}) helps you find, check and buy property in Bangalore. ${projectsLite.length} projects from ${builders.length} builders, RERA numbers on every listing, and signed property reports.`,
+  description: `100 Yards (${company.legal}) walks you through the last stretch of buying a home in Bangalore: shortlist, site visits, the project's record, the terms and registration. ${projectsLite.length} projects from ${builders.length} builders.`,
   alternates: { canonical: "/" },
 };
 
-const reportPages = [
-  "Project identification & registration",
-  "Record Grade assessment",
-  "Promoter profile & track record",
-  "Encumbrance & ownership history",
-  "Statutory charges & cost framework",
-  "Site documentation",
-  "Due-diligence checklist",
-  "Certification & references",
+/** Stage imagery: real catalogue projects, named in the caption. */
+const stageShots = [
+  "sattva-vasanta-sky-devanahalli-bangalore",
+  "lt-elara-celestia",
+  "assetz-zen-and-sato-yelahanka-bangalore",
+  "lodha-beaumont-estate",
+  "embassy-greenshore-devanahalli-bangalore",
+  "embassy-knowledge-park-villas-north-bangalore",
+];
+const reelSlugs = [
+  "embassy-knowledge-park-villas-north-bangalore",
+  "lodha-beaumont-estate",
+  "lt-elara-celestia",
+  "assetz-zen-and-sato-yelahanka-bangalore",
+  "embassy-greenshore-devanahalli-bangalore",
+  "century-kindle-yelahanka-bangalore",
+  "goyal-co-orchid-salisbury-thanisandra-main-road-bangalore",
+  "sattva-vasanta-sky-devanahalli-bangalore",
 ];
 
 export default function HomePage() {
+  const bySlug = new Map(projectsLite.map((p) => [p.slug, p]));
+  const stages: YardStage[] = journey.map((step, index) => {
+    const project = bySlug.get(stageShots[index]);
+    return {
+      title: step.title, copy: step.copy,
+      img: project?.cover?.src ?? "/brand/hero-poster.jpg",
+      alt: project ? `${project.name} by ${project.dev}` : "",
+      caption: project ? `${project.name} · ${project.dev}` : "",
+    };
+  });
+  const reel = reelSlugs.map((slug) => bySlug.get(slug)).filter((p): p is NonNullable<typeof p> => Boolean(p?.cover));
   const corridors: Corridor[] = areas.filter((a) => a.slug !== "coimbatore").map((area) => {
     const list = projectsInArea(area.slug);
     const range = priceRange(list);
@@ -42,7 +60,6 @@ export default function HomePage() {
       sample: list.slice(0, 4).map((p) => ({ slug: p.slug, name: p.name })),
     };
   });
-  const featured = projectsLite.filter((p) => p.cover && p.priceLakh).slice(0, 6);
   const stats = [
     { value: projectsLite.length, suffix: "", label: "Residential projects listed", source: "100 Yards catalogue" },
     { value: builders.length, suffix: "", label: "Builders represented", source: "100 Yards catalogue" },
@@ -55,48 +72,36 @@ export default function HomePage() {
     <main id="main-content">
       <OpeningSequence />
 
-      {/* ---------- act 1 · the firm ---------- */}
-      <section className="hero hero--firm" id="top">
+      {/* ---------- scene 1 · the promise ---------- */}
+      <section className="hero hero--film" id="top">
         <AmbientBackdrop video={media.heroVideo} poster={media.heroPoster} />
         <div className="shell hero__inner">
           <div className="hero__copy hero__copy--wide">
             <p className="eyebrow" data-enter>Real estate advisory · {company.cities.join(" · ")}</p>
             <h1 data-split>
-              Find the home.{" "}
+              The last hundred yards are where a home is{" "}
               <span className="u-line">
-                Check
+                won.
                 <svg viewBox="0 0 100 8" aria-hidden="true" preserveAspectRatio="none">
                   <path data-draw d="M2,5.5 C30,3 70,3 98,5.5" />
                 </svg>
-              </span>{" "}
-              the record. Then decide.
+              </span>
             </h1>
-            <p className="hero__lede" data-enter>
-              100 Yards shortlists, shows and negotiates property across Bangalore, and puts the
-              official record of each project in front of you before you pay anyone.
-            </p>
-            <form className="hero__search" action="/projects" method="get" data-enter>
-              <label>
-                <span>Area</span>
-                <select name="area" defaultValue="">
-                  <option value="">Any area</option>
-                  {areas.map((a) => <option key={a.slug} value={a.slug}>{a.name}</option>)}
-                </select>
-              </label>
-              <label>
-                <span>Type</span>
-                <select name="type" defaultValue="">
-                  <option value="">Any type</option>
-                  <option>Apartments</option><option>Villas</option><option>Plots</option>
-                </select>
-              </label>
-              <button className="button button--gold" type="submit">Search projects <ArrowUpRight size={16} aria-hidden="true" /></button>
-            </form>
+            <div className="hero__row">
+              <p className="hero__lede" data-enter>
+                Finding a home takes a weekend. Owning it without regret takes the visits, the
+                paperwork, the price and the registration. We walk that stretch with you.
+              </p>
+              <div className="hero__actions" data-enter>
+                <a className="button button--gold" href="#begin" data-track="callback_cta">Begin <ArrowUpRight size={15} aria-hidden="true" /></a>
+                <a className="button button--outline" href="/projects">View residences</a>
+              </div>
+            </div>
             <p className="hero__status" data-enter>
               <BadgeCheck size={15} aria-hidden="true" /> Karnataka RERA registered agent · {company.reraAgent}
             </p>
           </div>
-          <a className="scroll-cue" href="#firm" data-enter>Scroll <ArrowDown size={14} aria-hidden="true" /></a>
+          <a className="scroll-cue" href="#manifesto" data-enter>Scroll <ArrowDown size={14} aria-hidden="true" /></a>
         </div>
         <div className="hero__foot">
           <div className="shell stat-rail__grid" data-reveal>
@@ -111,38 +116,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- builders ticker ---------- */}
-      <div className="ticker surface-dark" aria-hidden="true">
-        <div className="ticker__track">
-          {[0, 1].map((copy) => (
-            <div className="ticker__set" key={copy}>
-              {builders.slice(0, 12).map((b) => <span key={b.slug}>{b.name}</span>)}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ---------- act 2 · what we do ---------- */}
-      <section className="section surface-dark" id="firm">
+      {/* ---------- scene 2 · what we do ---------- */}
+      <section className="section manifesto surface-dark" id="manifesto">
         <div className="shell">
-          <div className="statement__grid">
-            <p className="statement__text" data-scrub-words>
-              A property decision gets easier when someone shows you the record, not only the brochure.
-            </p>
-            <p className="statement__aside annot">how 100 Yards works: shortlist, site visit, the paperwork, then the negotiation</p>
-          </div>
-          <div className="grid grid--4" data-reveal-group>
-            {services.map((service) => (
-              <article className="card" key={service.title}>
-                <h3>{service.title}</h3>
-                <p className="card__body">{service.copy}</p>
-              </article>
-            ))}
-          </div>
+          <p className="eyebrow">What we do</p>
+          <p className="manifesto__text" data-scrub-words>
+            Anyone can show you a flat. We stay for what comes after: the site visits, the record, the terms, the registration. That last stretch is our name.
+          </p>
         </div>
       </section>
 
-      {/* ---------- act 3 · the city (signature move) ---------- */}
+      {/* ---------- scene 3 · the hundred yards (signature) ---------- */}
+      <HundredYards stages={stages} />
+
+      {/* ---------- scene 4 · what we assure ---------- */}
+      <section className="section vows surface-dark" id="assurances">
+        <div className="shell">
+          <p className="eyebrow">What we assure you</p>
+          <div className="vows__list">
+            {assurances.map((vow) => (
+              <article className="vow" key={vow.key}>
+                <span className="vow__key">{vow.key}</span>
+                <div>
+                  <h2 data-split>{vow.title}</h2>
+                  <p data-reveal>{vow.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <figure className="pullquote pullquote--film" data-reveal>
+            <blockquote>{leadReview.quote}</blockquote>
+            <figcaption>{leadReview.name} <span>· 100 Yards client</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {/* ---------- scene 5 · the residences ---------- */}
+      <ResidenceReel projects={reel} total={projectsLite.length} />
+
+      {/* ---------- scene 6 · the city ---------- */}
       <section className="section surface-dark" id="areas">
         <div className="shell">
           <div className="head">
@@ -150,58 +162,38 @@ export default function HomePage() {
               <p className="eyebrow">Explore by area</p>
               <h2 data-split>Where Bangalore is growing.</h2>
             </div>
-            <p className="head__note" data-reveal>Five corridors, {projectsLite.length} projects. Scroll the list and watch the map follow.</p>
+            <p className="head__note" data-reveal>Five corridors, {projectsLite.length} projects. Scroll the list and the map follows.</p>
           </div>
           <CorridorMap corridors={corridors} />
         </div>
       </section>
 
-      {/* ---------- act 4 · the projects ---------- */}
-      <section className="section surface-dark" id="projects">
-        <div className="shell">
-          <div className="head">
-            <div className="head__main">
-              <p className="eyebrow">Latest projects</p>
-              <h2 data-split>Newly added to 100 Yards.</h2>
-            </div>
-            <a className="text-link" href="/projects">All {projectsLite.length} projects <ChevronRight size={15} aria-hidden="true" /></a>
-          </div>
-          <div className="pgrid" data-reveal-group>
-            {featured.map((p) => <ProjectCard key={p.slug} project={p} />)}
-          </div>
-          <p className="annot section-foot">prices are the published starting figures for each project, as listed by 100 Yards</p>
-        </div>
-      </section>
-
-      {/* ---------- act 5 · the report ---------- */}
-      <section className="section section--video surface-deep" id="reports">
-        <SectionVideo src="/video/site.mp4" opacity={0.3} />
-        <div className="shell pillar__grid">
-          <div className="pillar__copy">
-            <p className="eyebrow"><FileText size={15} aria-hidden="true" /> Property Intelligence Report</p>
-            <h2 data-split>Ten pages of record, before lakhs of commitment.</h2>
+      {/* ---------- scene 7 · the record (the one bone band) ---------- */}
+      <section className="section record surface-light" id="reports">
+        <div className="shell record__grid">
+          <div className="record__copy">
+            <p className="eyebrow">The record</p>
+            <h2 data-split>Eighteen questions. Answered before you sign.</h2>
             <p>
-              For the property you are serious about: its registration record, the builder&apos;s track
-              record, the ownership trail and the full cost on top of the quoted price. Every fact
-              names its source. Reviewed and signed by {company.md} before it reaches you.
+              For the home you are serious about, we prepare a Property Intelligence Report written
+              as the questions a careful buyer asks. Each answer names its official source and
+              date. It never says buy or don&apos;t buy. It shows you what is on file.
             </p>
-            <p className="preport__price"><strong>₹{company.reportPrice.toLocaleString("en-IN")}</strong> per property · free snapshot on every project page</p>
+            <p className="record__price"><strong>₹{company.reportPrice.toLocaleString("en-IN")}</strong><span>per property · reviewed and signed by {company.md}</span></p>
             <div className="hero__actions">
-              <a className="button button--gold" href="/reports#order" data-track="report_order_cta">Order a report <ArrowUpRight size={16} aria-hidden="true" /></a>
-              <a className="button button--outline" href="/reports/embassy-edge-specimen.pdf" target="_blank" rel="noreferrer" data-track="report_sample_opened">Read the sample</a>
+              <a className="button button--gold" href="/reports#order" data-track="report_order_cta">Order a report <ArrowUpRight size={15} aria-hidden="true" /></a>
+              <a className="button button--outline" href="/reports/lodha-beaumont-estate-specimen.pdf" target="_blank" rel="noreferrer" data-track="report_sample_opened">Read a sample</a>
             </div>
           </div>
-          <aside className="pillar__spine" data-reveal aria-label="Report contents">
-            <p className="pillar__spine-title">The report, page by page</p>
-            {reportPages.map((item, index) => (
-              <p className="pillar__spine-row" key={item}><span>{String(index + 1).padStart(2, "0")}</span> {item}</p>
-            ))}
-            <p className="annot">it never says buy or don&apos;t buy. It shows you the record.</p>
-          </aside>
+          <div className="record__pages" data-reveal aria-hidden="true">
+            <div className="rpage rpage--a"><small>Question 9 of 18</small><b>What do I pay on top of the quoted price?</b><i /><span>Stamp duty, registration, cess, surcharge and GST, worked out on the quoted price, with the rate and source for each line.</span><em>Source: Karnataka Stamps &amp; Registration</em></div>
+            <div className="rpage rpage--b"><small>Question 1 of 18</small><b>Is the project registered with RERA, and until when?</b><i /><span>The registration number, promoter on the register, validity date and any extensions, as read from the register.</span><em>Source: K-RERA register</em></div>
+            <div className="rpage rpage--cover"><small>Property Intelligence Report</small><b>Lodha Beaumont Estate</b><span>Sadahalli, North Bengaluru</span><span className="rpage__line">18 questions, answered from the official record.</span><em>Signed: {company.md}</em></div>
+          </div>
         </div>
       </section>
 
-      {/* ---------- act 6 · the person accountable ---------- */}
+      {/* ---------- scene 8 · the person who signs ---------- */}
       <section className="section surface-dark" id="leadership">
         <div className="shell instructor__grid">
           <div className="instructor__portrait" data-clip>
@@ -210,14 +202,14 @@ export default function HomePage() {
             </div>
           </div>
           <div className="instructor__copy">
-            <p className="eyebrow">Leadership</p>
+            <p className="eyebrow">The person who signs</p>
             <h2 data-split>{company.md}</h2>
             <p className="instructor__role">{company.mdRole} · {company.legal}</p>
             <p className="instructor__quote">“Most people are not confused by property. They are confused by the words used around it.”</p>
             <p>
               An Electronics &amp; Communication engineer with over a decade in real estate, Rohitt leads
-              100 Yards across Bangalore, Coimbatore, Dubai and Phuket. He reviews and signs every
-              property report the firm issues.
+              100 Yards across Bangalore, Coimbatore, Dubai and Phuket, and puts his name on every
+              report the firm issues.
             </p>
             <div className="instructor__links">
               <a className="text-link" href="/rohitt">Read Rohitt&apos;s profile <ChevronRight size={15} aria-hidden="true" /></a>
@@ -227,18 +219,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- act 7 · proof ---------- */}
-      <section className="section surface-deep" id="reviews">
+      {/* ---------- scene 9 · the builders ---------- */}
+      <div className="ticker ticker--grand surface-dark" aria-label={`Builders we work with: ${builders.slice(0, 12).map((b) => b.name).join(", ")}`}>
+        <div className="ticker__track" aria-hidden="true">
+          {[0, 1].map((copy) => (
+            <div className="ticker__set" key={copy}>
+              {builders.slice(0, 12).map((b) => <span key={b.slug}>{b.name}</span>)}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ---------- scene 10 · proof ---------- */}
+      <section className="section surface-dark" id="reviews">
         <div className="shell">
           <div className="head">
             <div className="head__main"><p className="eyebrow">Client reviews</p><h2 data-split>What 100 Yards clients say.</h2></div>
-            <p className="head__note">Reviews from property buyers who worked with the 100 Yards team.</p>
+            <a className="text-link" href="/stories">More client stories <ChevronRight size={15} aria-hidden="true" /></a>
           </div>
-          <figure className="pullquote" data-reveal>
-            <blockquote>{leadReview.quote}</blockquote>
-            <figcaption>{leadReview.name} <span>· 100 Yards client</span></figcaption>
-          </figure>
-          <div className="review-row" data-reveal-group>
+          <div className="review-row review-row--three" data-reveal-group>
             {otherReviews.slice(0, 3).map((review) => (
               <figure className="review" key={review.name}>
                 <blockquote>“{review.quote}”</blockquote>
@@ -247,46 +246,9 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-        <div className="shell section-foot">
-          <a className="text-link" href="/stories">More client stories <ChevronRight size={15} aria-hidden="true" /></a>
-        </div>
       </section>
 
-      {/* ---------- act 8 · the builders (the one ivory band) ---------- */}
-      <section className="section section--tight surface-light" id="builders">
-        <div className="shell">
-          <div className="head">
-            <div className="head__main"><p className="eyebrow">Developer partners</p><h2 data-split>The builders we work with.</h2></div>
-            <a className="text-link" href="/builders">All {builders.length} builders <ChevronRight size={15} aria-hidden="true" /></a>
-          </div>
-          <ul className="logowall" data-reveal-group>
-            {builderLogos.map((logo) => (
-              <li key={logo.slug}><img src={logo.img} alt={logo.name} loading="lazy" decoding="async" /></li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ---------- act 9 · why us ---------- */}
-      <section className="section surface-dark">
-        <div className="shell boundary__grid">
-          <div data-reveal>
-            <p className="eyebrow">Why 100 Yards</p>
-            <h2 data-split>Customer-centric is not a phrase here.</h2>
-            <p className="trustline" aria-label="Our values: Transparency, Reliability, Understanding, Service excellence, Timely execution">
-              {trustValues.map((v, i) => <span key={i} title={v.title}>{v.letter}</span>)}
-            </p>
-            <p className="annot">Transparency · Reliability · Understanding · Service excellence · Timely execution</p>
-          </div>
-          <ul className="whylist" data-reveal-group>
-            {whyUs.map((item) => (
-              <li key={item.title}><strong>{item.title}</strong><span>{item.copy}</span></li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ---------- act 10 · watch ---------- */}
+      {/* ---------- scene 11 · watch + learn ---------- */}
       <section className="section section--tight surface-dark" id="watch">
         <div className="shell">
           <div className="head">
@@ -297,7 +259,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- act 11 · learn ---------- */}
       <section className="section surface-dark">
         <div className="shell">
           <div className="head">
@@ -333,12 +294,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- act 12 · the ask ---------- */}
-      <section className="section surface-dark" id="callback-section">
+      {/* ---------- scene 12 · zero yards ---------- */}
+      <section className="section begin surface-dark" id="begin">
         <div className="shell pforms pforms--single">
           <div>
-            <p className="eyebrow">Talk to an advisor</p>
-            <h2 data-split>Tell us the brief. We shortlist.</h2>
+            <p className="eyebrow">Zero yards</p>
+            <h2 className="begin__title" data-split>Begin your hundred yards.</h2>
             <p className="head__note" data-reveal>Budget, area and timeline are enough to start. One advisor calls you back.</p>
             <dl className="office" data-reveal>
               <div><dt>Office</dt><dd>{company.address}</dd></div>
@@ -351,7 +312,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <ClosingCta />
     </main>
   );
 }

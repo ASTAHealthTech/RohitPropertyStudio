@@ -25,7 +25,7 @@ const ZONES = ["All", "North", "East", "South", "West", "Central"] as const;
 
 /** The one project whose full specimen report is published free. */
 const SAMPLE_REPORT_SLUG = "embassy-edge";
-const SAMPLE_REPORT_URL = "/reports/embassy-edge-specimen.pdf";
+const SAMPLE_REPORT_URL = "/reports/embassy-edge-devanahalli-bangalore-specimen.pdf";
 
 /** Published ranking formula — order, never opinion. */
 const STATUS_WEIGHT: Record<string, number> = {

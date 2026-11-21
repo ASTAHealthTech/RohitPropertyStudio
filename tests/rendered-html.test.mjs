@@ -21,8 +21,9 @@ test("server-renders the 100 Yards home page without depending on JavaScript", a
   assert.match(html, /Rohitt Kumar Singh/);
   // The brand spells it with two t's. This catches any regression to one t.
   assert.doesNotMatch(html, /Rohit(?!t) Kumar Singh/);
-  assert.match(html, /Find the home/i);
-  assert.match(html, /the record\. Then decide/i);
+  assert.match(html, /The last hundred yards are where a home is/i);
+  assert.match(html, /Nothing paid before you have read the record/i);
+  assert.match(html, /Begin your hundred yards/i);
   assert.match(html, /u-line/); // the self-drawing gold underline is present
   assert.match(html, /\/video\/hero\.mp4/); // hero film wired
   assert.match(html, /ticker__set/); // marquee track present
@@ -35,7 +36,7 @@ test("server-renders the 100 Yards home page without depending on JavaScript", a
 test("makes no guarantee or advice claim, and takes no payment on the site", async () => {
   const html = await (await render()).text();
   assert.doesNotMatch(html, /Buy now|Proceed to payment|guaranteed (returns|outcome)|assured returns/i);
-  assert.match(html, /never says buy or don(&#x27;|')t buy|It shows you the record/i);
+  assert.match(html, /never says buy or don(&#x27;|')t buy/i);
 });
 
 test("homepage rupee figures are labelled as published listing prices", async () => {
@@ -117,7 +118,8 @@ test("server-renders the reports page and the homepage pillar", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Property Intelligence Report/i);
-  assert.match(html, /embassy-edge-specimen\.pdf/);
+  assert.match(html, /lodha-beaumont-estate-specimen\.pdf/);
+  assert.match(html, /woodland-forest-bangalore-specimen\.pdf/);
   assert.match(html, /never says buy/i);
   assert.match(html, /₹1,000/);
   assert.match(html, /id="order-form"/);

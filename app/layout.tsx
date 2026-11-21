@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Manrope, Playfair_Display } from "next/font/google";
 import "./styles/tokens.css";
 import "./styles/base.css";
 import "./styles/components.css";
@@ -9,6 +8,7 @@ import "./styles/pages.css";
 import "./styles/lab.css";
 import "./styles/datalab.css";
 import "./styles/catalog.css";
+import "./styles/film.css";
 import { EventTracker } from "./components/EventTracker";
 import { MotionLayer } from "./components/MotionLayer";
 import { SiteFooter } from "./components/SiteFooter";
@@ -18,8 +18,6 @@ import { Tracking } from "./components/Tracking";
 import { company, organizationJsonLd } from "./lib/company";
 import { personJsonLd } from "./lib/siteContent";
 
-const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "swap" });
-const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["latin"], display: "swap" });
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -48,8 +46,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const structuredData = JSON.stringify([organizationJsonLd, personJsonLd]).replace(/</g, "\\u003c");
   return (
-    <html lang="en-IN" className={`${manrope.variable} ${playfair.variable}`}>
+    <html lang="en-IN">
       <body>
+        <link rel="preload" href="/fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/cormorant-garamond-latin-300-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
         <a className="skip-link" href="#main-content">Skip to content</a>
         <MotionLayer />

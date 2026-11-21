@@ -3,7 +3,6 @@ import { ArrowUpRight, FileText, ShieldCheck } from "lucide-react";
 import { AmbientBackdrop } from "../components/AmbientBackdrop";
 import { LeadFormSlot } from "../components/leads/LeadFormSlot";
 import { company } from "../lib/company";
-import registry from "../lib/datalab/projects.json";
 
 const price = `₹${company.reportPrice.toLocaleString("en-IN")}`;
 
@@ -14,17 +13,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/reports" },
 };
 
-const SAMPLE_URL = "/reports/embassy-edge-specimen.pdf";
+const SAMPLE_URL = "/reports/lodha-beaumont-estate-specimen.pdf";
+
+const specimens = [
+  ["An apartment", "Lodha Beaumont Estate, North Bengaluru", "/reports/lodha-beaumont-estate-specimen.pdf"],
+  ["A plot", "The Woodland Forest, Devanahalli", "/reports/woodland-forest-bangalore-specimen.pdf"],
+  ["A villa", "Embassy Knowledge Park Villas, North Bengaluru", "/reports/embassy-knowledge-park-villas-north-bangalore-specimen.pdf"],
+] as const;
 
 const sections = [
-  ["01", "Project identification & registration", "Every line shows the fact, its official source and the date it was read."],
-  ["02", "Record Grade assessment", "An A–E grade of how complete and clean the public record is. A fixed, printed formula, never a buy or don't-buy opinion."],
-  ["03", "Promoter profile & track record", "The builder's registrations across the register, plus the corporate record from MCA."],
-  ["04", "Encumbrance & ownership history", "The government's own transaction trail for the land, pulled fresh from Kaveri for each report."],
-  ["05", "Statutory charges & cost framework", "Stamp duty, registration, cess, surcharge and GST, applied to the actual quoted price and compared with the official guidance value."],
-  ["06", "Site documentation", "Locality map and photographs taken during preparation, dated on the caption."],
-  ["07", "Due-diligence checklist", "The questions to carry into the room, in order."],
-  ["08", "Certification & references", "Citations with verify links, QR codes to the official register, and the reviewer's signature."],
+  ["01–04", "Is it legal?", "RERA registration and its validity, plan approvals, complaints and cases on record, and the land's encumbrance trail."],
+  ["05–08", "Who is behind it?", "The legal promoter behind the brand, its other registrations, whether earlier projects finished on time, and who runs the company."],
+  ["09–12", "What will it really cost?", "Stamp duty, registration, cess, surcharge and GST on the quoted price; the guidance value; the payment schedule; the running costs."],
+  ["13–14", "What am I actually buying?", "Changes with the property. An apartment: carpet area and land share. A plot: layout approval, conversion and khata. A villa: land ownership and specification."],
+  ["15–16", "What is it like to live there?", "The amenities promised in writing, and what is nearby with honest travel times."],
+  ["17–18", "What could go wrong?", "What happens if possession is late, and what must be true before each payment."],
 ] as const;
 
 const steps = [
@@ -42,10 +45,10 @@ export default function ReportsPage() {
         <div className="shell page-hero__grid">
           <div className="page-hero__copy">
             <p className="eyebrow" data-enter>Property Intelligence Reports</p>
-            <h1 data-split>Ten pages of record, before lakhs of commitment.</h1>
+            <h1 data-split>Eighteen questions. Answered before you sign.</h1>
             <p data-enter>
-              A commissioned report reads one project&apos;s complete public record (RERA, Kaveri,
-              MCA), verifies it, grades it, and signs it. Information, never investment advice.
+              One buyer question to a page, about two dozen pages, written for one property. Each
+              answer names its official source and date. Information, never investment advice.
             </p>
             <div className="hero__actions" data-enter>
               <a className="button button--gold" href="#order" data-track="report_order_cta">
@@ -71,9 +74,9 @@ export default function ReportsPage() {
           <div className="head">
             <div className="head__main">
               <p className="eyebrow">Inside the report</p>
-              <h2 data-split>Eight sections. Every figure names its source.</h2>
+              <h2 data-split>Six parts. One question to a page.</h2>
             </div>
-            <p className="head__note" data-reveal>The structure below is the actual document. Open the specimen and follow along page by page.</p>
+            <p className="head__note" data-reveal>Each page gives a short answer, what the record shows, why it matters, what to ask the builder, and how to check it yourself.</p>
           </div>
           <div className="rp-sections" data-reveal-group>
             {sections.map(([num, title, copy]) => (
@@ -90,19 +93,25 @@ export default function ReportsPage() {
         <div className="shell rp-sample__grid">
           <div>
             <p className="eyebrow">The specimen</p>
-            <h2 data-split>Judge the report before anyone pays for one.</h2>
+            <h2 data-split>Read three before you order one.</h2>
           </div>
           <div className="rp-sample__copy" data-reveal>
             <p>
-              The specimen covers <strong>Embassy Edge, Devanahalli</strong>, a real entry from the
-              register of {registry.projects.length} Bengaluru projects the Datalab tracks. Sections
-              that need per-order official pulls are marked <em>pending</em> rather than filled with
-              guesses; a commissioned report completes them.
+              The report is different for every property. These three specimens show the same
+              eighteen questions asked of an apartment, a plot and a villa. Lines that need a
+              per-order official pull are marked <em>pending</em> rather than filled with guesses;
+              a commissioned report completes them.
             </p>
-            <a className="button button--gold" href={SAMPLE_URL} target="_blank" rel="noreferrer" data-track="report_sample_opened">
-              <FileText size={16} aria-hidden="true" /> Open the sample (PDF)
-            </a>
-            <p className="annot">Watermarked specimen. Free to read, share and verify.</p>
+            <ul className="rp-specimens">
+              {specimens.map(([kind, name, href]) => (
+                <li key={href}>
+                  <a href={href} target="_blank" rel="noreferrer" data-track="report_sample_opened">
+                    <FileText size={16} aria-hidden="true" /><span><strong>{kind}</strong>{name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="annot">Watermarked specimens. Free to read, share and verify.</p>
           </div>
         </div>
       </section>

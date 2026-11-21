@@ -9,7 +9,7 @@ export function SiteFooter() {
       <div className="site-footer__main shell">
         <div data-reveal>
           <p className="eyebrow">100 Yards</p>
-          <h2>Find the home.<br />Check the record.</h2>
+          <h2>The last hundred yards,<br />walked with you.</h2>
           <p className="site-footer__addr">{company.legal}<br />{company.address}<br />{company.hours}</p>
         </div>
         <div className="site-footer__channels" data-reveal data-reveal-delay="1">

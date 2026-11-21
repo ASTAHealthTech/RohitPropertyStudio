@@ -61,6 +61,27 @@ export const trustValues = [
   { letter: "T", title: "Timely execution", copy: "We ensure every transaction moves forward without unnecessary delays, respecting our clients' time and goals." },
 ] as const;
 
+/**
+ * The three assurances shown on the homepage. They are promises the firm makes to
+ * every buyer, so they must be ones the team keeps. Change the wording here only
+ * with the Managing Director's sign-off.
+ */
+export const assurances = [
+  { key: "On the record", title: "Nothing paid before you have read the record.", copy: "Every project we recommend comes with its registration, builder history and full cost on paper first." },
+  { key: "On the people", title: "One advisor, from first call to registration.", copy: "You are not handed from a caller to a closer. The person who learns your brief stays to the end." },
+  { key: "On the pace", title: "No pressure. You decide when you are ready.", copy: "We show the options, the trade-offs and the paperwork. The decision and the timing are yours." },
+] as const;
+
+/** How 100 Yards works, as six steps of twenty yards each. */
+export const journey = [
+  { title: "The brief", copy: "We listen first. Budget, commute, schools, and the life you want the address to give you." },
+  { title: "The shortlist", copy: "Three to five homes chosen for you from the whole catalogue. Not thirty brochures." },
+  { title: "The visit", copy: "We walk each site with you: the model flat, the actual tower, the road outside at rush hour." },
+  { title: "The record", copy: "Before any payment you read the project's record. Registration, builder, land title, true cost. Signed by Rohitt." },
+  { title: "The terms", copy: "Price, floor, payment plan. We negotiate with the builder for you and put it in writing." },
+  { title: "The keys", copy: "Agreement, loan, registration. We are in the room until the keys are in your hand." },
+] as const;
+
 export const services = [
   { title: "Buying", copy: "We start with your preferences and budget, then shortlist, arrange site visits, negotiate and stay with you through registration." },
   { title: "Selling", copy: "Marketing and negotiation aimed at the best possible value for your home or investment." },

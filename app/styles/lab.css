@@ -9,7 +9,7 @@
 .lab-seg { display: flex; flex-wrap: wrap; gap: 1px; background: var(--line); border: 1px solid var(--line); width: fit-content; }
 .lab-seg button {
   border: 0; padding: 10px 14px; background: var(--ground); color: var(--ink-soft);
-  font-size: 12.5px; font-weight: 800; cursor: pointer;
+  font-size: 12.5px; font-weight: 500; cursor: pointer;
   transition: background-color var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out);
 }
 .lab-seg button:hover { color: var(--ink); }
@@ -17,16 +17,16 @@
 
 .lab-result { display: grid; gap: var(--s-5); align-content: start; }
 .lab-result__headline { display: grid; gap: 6px; }
-.lab-result__headline > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.lab-result__headline > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
 .lab-result__headline strong { color: var(--accent); font-family: var(--serif); font-size: clamp(40px, 4.4vw, 62px); font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
 .lab-result__headline small { color: var(--ink-soft); font-size: var(--t-small); }
 
 .lab-bars { display: grid; gap: 10px; }
 .lab-bar { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 110px; align-items: center; gap: 12px; font-size: 13px; }
-.lab-bar__label { color: var(--ink-soft); font-weight: 700; }
+.lab-bar__label { color: var(--ink-soft); font-weight: 500; }
 .lab-bar__track { height: 12px; background: color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; }
 .lab-bar__track i { display: block; height: 100%; background: var(--gold); transition: width var(--d-base) var(--e-out); }
-.lab-bar__value { text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; }
+.lab-bar__value { text-align: right; font-weight: 500; font-variant-numeric: tabular-nums; }
 
 .lab-meter { display: grid; gap: 12px; }
 .lab-meter__track { height: 10px; background: color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; }
@@ -40,13 +40,13 @@
 .lab-chart svg { width: 100%; height: auto; }
 .lab-chart__legend { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 22px; font-size: 13px; }
 .lab-chart__legend strong { color: var(--accent); font-size: 13.5px; }
-.lab-chart__key { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-soft); font-weight: 700; }
+.lab-chart__key { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-soft); font-weight: 500; }
 .lab-chart__key::before { content: ""; width: 18px; height: 2px; }
 .lab-chart__key--own::before { background: var(--gold); }
 .lab-chart__key--rent::before { background: color-mix(in srgb, var(--ink) 55%, transparent); }
 .lab-chart__axis { stroke: var(--line); stroke-width: 1; }
 .lab-chart__tick, .lab-chart__end { fill: var(--ink-faint); font-family: var(--sans); font-size: 12px; font-variant-numeric: tabular-nums; }
-.lab-chart__end { fill: var(--accent); font-weight: 700; }
+.lab-chart__end { fill: var(--accent); font-weight: 500; }
 .lab-chart__end--rent { fill: var(--ink-soft); }
 .lab-chart__line { fill: none; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
 .lab-chart__line--own { stroke: var(--gold); }
@@ -55,7 +55,7 @@
 
 /* ---------- deal decoder ---------- */
 .decoder__form { display: grid; gap: 14px; }
-.decoder__form > label { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.decoder__form > label { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
 .decoder__form textarea {
   width: 100%; resize: vertical; min-height: 84px;
   border: 1px solid var(--line); padding: 14px 16px; background: transparent; font-size: 15px; line-height: 1.6;
@@ -66,7 +66,7 @@
 .decoder__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .decoder__sample {
   border: 1px solid var(--line); padding: 9px 13px; background: transparent; color: var(--ink-soft);
-  font-size: 12px; font-weight: 700; cursor: pointer; text-align: left;
+  font-size: 12px; font-weight: 500; cursor: pointer; text-align: left;
   transition: border-color var(--d-base) var(--e-out), color var(--d-base) var(--e-out);
 }
 .decoder__sample:hover { border-color: var(--accent); color: var(--accent); }
@@ -77,14 +77,14 @@
 /* ---------- quiz ---------- */
 .quiz { grid-template-columns: minmax(0, 1fr); max-width: 780px; }
 .quiz__progress { position: relative; display: grid; gap: 8px; }
-.quiz__progress span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.quiz__progress span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
 .quiz__progress i { display: block; height: 2px; background: var(--gold); transition: width var(--d-base) var(--e-out); }
 .quiz__question { font-family: var(--serif); font-size: clamp(21px, 2.2vw, 28px); font-weight: 500; letter-spacing: -.015em; line-height: 1.25; }
 .quiz__options { display: grid; gap: 10px; }
 .quiz__option {
   display: flex; justify-content: space-between; align-items: center; gap: 14px;
   border: 1px solid var(--line); padding: 14px 18px; background: transparent; color: var(--ink);
-  font-size: 15px; font-weight: 700; text-align: left; cursor: pointer;
+  font-size: 15px; font-weight: 500; text-align: left; cursor: pointer;
   transition: border-color var(--d-fast) var(--e-out), background-color var(--d-fast) var(--e-out), opacity var(--d-fast) var(--e-out);
 }
 .quiz__option:hover:not(:disabled) { border-color: var(--accent); }
@@ -95,7 +95,7 @@
 .quiz__explain { display: grid; gap: 14px; justify-items: start; border-top: 1px solid var(--line); padding-top: var(--s-4); }
 .quiz__explain p { color: var(--ink-soft); font-size: var(--t-small); line-height: 1.7; }
 .quiz__score { display: grid; gap: 10px; justify-items: start; }
-.quiz__score > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.quiz__score > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
 .quiz__score strong { color: var(--accent); font-family: var(--serif); font-size: clamp(56px, 7vw, 96px); font-weight: 500; line-height: 1; }
 .quiz__score strong small { color: var(--ink-faint); font-size: .38em; }
 .quiz__score p { max-width: 46ch; color: var(--ink-soft); font-size: var(--t-lead); }
@@ -135,9 +135,9 @@
 /* ---------- simulator readouts ---------- */
 .sim-readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
 .sim-readout { display: grid; gap: 5px; border-left: 2px solid var(--gold); padding-left: 16px; }
-.sim-readout > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.sim-readout > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
 .sim-readout strong { color: var(--accent); font-family: var(--serif); font-size: clamp(28px, 3vw, 44px); font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
-.sim-readout strong em { font-family: var(--sans); font-size: .38em; font-style: normal; font-weight: 700; }
+.sim-readout strong em { font-family: var(--sans); font-size: .38em; font-style: normal; font-weight: 500; }
 .sim-readout small { color: var(--ink-soft); font-size: 13px; }
 .lab-chart__area { pointer-events: none; }
 
@@ -163,7 +163,7 @@
 .build { grid-template-columns: minmax(260px, .62fr) minmax(0, 1.38fr); align-items: start; }
 .build__stage { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(16px, 2vw, 28px); align-items: center; }
 .build__readout { display: grid; gap: 6px; align-content: start; border-left: 2px solid var(--gold); padding-left: 16px; }
-.build__readout > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.build__readout > span { color: var(--ink-faint); font-size: var(--t-micro); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
 .build__readout strong { color: var(--accent); font-family: var(--serif); font-size: clamp(52px, 6vw, 84px); font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
 .build__readout small { color: var(--ink-soft); font-size: 13px; }
 .build__svg { width: 100%; height: auto; }
@@ -183,7 +183,7 @@
 /* ---------- emi time machine ---------- */
 .emiflow__stats { display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: var(--s-4); }
 .emiflow__stats > div { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 13px; }
-.emiflow__stats span { color: var(--ink-soft); font-weight: 700; }
+.emiflow__stats span { color: var(--ink-soft); font-weight: 500; }
 .emiflow__stats strong { font-size: 15.5px; font-variant-numeric: tabular-nums; }
 .emiflow__gold { color: var(--accent); }
 .emiflow__silver { color: var(--ink-soft); }
@@ -205,7 +205,7 @@
 .xray__layer.is-active span { color: color-mix(in srgb, var(--deep) 65%, transparent); }
 .xray__readout { display: grid; gap: 8px; border-left: 2px solid var(--gold); margin-top: var(--s-5); padding-left: 16px; }
 .xray__readout strong { color: var(--accent); font-family: var(--serif); font-size: clamp(38px, 4vw, 58px); font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
-.xray__readout strong em { font-family: var(--sans); font-size: .34em; font-style: normal; font-weight: 700; }
+.xray__readout strong em { font-family: var(--sans); font-size: .34em; font-style: normal; font-weight: 500; }
 .xray__readout p { color: var(--ink-soft); font-size: var(--t-small); line-height: 1.65; max-width: 40ch; }
 .xray__stage svg { width: 100%; height: auto; }
 .xray__g { transition: opacity .55s var(--e-out), transform .55s var(--e-out); }
@@ -230,4 +230,4 @@
 
 /* ---------- journey chips ---------- */
 .journey__chips { display: flex; flex-wrap: wrap; gap: 7px; }
-.journey__chips span { border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); padding: 5px 10px; color: var(--ink); font-size: 11.5px; font-weight: 700; letter-spacing: .03em; }
+.journey__chips span { border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); padding: 5px 10px; color: var(--ink); font-size: 11.5px; font-weight: 500; letter-spacing: .03em; }
