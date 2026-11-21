@@ -289,13 +289,17 @@ are delivered only after Rohitt reviews and signs. Payment flow intentionally no
 ## The story (Nov 2026) — "from the drawing to the keys"
 
 Owner direction: every page tells one story, not just motion. Three beats, in order:
-1. **The drawing** (expertise) — `OpeningSequence.tsx` + `styles/opening.css`: a floor plan draws
-   itself, lies down, a tower rises from it, windows light, we move in on one window, and two
-   door leaves swing open onto the hero. CSS-only, armed by an inline script before paint, all
-   timings multiples of `--ou`. Plays ONCE PER BROWSER SESSION (`sessionStorage hy_opened`), never
-   under reduced motion or Save-Data. Phones and ad traffic (utm/gclid/fbclid) get the short
-   version: plan, then doors, about 1.5s. `?intro=1` forces it for review. MotionLayer reads
-   `window.__hyHold` so the hero headline waits for the doors.
+1. **The drawing** (expertise) — `OpeningSequence.tsx` + `styles/opening.css`, "one line, one
+   light, one door": one champagne line is drawn ("Every home begins as a line."), it becomes a
+   detailed architect's plan, one room fills with warm light, and that room opens as a doorway
+   (an animated hole in the overlay's `clip-path`) onto the hero. One slow camera push runs
+   under all of it — no cuts, no building (a drawn tower was tried and rejected). CSS-only,
+   armed by an inline script before paint, all timings multiples of `--ou`; about 5.5s on
+   desktop, about 3s on phones and ad traffic (utm/gclid/fbclid). Plays ONCE PER BROWSER SESSION
+   (`sessionStorage hy_opened`), never under reduced motion or Save-Data. `?intro=1` forces it.
+   The lit room is centred on the 1600x900 sheet so the doorway hole (`--o-hw/--o-hh`, sized
+   from `--s` and `--k`) lands on it at any screen size — keep that if the plan is redrawn.
+   MotionLayer reads `window.__hyHold` so the hero headline waits for the door.
 2. **The walk** — the hundred-yards counter and the reel on the homepage (unchanged).
 3. **The signature** (trust) — `Signature.tsx`: Rohitt's name in Mrs Saint Delafield, written in
    left to right on reveal. It is a styled name, NOT his legal signature: never put it on a

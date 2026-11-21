@@ -1,111 +1,141 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 /**
- * The opening: "from the drawing to the door".
+ * Opening — "one line, one light, one door".
  *
- *   0.0s  one line draws a floor plan on dark paper, a measure counts to 100 yards
- *   1.3s  the plan lies down and a tower rises from it, floor by floor
- *   2.0s  its windows light
- *   2.6s  we move in on one lit window
- *   3.2s  the doors open onto the home page
+ *   0.2u  one champagne line is drawn across the dark sheet ("Every home begins as a line.")
+ *   1.4u  the line becomes an architect's plan: walls, doors, furniture, room names, measures
+ *   3.3u  one room fills with warm light
+ *   4.3u  that room opens like a doorway and the home page is seen through it
  *
- * Plays once per browser session (sessionStorage): close the browser and it
- * plays again; move between pages or reload and it does not. Add ?intro=1 to
- * the address to force it. On phones and for ad traffic it runs as a short
- * version (plan, then doors, under two seconds). Never under reduced motion or
- * Save-Data. Everything is CSS driven by one time unit (--ou), so it starts
- * before the page's JavaScript has loaded and there is no flash of the page.
- * MotionLayer holds the hero entrance for `window.__hyHold` seconds.
+ * One slow camera push runs underneath everything, start to finish — no cuts.
+ * Pure CSS, driven by one time unit (--ou), armed by the inline script before first paint,
+ * so it plays before the page's JavaScript arrives. Once per browser session; never under
+ * reduced motion or Save-Data. Phones and ad traffic run the same film at about half length.
+ * `?intro=1` forces it for review.
  */
-const decide = `(function(){try{var d=document.documentElement,c=navigator.connection,q=location.search,force=/[?&]intro=1/.test(q);if(matchMedia('(prefers-reduced-motion: reduce)').matches||(c&&c.saveData))return;if(!force&&sessionStorage.getItem('hy_opened'))return;sessionStorage.setItem('hy_opened','1');var s=matchMedia('(max-width: 820px)').matches||/[?&](utm_|gclid|fbclid)/.test(q),u=s?0.5:1;d.style.setProperty('--ou',u+'s');if(s)d.classList.add('opening-short');d.classList.add('opening-on');window.__hyHold=(s?2.1:3.3)*u;setTimeout(function(){d.classList.add('opening-out')},(s?2000:3200)*u);setTimeout(function(){d.classList.remove('opening-on','opening-out','opening-short')},(s?3100:4300)*u);}catch(e){}})();`;
+const decide = `(function(){try{var d=document.documentElement,c=navigator.connection,q=location.search,force=/[?&]intro=1/.test(q);if(matchMedia('(prefers-reduced-motion: reduce)').matches||(c&&c.saveData))return;if(!force&&sessionStorage.getItem('hy_opened'))return;sessionStorage.setItem('hy_opened','1');var s=matchMedia('(max-width: 820px)').matches||/[?&](utm_|gclid|fbclid)/.test(q),u=s?0.55:1;d.style.setProperty('--ou',u+'s');d.classList.add('opening-on');window.__hyHold=4.55*u;setTimeout(function(){d.classList.add('opening-out')},4300*u);setTimeout(function(){d.classList.remove('opening-on','opening-out')},5650*u);}catch(e){}})();`;
 
-type Line = { d: string; t: number; w?: number };
-const delay = (t: number, extra?: React.CSSProperties) => ({ ...extra, ["--d" as string]: t }) as React.CSSProperties;
+const at = (d: number, len?: number) => ({ "--d": d, ...(len ? { "--l": len } : {}) }) as CSSProperties;
 
-/* Ground-floor plan, drawn in a 1600 × 900 sheet. Outer walls first, then partitions, then the detail. */
-const walls: Line[] = [
-  { d: "M520,250 H1080 V650 H520 Z", t: 0, w: 3.2 },
-  { d: "M520,430 H740", t: 0.3, w: 2.2 },
-  { d: "M740,250 V376 M740,424 V540", t: 0.36, w: 2.2 },
-  { d: "M740,540 H828 M876,540 H900", t: 0.46, w: 2.2 },
-  { d: "M900,430 V650", t: 0.52, w: 2.2 },
-  { d: "M900,430 H946 M994,430 H1080", t: 0.58, w: 2.2 },
-  { d: "M900,250 V430", t: 0.62, w: 2.2 },
-];
-const detail: Line[] = [
-  // door swings
-  { d: "M740,376 A48,48 0 0 1 788,424 M740,424 H788", t: 0.72 },
-  { d: "M828,540 A48,48 0 0 1 876,588 M876,540 V588", t: 0.78 },
-  { d: "M946,430 A48,48 0 0 0 994,478 M994,430 V478", t: 0.84 },
-  { d: "M610,650 A52,52 0 0 0 662,598 M662,650 V598", t: 0.9 },
-  // windows (double line on the outer wall)
-  { d: "M580,244 H690 M580,256 H690", t: 0.74 },
-  { d: "M780,244 H860 M780,256 H860", t: 0.78 },
-  { d: "M940,244 H1040 M940,256 H1040", t: 0.82 },
-  { d: "M1074,300 V390 M1086,300 V390", t: 0.86 },
-  { d: "M1074,500 V600 M1086,500 V600", t: 0.9 },
-  { d: "M514,300 V390 M526,300 V390", t: 0.94 },
-  // stair
-  { d: "M760,560 H820 M760,575 H820 M760,590 H820 M760,605 H820 M760,620 H820 M760,635 H820 M760,560 V650 M820,560 V650", t: 0.88 },
-  // kitchen counter and bed
-  { d: "M920,270 H1060 V300 H950 V410 H920 Z", t: 0.96 },
-  { d: "M550,280 H680 V390 H550 Z M550,310 H680", t: 1.0 },
-  { d: "M930,520 H1050 V620 H930 Z M930,548 H1050", t: 1.04 },
-];
-const measure: Line[] = [
-  { d: "M520,200 H1080 M520,188 V212 M1080,188 V212", t: 0.12 },
-  { d: "M470,250 V650 M458,250 H482 M458,650 H482", t: 0.2 },
-];
-const labels = [
-  { x: 615, y: 350, text: "BEDROOM" }, { x: 820, y: 330, text: "LIVING" }, { x: 990, y: 372, text: "KITCHEN" },
-  { x: 622, y: 548, text: "STUDY" }, { x: 990, y: 596, text: "BEDROOM" }, { x: 820, y: 596, text: "UP" },
+/* walls: [path, start] — drawn one after another so the plan grows like a single pen stroke */
+const innerWalls: Array<[string, number]> = [
+  ["M700 170V260M700 320V560M700 620V730", 2.0],
+  ["M900 170V240M900 300V520M900 580V730", 2.15],
+  ["M350 450H700", 2.3],
+  ["M700 300H760M840 300H900", 2.4],
+  ["M700 600H740M860 600H900", 2.5],
+  ["M900 400H1250M900 560H1250", 2.6],
 ];
 
-/* The tower that rises from the plan. Front face x 680–920, side face to 1000. */
-const TOP = 150, BASE = 610, FLOORS = 12;
-const floorY = (i: number) => BASE - ((BASE - TOP) / FLOORS) * i;
-const tower: Line[] = [
-  { d: `M680,${BASE} V${TOP + 20} M920,${BASE} V${TOP + 20} M1000,${BASE - 36} V${TOP}`, t: 1.45, w: 2.4 },
-  { d: `M680,${TOP + 20} H920 L1000,${TOP} H760 Z`, t: 2.0, w: 2.4 },
-  { d: `M680,${BASE} H920 L1000,${BASE - 36}`, t: 1.4, w: 2.4 },
+const details: Array<[string, number]> = [
+  /* door leaves and their swings */
+  ["M700 320H640M640 320A60 60 0 0 1 700 260", 2.6],
+  ["M700 560H640M640 560A60 60 0 0 0 700 620", 2.68],
+  ["M900 300H960M960 300A60 60 0 0 0 900 240", 2.76],
+  ["M900 580H960M960 580A60 60 0 0 0 900 520", 2.84],
+  /* windows on the outer wall */
+  ["M430 164H620M430 176H620M430 724H620M430 736H620M1000 164H1180M1000 176H1180M344 250V380M356 250V380M1244 440V530M1256 440V530", 2.7],
+  /* master bedroom: bed, pillows, side tables, wardrobe */
+  ["M400 215H590V345H400ZM400 250H590M415 222H485V244H415ZM505 222H575V244H505ZM372 215H394V240H372ZM596 215H618V240H596Z", 2.8],
+  ["M365 400H560V436H365ZM430 400V436M495 400V436", 2.88],
+  /* second bedroom: bed, desk, chair */
+  ["M400 575H570V690H400ZM400 606H570M414 582H476V600H414ZM494 582H556V600H494Z", 2.92],
+  ["M610 470H684V520H610ZM632 536A14 14 0 1 0 660 536A14 14 0 1 0 632 536", 3.0],
+  /* kitchen: counter, sink, hob */
+  ["M930 195H1225V375H1175V245H930Z", 2.9],
+  ["M960 205H1020V236H960ZM1190 270A10 10 0 1 0 1210 270A10 10 0 1 0 1190 270M1190 300A10 10 0 1 0 1210 300A10 10 0 1 0 1190 300M1190 330A10 10 0 1 0 1210 330A10 10 0 1 0 1190 330", 3.0],
+  /* dining: table and six chairs */
+  ["M1000 462H1160V508H1000Z", 3.0],
+  ["M1016 440H1046V454H1016ZM1065 440H1095V454H1065ZM1114 440H1144V454H1114ZM1016 516H1046V530H1016ZM1065 516H1095V530H1065ZM1114 516H1144V530H1114Z", 3.08],
+  /* bath: tub, basin, wc */
+  ["M1140 585Q1140 578 1147 578H1218Q1225 578 1225 585V700Q1225 707 1218 707H1147Q1140 707 1140 700ZM1152 592H1213V694H1152Z", 3.05],
+  ["M935 660A18 18 0 1 0 971 660A18 18 0 1 0 935 660M1010 690H1050V712H1010ZM1012 690A18 14 0 0 1 1048 690", 3.12],
+  /* foyer: threshold and console · balcony: rail and planters */
+  ["M760 170V150H840V170M770 160H830M715 185H745V250H715Z", 3.0],
+  ["M712 612V718M724 612V718M736 612V718M748 612V718M876 612V718M864 612V718M852 612V718M770 700A12 12 0 1 0 794 700A12 12 0 1 0 770 700M806 700A12 12 0 1 0 830 700A12 12 0 1 0 806 700", 3.1],
 ];
-const floors = Array.from({ length: FLOORS - 1 }, (_, i) => ({ d: `M680,${floorY(i + 1) + 20 * ((i + 1) / FLOORS)} H920 l80,${-20 - 16 * (1 - (i + 1) / FLOORS)}`, t: 1.55 + i * 0.04 }));
-const windowsLit = Array.from({ length: 11 }, (_, row) => Array.from({ length: 5 }, (_, col) => {
-  const y0 = floorY(row + 1) + 20 * ((row + 1) / FLOORS) + 9;
-  return { x: 696 + col * 46, y: y0, t: 2.0 + ((row * 7 + col * 13) % 11) * 0.045, key: `${row}-${col}`, hero: row === 5 && col === 2 };
-})).flat();
+
+const measures: Array<[string, number]> = [
+  ["M350 112H1250M350 102V122M700 105V119M900 105V119M1250 102V122", 2.7],
+  ["M292 170V730M282 170H302M285 450H299M282 730H302", 2.85],
+  ["M1308 170V730M1298 170H1318M1301 400H1315M1301 560H1315M1298 730H1318", 2.95],
+  /* compass */
+  ["M1420 150A34 34 0 1 0 1420 218A34 34 0 1 0 1420 150M1420 138V230M1386 184H1454M1420 138L1411 172H1429Z", 3.0],
+  /* registration marks at the sheet corners */
+  ["M150 80H190M170 60V100M1410 800H1450M1430 780V820M150 800H190M170 780V820", 2.4],
+];
+
+const labels: Array<[number, number, string, number]> = [
+  [525, 380, "MASTER BEDROOM", 3.2],
+  [505, 550, "BEDROOM", 3.26],
+  [1052, 300, "KITCHEN", 3.3],
+  [1080, 548, "DINING", 3.34],
+  [1040, 620, "BATH", 3.38],
+  [800, 232, "FOYER", 3.3],
+  [800, 664, "BALCONY", 3.42],
+];
 
 export function OpeningSequence() {
-  const skip = () => document.documentElement.classList.remove("opening-on", "opening-out", "opening-short");
+  const skip = () => document.documentElement.classList.remove("opening-on", "opening-out");
+
   return (
     <>
       <script dangerouslySetInnerHTML={{ __html: decide }} />
-      <div className="opening" role="presentation">
-        <span className="opening__leaf opening__leaf--l" aria-hidden="true" />
-        <span className="opening__leaf opening__leaf--r" aria-hidden="true" />
-        <span className="opening__seam" aria-hidden="true" />
+      <div className="opening" aria-hidden="true">
+        <div className="opening__grid" />
+        <div className="opening__cam">
+          <svg className="opening__plan" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <radialGradient id="o-lamp" cx="50%" cy="46%" r="62%">
+                <stop offset="0" stopColor="#fff3d6" />
+                <stop offset=".45" stopColor="#f0cf94" />
+                <stop offset="1" stopColor="#b98a4a" stopOpacity=".55" />
+              </radialGradient>
+              <radialGradient id="o-spill" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stopColor="#f0cf94" stopOpacity=".34" />
+                <stop offset="1" stopColor="#f0cf94" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="o-tip" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stopColor="#fff7e6" />
+                <stop offset=".25" stopColor="#f0cf94" stopOpacity=".7" />
+                <stop offset="1" stopColor="#f0cf94" stopOpacity="0" />
+              </radialGradient>
+            </defs>
 
-        <div className="opening__stage" aria-hidden="true">
-          <div className="opening__plan">
-            <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
-              <g className="o-measure">{measure.map((l) => <path key={l.d} d={l.d} pathLength={1} style={delay(l.t)} />)}</g>
-              <g className="o-walls">{walls.map((l) => <path key={l.d} d={l.d} pathLength={1} style={delay(l.t, { strokeWidth: l.w })} />)}</g>
-              <g className="o-detail">{detail.map((l) => <path key={l.d} d={l.d} pathLength={1} style={delay(l.t)} />)}</g>
-              <g className="o-labels">{labels.map((l, i) => <text key={i} x={l.x} y={l.y} style={delay(1.0 + i * 0.04)}>{l.text}</text>)}</g>
-              <text className="o-dim" x="800" y="182" style={delay(0.5)}>100 YARDS</text>
-            </svg>
-          </div>
-          <div className="opening__tower">
-            <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
-              <g className="o-floors">{floors.map((l) => <path key={l.d} d={l.d} pathLength={1} style={delay(l.t)} />)}</g>
-              <g className="o-windows">{windowsLit.map((w) => <rect key={w.key} x={w.x} y={w.y} width="30" height="20" className={w.hero ? "is-hero" : undefined} style={delay(w.t)} />)}</g>
-              <g className="o-tower">{tower.map((l) => <path key={l.d} d={l.d} pathLength={1} style={delay(l.t, { strokeWidth: l.w })} />)}</g>
-            </svg>
-          </div>
+            {/* beat 1 — the line */}
+            <g className="o-first">
+              <path pathLength={1} d="M350 450H1250" />
+              <circle className="o-tip" cx="350" cy="450" r="26" fill="url(#o-tip)" />
+            </g>
+
+            {/* beat 2 — the plan */}
+            <ellipse className="o-spill" cx="800" cy="450" rx="430" ry="360" fill="url(#o-spill)" />
+            <rect className="o-lamp" x="703" y="303" width="194" height="294" fill="url(#o-lamp)" />
+            <g className="o-walls">
+              <path pathLength={1} style={at(1.4, 1.25)} d="M350 170H1250V730H350Z" />
+              <path className="is-inner" pathLength={1} style={at(1.6, 1.25)} d="M359 179H1241V721H359Z" />
+              {innerWalls.map(([d, t]) => <path key={d} pathLength={1} style={at(t, 0.8)} d={d} />)}
+            </g>
+            <g className="o-detail">
+              {details.map(([d, t]) => <path key={d} pathLength={1} style={at(t, 0.8)} d={d} />)}
+            </g>
+            <g className="o-measure">
+              {measures.map(([d, t]) => <path key={d} pathLength={1} style={at(t, 0.7)} d={d} />)}
+            </g>
+            <g className="o-labels">
+              {labels.map(([x, y, text, t]) => <text key={text} x={x} y={y} style={at(t)}>{text}</text>)}
+              <text className="o-dim" x="800" y="96" style={at(3.1)}>100 YARDS</text>
+              <text className="o-dim" x="1420" y="128" style={at(3.2)}>N</text>
+              <text className="o-room" x="800" y="456" style={at(3.5)}>LIVING</text>
+            </g>
+          </svg>
         </div>
-
-        <div className="opening__sheet" aria-hidden="true">
-          <span>Sheet 01 · Ground floor plan</span>
+        <p className="opening__words"><span>Every home begins</span> <span>as a line.</span></p>
+        <div className="opening__sheet">
+          <span>Sheet 01 · Residence plan</span>
           <span className="opening__count"><i className="opening__num" /> yards</span>
           <span>100 Yards · Drawn for you</span>
         </div>
