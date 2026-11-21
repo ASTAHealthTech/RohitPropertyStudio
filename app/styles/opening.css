@@ -1,0 +1,107 @@
+/* ============================================================
+   Opening — "from the drawing to the door"
+   Driven entirely by CSS off one time unit, --ou (1s on desktop, .5s for the
+   short version), so it runs before the page's JavaScript arrives.
+   Timeline in units: 0 plan draws · 1.3 plan lies down · 1.4 tower rises ·
+   2.0 windows light · 2.6 move in on a window · 3.2 doors open (opening-out).
+   ============================================================ */
+.opening { display: none; }
+html.opening-on { overflow: hidden; }
+html.opening-on .opening { position: fixed; inset: 0; z-index: 9999; display: block; color: var(--on-dark); perspective: 1800px; overflow: hidden; }
+
+/* the two door leaves are the dark paper the plan is drawn on */
+.opening__leaf { position: absolute; top: 0; bottom: 0; width: 50.1%; background: var(--navy); backface-visibility: hidden; transition: transform calc(var(--ou) * 1.05) cubic-bezier(.7, 0, .2, 1); }
+.opening__leaf--l { left: 0; transform-origin: left center; }
+.opening__leaf--r { right: 0; transform-origin: right center; }
+html.opening-out .opening__leaf--l { transform: rotateY(-96deg); }
+html.opening-out .opening__leaf--r { transform: rotateY(96deg); }
+.opening__seam { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: linear-gradient(180deg, transparent, var(--gold-hi) 18%, #fff7e6 50%, var(--gold-hi) 82%, transparent); box-shadow: 0 0 34px 6px color-mix(in srgb, var(--gold-hi) 60%, transparent); transform: scaleY(0); opacity: 0; }
+html.opening-on .opening__seam { animation: o-seam calc(var(--ou) * .7) cubic-bezier(.3, 0, .2, 1) calc(var(--ou) * 2.62) forwards; }
+html.opening-out .opening__seam { animation: o-seam-out calc(var(--ou) * .5) ease forwards; }
+
+/* the stage: plan + tower, same 1600×900 sheet */
+.opening__stage { position: absolute; inset: 0; transform-origin: 50.3% 44%; }
+html.opening-on .opening__stage { animation: o-movein calc(var(--ou) * .72) cubic-bezier(.6, 0, .9, .4) calc(var(--ou) * 2.56) forwards; }
+.opening__plan, .opening__tower { position: absolute; inset: 0; }
+.opening__plan { transform-origin: 50% 72%; }
+html.opening-on .opening__plan { animation: o-laydown calc(var(--ou) * .85) cubic-bezier(.65, 0, .25, 1) calc(var(--ou) * 1.22) forwards; }
+.opening svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transform: scale(1.3); }
+.opening path { fill: none; stroke: var(--on-dark); stroke-width: 1.5; stroke-linecap: square; stroke-linejoin: miter; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
+html.opening-on .opening path { animation: o-draw calc(var(--ou) * .62) cubic-bezier(.5, 0, .2, 1) calc(var(--ou) * var(--d)) forwards; }
+.o-walls path { stroke: var(--on-dark); }
+.o-detail path { stroke: color-mix(in srgb, var(--on-dark) 62%, transparent); stroke-width: 1.1; }
+.o-measure path { stroke: var(--gold); stroke-width: 1.1; }
+.opening text { fill: color-mix(in srgb, var(--on-dark) 58%, transparent); font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 3px; text-anchor: middle; opacity: 0; }
+html.opening-on .opening text { animation: o-fade calc(var(--ou) * .4) ease calc(var(--ou) * var(--d)) forwards; }
+.opening .o-dim { fill: var(--gold); font-size: 12px; letter-spacing: 6px; }
+
+/* tower */
+.o-tower path { stroke: var(--on-dark); }
+.o-floors path { stroke: color-mix(in srgb, var(--on-dark) 46%, transparent); stroke-width: 1; }
+.o-windows rect { fill: var(--gold-hi); opacity: 0; }
+html.opening-on .o-windows rect { animation: o-light calc(var(--ou) * .35) ease calc(var(--ou) * var(--d)) forwards; }
+html.opening-on .o-windows rect.is-hero { animation: o-light-hero calc(var(--ou) * .35) ease calc(var(--ou) * var(--d)) forwards; }
+
+/* title block along the bottom, like a drawing sheet */
+.opening__sheet { position: absolute; left: clamp(18px, 4vw, 56px); right: clamp(18px, 4vw, 56px); bottom: clamp(18px, 3.4vh, 36px); display: flex; justify-content: space-between; align-items: baseline; gap: 20px; border-top: 1px solid color-mix(in srgb, var(--on-dark) 22%, transparent); padding-top: 14px; font-size: 10.5px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: var(--on-dark-faint); opacity: 0; }
+html.opening-on .opening__sheet { animation: o-fade calc(var(--ou) * .5) ease calc(var(--ou) * .1) forwards, o-out calc(var(--ou) * .35) ease calc(var(--ou) * 2.62) forwards; }
+.opening__count { color: var(--gold); }
+@property --opening-n { syntax: "<integer>"; initial-value: 0; inherits: false; }
+.opening__num { font-style: normal; counter-reset: n var(--opening-n); font-variant-numeric: tabular-nums; }
+.opening__num::after { content: counter(n); }
+html.opening-on .opening__num { animation: o-count calc(var(--ou) * 1.9) cubic-bezier(.45, 0, .2, 1) calc(var(--ou) * .15) both; }
+.opening__skip { position: absolute; right: clamp(18px, 4vw, 56px); top: clamp(18px, 3.4vh, 32px); border: 1px solid var(--line-dark); padding: 10px 16px; background: transparent; color: var(--on-dark-soft); font-size: 10.5px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; cursor: pointer; transition: opacity .3s; }
+.opening__skip:hover { border-color: var(--gold); color: var(--gold); }
+html.opening-out .opening__skip, html.opening-out .opening__sheet { opacity: 0; }
+
+@keyframes o-draw { to { stroke-dashoffset: 0; } }
+@keyframes o-fade { to { opacity: 1; } }
+@keyframes o-out { to { opacity: 0; } }
+@keyframes o-count { from { --opening-n: 0; } to { --opening-n: 100; } }
+@keyframes o-laydown { to { transform: translateY(21%) rotateX(72deg) scale(.6); opacity: .55; } }
+@keyframes o-light { to { opacity: .82; } }
+@keyframes o-light-hero { to { opacity: 1; fill: #fff7e6; } }
+@keyframes o-movein { 0% { transform: scale(1); opacity: 1; } 70% { opacity: 1; } 100% { transform: scale(7.5); opacity: 0; } }
+@keyframes o-seam { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
+@keyframes o-seam-out { to { transform: scaleY(1) scaleX(40); opacity: 0; } }
+
+/* ---- short version: phones and ad traffic. Plan, then doors. ---- */
+html.opening-short .opening__tower { display: none; }
+html.opening-short.opening-on .opening__plan { animation: none; }
+html.opening-short.opening-on .opening__stage { animation: o-out calc(var(--ou) * .5) ease calc(var(--ou) * 1.6) forwards; }
+html.opening-short.opening-on .opening__seam { animation-delay: calc(var(--ou) * 1.5); }
+html.opening-short.opening-on .opening__sheet { animation: o-fade calc(var(--ou) * .5) ease calc(var(--ou) * .1) forwards, o-out calc(var(--ou) * .35) ease calc(var(--ou) * 1.6) forwards; }
+html.opening-short.opening-on .opening__num { animation-duration: calc(var(--ou) * 1.4); }
+@media (max-width: 820px) {
+  .opening svg { transform: scale(1.9); }
+  .opening path { stroke-width: .8; }
+  .o-detail path, .o-measure path { stroke-width: .55; }
+  .opening__sheet span:first-child, .opening__sheet span:last-child { display: none; }
+  .opening__sheet { justify-content: center; }
+}
+
+/* ============================================================
+   The story carried through the site
+   ============================================================ */
+/* every inner page: a plan draws itself behind the page title, once, in about a second */
+.backdrop__plan { position: absolute; right: clamp(-40px, 4vw, 90px); top: 50%; width: min(46vw, 640px); transform: translateY(-46%); opacity: .2; overflow: visible; }
+.backdrop__plan path { fill: none; stroke: var(--on-dark); stroke-width: 1.2; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.backdrop__plan path.is-measure { stroke: var(--gold); }
+@media (prefers-reduced-motion: no-preference) {
+  .backdrop__plan path { stroke-dashoffset: 1; animation: o-draw .8s cubic-bezier(.5, 0, .2, 1) calc(.15s + var(--d) * 1s) forwards; }
+}
+@media (max-width: 820px) { .backdrop__plan { right: -18vw; width: 92vw; opacity: .13; } }
+
+/* the signature */
+.signature { display: grid; justify-items: start; gap: 2px; margin: var(--s-3) 0 var(--s-2); }
+.signature__ink { font-family: "Mrs Saint Delafield", "Snell Roundhand", cursive; font-size: clamp(54px, 5.4vw, 86px); line-height: 1; color: var(--accent); padding: .12em .3em .1em .06em; margin-left: -.06em; white-space: nowrap; transform: rotate(-3deg); transform-origin: left bottom; }
+.signature__rule { width: min(300px, 70%); height: 1px; background: var(--line); transform-origin: left; }
+.signature__note { font-size: 10.5px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-faint); padding-top: 8px; }
+.js .signature .signature__ink { clip-path: inset(-30% 100% -30% 0); }
+.js .signature .signature__rule { transform: scaleX(0); }
+.js .signature.is-in .signature__ink { clip-path: inset(-30% -25% -30% 0); transition: clip-path 1.5s cubic-bezier(.55, .05, .3, 1) .25s; }
+.js .signature.is-in .signature__rule { transform: none; transition: transform .7s var(--e-out) 1.5s; }
+@media (prefers-reduced-motion: reduce) { .js .signature .signature__ink { clip-path: none; } .js .signature .signature__rule { transform: none; } }
+.surface-gold .signature__ink { color: var(--ink); }
+.instructor__copy p.instructor__habit { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 1.7vw, 26px); color: var(--ink); }
+.header__call, .site-header .button { white-space: nowrap; }

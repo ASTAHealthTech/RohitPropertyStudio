@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -208,6 +209,14 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
           onError={() => setVideoOk(false)}
           src={video}
         />
+      )}
+      {!video && (
+        <svg className="backdrop__plan" viewBox="0 0 640 440" preserveAspectRatio="xMidYMid meet">
+          <path pathLength={1} style={{ "--d": 0 } as React.CSSProperties} d="M40 60H600V400H40Z" />
+          <path pathLength={1} style={{ "--d": 0.18 } as React.CSSProperties} d="M40 220H250M310 220H420M420 60V170M420 230V400M250 220V330M250 380V400" />
+          <path pathLength={1} style={{ "--d": 0.36 } as React.CSSProperties} d="M250 330A50 50 0 0 1 300 380M420 170A60 60 0 0 0 480 230M480 230H600" />
+          <path className="is-measure" pathLength={1} style={{ "--d": 0.5 } as React.CSSProperties} d="M40 30H600M40 22V38M600 22V38M14 60V400M6 60H22M6 400H22" />
+        </svg>
       )}
       <div className="backdrop__scrim" />
       <div className="backdrop__grain" />

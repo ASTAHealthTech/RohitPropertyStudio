@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowDown, ArrowUpRight, BadgeCheck, ChevronRight } from "lucide-react";
 import { AmbientBackdrop } from "./components/AmbientBackdrop";
 import { CorridorMap, type Corridor } from "./components/CorridorMap";
+import { Signature } from "./components/Signature";
 import { OpeningSequence } from "./components/OpeningSequence";
 import { HundredYards, type YardStage } from "./components/film/HundredYards";
 import { ResidenceReel } from "./components/film/ResidenceReel";
@@ -211,6 +212,8 @@ export default function HomePage() {
               100 Yards across Bangalore, Coimbatore, Dubai and Phuket, and puts his name on every
               report the firm issues.
             </p>
+            <p className="instructor__habit">An engineer&apos;s habit: read the drawing first, then the claim.</p>
+            <Signature />
             <div className="instructor__links">
               <a className="text-link" href="/rohitt">Read Rohitt&apos;s profile <ChevronRight size={15} aria-hidden="true" /></a>
               <a className="text-link" href={company.youtube} target="_blank" rel="noreferrer" data-track="youtube_clicked">Watch on YouTube <ArrowUpRight size={14} aria-hidden="true" /></a>

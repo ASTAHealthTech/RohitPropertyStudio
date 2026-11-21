@@ -9,6 +9,7 @@ import "./styles/lab.css";
 import "./styles/datalab.css";
 import "./styles/catalog.css";
 import "./styles/film.css";
+import "./styles/opening.css";
 import { EventTracker } from "./components/EventTracker";
 import { MotionLayer } from "./components/MotionLayer";
 import { SiteFooter } from "./components/SiteFooter";

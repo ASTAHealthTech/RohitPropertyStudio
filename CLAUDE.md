@@ -285,3 +285,20 @@ the price page shows only statutory rates (keep in sync with labData.ts). Brand:
 ivory pages, Playfair/Manrope from .vinext/fonts (style.css files are inlined with paths
 rewritten — keep those caches). Specimens are watermarked and marked not-for-sale. Reports
 are delivered only after Rohitt reviews and signs. Payment flow intentionally not built yet.
+
+## The story (Nov 2026) — "from the drawing to the keys"
+
+Owner direction: every page tells one story, not just motion. Three beats, in order:
+1. **The drawing** (expertise) — `OpeningSequence.tsx` + `styles/opening.css`: a floor plan draws
+   itself, lies down, a tower rises from it, windows light, we move in on one window, and two
+   door leaves swing open onto the hero. CSS-only, armed by an inline script before paint, all
+   timings multiples of `--ou`. Plays ONCE PER BROWSER SESSION (`sessionStorage hy_opened`), never
+   under reduced motion or Save-Data. Phones and ad traffic (utm/gclid/fbclid) get the short
+   version: plan, then doors, about 1.5s. `?intro=1` forces it for review. MotionLayer reads
+   `window.__hyHold` so the hero headline waits for the doors.
+2. **The walk** — the hundred-yards counter and the reel on the homepage (unchanged).
+3. **The signature** (trust) — `Signature.tsx`: Rohitt's name in Mrs Saint Delafield, written in
+   left to right on reveal. It is a styled name, NOT his legal signature: never put it on a
+   report PDF or anything a buyer could take for a signed document.
+Inner pages stay light but not zero: `AmbientBackdrop` without a video draws a small plan
+(`.backdrop__plan`) behind the page title in about a second. Plans are always vector, never images.

@@ -114,7 +114,7 @@ export function MotionLayer() {
 
     // On a first visit the homepage plays its opening sequence (OpeningSequence.tsx)
     // over the hero; hold the hero's own entrance until that overlay lifts.
-    const hold = document.documentElement.classList.contains("opening-on") ? 2.9 : 0;
+    const hold = document.documentElement.classList.contains("opening-on") ? ((window as unknown as { __hyHold?: number }).__hyHold ?? 3.3) : 0;
 
     const context = gsap.context(() => {
       /* --- soft fade-through on route change --- */

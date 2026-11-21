@@ -1,5 +1,6 @@
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { whatsappLink } from "../lib/company";
+import { Signature } from "./Signature";
 
 export function ClosingCta({
   eyebrow = "Talk to 100 Yards",
@@ -16,6 +17,7 @@ export function ClosingCta({
         <div className="head__main" data-reveal>
           <p className="eyebrow">{eyebrow}</p>
           <h2>{title}</h2>
+          <Signature />
         </div>
         <div className="closing__action" data-reveal data-reveal-delay="1">
           <p>{copy}</p>
