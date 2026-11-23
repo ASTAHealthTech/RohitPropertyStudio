@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { recordEvent } from "../../lib/analytics";
+import { notifyLater } from "../../lib/notify";
 
 /**
  * One endpoint for every property form. Each submission becomes one row in the
@@ -108,6 +109,8 @@ export async function POST(request: Request) {
     ).run();
 
     recordEvent("lead_submitted", kind, sourcePath);
+    // The lead is saved. Telling the team by email is extra and can never fail the form.
+    await notifyLater({ kind, name, phone, email: email || null, project: clean(body.projectName, 160) || null, answers, sourcePath, source: at("utm_source") || at("referrer", 300), score: scoreLead(kind, answers, Boolean(email)), origin: new URL(request.url).origin });
     return json({ id, message: "Thank you. Our team will call you shortly." }, 201);
   } catch (error) {
     console.error("Lead submission failed", error);

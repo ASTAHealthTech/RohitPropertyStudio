@@ -315,3 +315,11 @@ projects) become horizontal swipe rows with the next card peeking in; the catalo
 compact row cards; reveals are immediate (no scroll-triggered fades) and MotionLayer only
 animates the page's opening headline. Nothing is removed from the HTML. Home went from about
 20 phone screens to about 13 — keep new sections inside that budget.
+
+## Enquiry emails (Nov 2026)
+
+Every form posts to `/api/lead` (or `/api/early-access` on the old course form). The enquiry is saved to D1 first and
+shows on `/desk`. `app/lib/notify.ts` then emails the team through Resend, AFTER the visitor has their answer
+(`waitUntil`). It is off until the Worker secrets `RESEND_API_KEY` and `LEAD_NOTIFY_TO` exist; `LEAD_NOTIFY_FROM` is
+optional and needs the domain verified in Resend. Email is never the record and can never fail a form. Do not commit
+these values.

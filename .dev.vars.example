@@ -3,3 +3,8 @@
 # used locally; never deploy the testing secret to production.
 TURNSTILE_SITE_KEY=1x00000000000000000000AA
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+
+# Email alert for each enquiry (optional). Real values go in Cloudflare as Worker secrets, never here.
+# RESEND_API_KEY=
+# LEAD_NOTIFY_TO=sales@100yards.in
+# LEAD_NOTIFY_FROM=100 Yards website <enquiries@100yards.in>

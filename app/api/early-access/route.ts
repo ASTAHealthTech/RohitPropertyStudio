@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { recordEvent } from "../../lib/analytics";
+import { notifyLater } from "../../lib/notify";
 
 const interests = new Set(["course-launch", "team-training", "property-enquiry", "general"]);
 
@@ -95,6 +96,7 @@ export async function POST(request: Request) {
     // The lead is already saved; recordEvent never throws, so analytics can never
     // turn a saved lead into an error for the visitor.
     recordEvent("early_access_completed", interest, sourcePath);
+    await notifyLater({ kind: interest, name, phone, email, sourcePath, origin: new URL(request.url).origin });
 
     return json({ message: "The team can now contact you when the launch details are confirmed." }, 201);
   } catch (error) {
