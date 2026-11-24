@@ -346,6 +346,8 @@ body:has(.adpage) .site-footer { display: none; }
 
 .lead-form__next { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
 .lead-form__next svg { color: inherit; }
+.lead-form__next .button { min-height: 56px; padding-inline: 24px; font-size: 15.5px; font-weight: 600; gap: 12px; }
+.lead-form__next .button--wa { border-color: var(--wa); background: var(--wa); color: var(--navy); }
 
 .adpicks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 32px); margin-top: var(--s-6); list-style: none; padding: 0; }
 .adpicks a { display: grid; gap: 6px; border-top: 1px solid var(--gold); padding-top: 14px; text-decoration: none; color: var(--ink); }
@@ -392,7 +394,8 @@ body:has(.adpage) .site-footer { display: none; }
   .adpicks { grid-template-columns: minmax(0, 1fr); }
   .adpage { padding-bottom: 62px; }
   .adbarb { position: fixed; z-index: var(--z-sticky); inset: auto 0 0 0; display: grid; grid-template-columns: 1fr 1fr 1.2fr; border-top: 1px solid var(--gold); background: var(--carbon); }
-  .adbarb a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px; color: var(--ink); font-size: 14px; font-weight: 500; letter-spacing: .04em; text-decoration: none; }
+  .adbarb a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 64px; color: var(--ink); font-size: 15px; font-weight: 600; letter-spacing: .01em; text-decoration: none; }
+  .adbarb .adbarb__wa { background: var(--wa); color: var(--navy); }
   .adbarb a + a { border-left: 1px solid var(--line); }
   .adbarb .adbarb__main { background: var(--gold); color: var(--carbon); }
 }

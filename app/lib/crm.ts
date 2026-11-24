@@ -93,6 +93,15 @@ export async function sendToCrm(lead: CrmLead): Promise<{ result: "sent" | "off"
     const body = sysbiPayload(lead, await repeatNote(first.mobile));
     const res = await post("Integration/Website", body);
     if (!res.ok) { console.error("CRM lead failed", res.status, res.text); return { result: "failed", detail: `${res.status} ${res.text}` }; }
+    // The CRM answers 200 even when it refuses a lead, so read its own verdict.
+    let accepted = true;
+    try { accepted = (JSON.parse(res.text) as { success?: boolean }).success !== false; } catch { /* not JSON: trust the status */ }
+    if (!accepted) {
+      // A same-day repeat is already in the CRM; that is not a lost lead.
+      if (/already exists/i.test(res.text)) return { result: "skipped", detail: res.text };
+      console.error("CRM lead refused", res.text);
+      return { result: "failed", detail: res.text };
+    }
     return { result: "sent", detail: res.text };
   } catch (error) {
     console.error("CRM lead failed", error);

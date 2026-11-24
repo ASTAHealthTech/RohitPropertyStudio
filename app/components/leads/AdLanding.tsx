@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { BadgeCheck, MapPin, MessageCircle, Phone } from "lucide-react";
+import { BadgeCheck, MapPin, Phone } from "lucide-react";
 import { AmbientBackdrop } from "../AmbientBackdrop";
 import { LeadFormSlot } from "./LeadFormSlot";
 import { assurances, company, whatsappLink } from "../../lib/company";
+import { WaIcon } from "../WaIcon";
 import type { Img } from "../../lib/catalog";
 
 /**
@@ -141,8 +142,8 @@ export function AdLanding({ eyebrow, title, place, intro, facts, cover, coverAlt
       </footer>
 
       <nav className="adbarb" aria-label="Contact">
-        <a href={company.phoneHref} data-track="call_clicked"><Phone size={16} aria-hidden="true" /> Call</a>
-        <a href={wa} target="_blank" rel="noreferrer" data-track="whatsapp_clicked"><MessageCircle size={16} aria-hidden="true" /> WhatsApp</a>
+        <a href={company.phoneHref} data-track="call_clicked"><Phone size={21} aria-hidden="true" /> Call</a>
+        <a className="adbarb__wa" href={wa} target="_blank" rel="noreferrer" data-track="whatsapp_clicked"><WaIcon size={24} /> WhatsApp</a>
         <a className="adbarb__main" href="#enquire">Get price</a>
       </nav>
     </main>

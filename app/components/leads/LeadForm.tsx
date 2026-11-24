@@ -1,7 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { ArrowRight, CheckCircle2, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
+import { WaIcon } from "../WaIcon";
 
 /**
  * One form component, seven forms. Each `kind` asks only what that visitor
@@ -227,10 +228,10 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
         <p>{cfg.done}</p>
         <div className="lead-form__next">
           <a className="button button--gold" href="tel:+919916866667" data-track="call_clicked">
-            <Phone size={16} aria-hidden="true" /> Call +91 99168 66667
+            <Phone size={21} aria-hidden="true" /> Call +91 99168 66667
           </a>
-          <a className="button button--outline" href={`https://wa.me/919916866667?text=${encodeURIComponent(text)}`} target="_blank" rel="noreferrer" data-track="whatsapp_clicked">
-            <MessageCircle size={16} aria-hidden="true" /> Continue on WhatsApp
+          <a className="button button--wa" href={`https://wa.me/919916866667?text=${encodeURIComponent(text)}`} target="_blank" rel="noreferrer" data-track="whatsapp_clicked">
+            <WaIcon size={24} /> Continue on WhatsApp
           </a>
         </div>
       </div>

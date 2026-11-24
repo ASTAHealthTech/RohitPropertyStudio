@@ -85,6 +85,7 @@
 
   /* --- depth --- */
   --z-base: 1;
+  --wa: #25d366; /* WhatsApp buttons only */
   --z-sticky: 60;
   --z-header: 100;
   --z-overlay: 500;
