@@ -127,7 +127,7 @@ body::after { /* film grain over the whole site */
 .record .button--outline { border-color: var(--ink); }
 .record__pages { position: relative; height: min(66vh, 600px); min-height: 440px; }
 .js .record__pages[data-reveal] { opacity: 1; transform: none; }
-.rpage { position: absolute; left: 50%; top: 50%; width: min(340px, 68%); aspect-ratio: 1 / 1.414; display: flex; flex-direction: column; gap: 12px; padding: 26px 24px; background: #fbf8f2; border: 1px solid var(--line); box-shadow: 0 30px 60px rgb(13 12 10 / .22); transform: translate(-50%, -50%); transition: transform 1.5s var(--e-inout); }
+.rpage { position: absolute; left: 50%; top: 50%; width: min(340px, 68%); aspect-ratio: 1 / 1.414; display: flex; flex-direction: column; gap: 12px; padding: 26px 24px; background: #fbf8f2; border: 1px solid var(--line); box-shadow: 0 30px 60px rgb(11 23 54 / .3); transform: translate(-50%, -50%); transition: transform 1.5s var(--e-inout); }
 .rpage small { font-size: 9.5px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--accent); }
 .rpage b { font-family: var(--serif); font-weight: 400; font-size: 25px; line-height: 1.06; }
 .rpage span { font-size: 11.5px; line-height: 1.5; color: var(--ink-soft); }

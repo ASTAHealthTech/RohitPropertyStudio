@@ -13,31 +13,32 @@
 @font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: swap; }
 :root {
   /* --- ground & surface ---
-     ONE ink (the variable is still called --navy for history). Every dark surface is the same warm black so the site reads as a single
-     material — depth comes from hairlines and type, never from shade-shifting.
+     ONE navy. Every dark surface is the same deep luxury blue so the site reads as a single
+     material — depth comes from hairlines and type, never from shade-shifting. (It was a warm
+     black for a while; the owner asked for dark blue and gold, Nov 2026. Do not go back to black.)
      The aliases below all resolve to it; do not reintroduce variants. */
-  --navy:        #0d0c0a;
+  --navy:        #0b1736;
   --deep:        var(--navy);
   --carbon:      var(--navy);
   --carbon-2:    var(--navy);
   --carbon-3:    var(--navy);
   --silver:      #ede7db;   /* primary light surface + dark-surface text */
   --silver-2:    #f6f2ea;   /* raised light surface */
-  --gold:        #cdb892;
-  --gold-hi:     #e2d3b5;
-  --gold-deep:   #6b5a36;   /* accessible gold on light surfaces */
+  --gold:        #d4ae62;
+  --gold-hi:     #e8cd8f;
+  --gold-deep:   #7a5a1c;   /* accessible gold on light surfaces */
 
   /* --- text roles (dark surfaces) --- */
-  --on-dark:        #ede7db;
-  --on-dark-soft:   #bcb4a5;
-  --on-dark-faint:  #8d8577;
+  --on-dark:        #f1ead9;
+  --on-dark-soft:   #bfc5d8;
+  --on-dark-faint:  #8d96b3;
   /* --- text roles (light surfaces) --- */
-  --on-light:       #14120f;
-  --on-light-soft:  #4a4439;
-  --on-light-faint: #6f6759;
+  --on-light:       #0b1736;
+  --on-light-soft:  #3b4566;
+  --on-light-faint: #5b6585;
 
   /* --- hairlines --- */
-  --line-dark:  #36312a;
+  --line-dark:  #27375f;
   --line-light: #cfc6b4;
 
   /* --- semantic (bound per surface) --- */
@@ -47,6 +48,7 @@
   --line: var(--line-dark);
   --ground: var(--carbon);
   --accent: var(--gold);
+  --head: var(--gold-hi);   /* headline colour: gold on navy, ink on the light and gold bands */
 
   /* --- type --- */
   --serif: "Cormorant Garamond", "Times New Roman", Georgia, serif;
@@ -91,10 +93,10 @@
 
 /* Surface contracts. Every block that flips ground colour uses one of these,
    and every colour inside is read from the semantic tokens above — never a literal. */
-.surface-deep  { --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--deep);    background: var(--ground); color: var(--ink); }
-.surface-dark  { --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--carbon);  background: var(--ground); color: var(--ink); }
-.surface-raise { --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--carbon-2); background: var(--ground); color: var(--ink); }
-.surface-light { --ink: var(--on-light); --ink-soft: var(--on-light-soft); --ink-faint: var(--on-light-faint); --line: var(--line-light); --accent: var(--gold-deep); --ground: var(--silver); background: var(--ground); color: var(--ink); }
-.surface-gold  { --ink: #14120f;         --ink-soft: #3a3428;              --ink-faint: #5a5140;              --line: #a8956c;           --accent: #14120f;          --ground: var(--gold);   background: var(--ground); color: var(--ink); }
+.surface-deep  { --head: var(--gold-hi); --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--deep);    background: var(--ground); color: var(--ink); }
+.surface-dark  { --head: var(--gold-hi); --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--carbon);  background: var(--ground); color: var(--ink); }
+.surface-raise { --head: var(--gold-hi); --ink: var(--on-dark);  --ink-soft: var(--on-dark-soft);  --ink-faint: var(--on-dark-faint);  --line: var(--line-dark);  --accent: var(--gold);      --ground: var(--carbon-2); background: var(--ground); color: var(--ink); }
+.surface-light { --head: var(--on-light); --ink: var(--on-light); --ink-soft: var(--on-light-soft); --ink-faint: var(--on-light-faint); --line: var(--line-light); --accent: var(--gold-deep); --ground: var(--silver); background: var(--ground); color: var(--ink); }
+.surface-gold  { --head: #0b1736; --ink: #0b1736;         --ink-soft: #2c3654;              --ink-faint: #47506e;              --line: #a8873e;           --accent: #0b1736;          --ground: var(--gold);   background: var(--ground); color: var(--ink); }
 
 @font-face { font-family: "Mrs Saint Delafield"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/mrs-saint-delafield-latin-400-normal.woff2") format("woff2"); }

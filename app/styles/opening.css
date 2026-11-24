@@ -60,7 +60,7 @@ html.opening-on .opening__vig { animation: o-out calc(var(--ou) * .35) ease var(
 .o-ln--v.is-rev { transform-origin: 50% 100%; }
 html.opening-on .o-ln { animation: o-grow calc(var(--ou) * var(--l)) linear calc(var(--ou) * var(--d)) forwards; }
 html.opening-on .o-ln.is-eased { animation-timing-function: cubic-bezier(.45, 0, .15, 1); }
-.o-walls { color: #f1eadc; --sw: 2.1px; }
+.o-walls { color: #f3ead6; --sw: 2.1px; }
 .o-walls .is-inner { color: color-mix(in srgb, var(--on-dark) 50%, transparent); --sw: 1px; }
 
 /* beat 1 — the line, with light at the pen tip */

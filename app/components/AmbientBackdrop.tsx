@@ -69,9 +69,9 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
     };
 
     const layers: Layer[] = [
-      buildLayer(0.0045, 0.60, "#15120e", 46, 120, 0.16, 0.42),
-      buildLayer(0.0105, 0.74, "#110f0c", 38, 96, 0.14, 0.34),
-      buildLayer(0.0210, 0.88, "#0b0a08", 30, 78, 0.10, 0.24),
+      buildLayer(0.0045, 0.60, "#13224a", 46, 120, 0.16, 0.42),
+      buildLayer(0.0105, 0.74, "#0f1c3f", 38, 96, 0.14, 0.34),
+      buildLayer(0.0210, 0.88, "#091330", 30, 78, 0.10, 0.24),
     ];
 
     let width = 0;
@@ -95,23 +95,23 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
 
       // Sky: cool near-black falling to a warm horizon.
       const sky = context.createLinearGradient(0, 0, 0, height);
-      sky.addColorStop(0, "#12100c");
-      sky.addColorStop(0.58, "#0d0c0a");
-      sky.addColorStop(1, "#0d0c0a");
+      sky.addColorStop(0, "#0f1d42");
+      sky.addColorStop(0.58, "#0b1736");
+      sky.addColorStop(1, "#0b1736");
       context.fillStyle = sky;
       context.fillRect(0, 0, width, height);
 
       // Horizon glow, drifting slowly across the width.
       const glowX = width * (0.42 + Math.sin(elapsed * 0.00007) * 0.22);
       const glow = context.createRadialGradient(glowX, height * 0.92, 0, glowX, height * 0.92, height * 0.85);
-      glow.addColorStop(0, "rgba(198,161,91,0.17)");
-      glow.addColorStop(0.55, "rgba(198,161,91,0.045)");
-      glow.addColorStop(1, "rgba(198,161,91,0)");
+      glow.addColorStop(0, "rgba(212,174,98,0.17)");
+      glow.addColorStop(0.55, "rgba(212,174,98,0.045)");
+      glow.addColorStop(1, "rgba(212,174,98,0)");
       context.fillStyle = glow;
       context.fillRect(0, 0, width, height);
 
       // Hairline horizon, drawn behind the skyline.
-      context.fillStyle = "rgba(198,161,91,0.16)";
+      context.fillStyle = "rgba(212,174,98,0.16)";
       context.fillRect(0, height * 0.885, width, 1);
 
       layers.forEach((layer) => {
@@ -125,7 +125,7 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
             if (x > width + 140 || x + block.w < -140) return;
             const h = block.h * height;
             context.fillRect(x, baseline - h, block.w, h + height);
-            context.fillStyle = "rgba(226,199,142,0.5)";
+            context.fillStyle = "rgba(232,205,143,0.5)";
             block.lights.forEach(([c, r]) => {
               const lx = x + 6 + c * 13;
               const ly = baseline - h + 9 + r * 16;

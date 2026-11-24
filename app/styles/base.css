@@ -18,7 +18,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 ::selection { background: var(--gold); color: var(--deep); }
 
 h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
-h1, h2 { font-family: var(--serif); font-weight: 300; letter-spacing: -.018em; line-height: 1; text-wrap: balance; }
+h1, h2 { font-family: var(--serif); font-weight: 300; letter-spacing: -.018em; line-height: 1; text-wrap: balance; color: var(--head); }
 h1 { font-size: var(--t-h1); }
 h2 { font-size: var(--t-h2); }
 h3 { font-family: var(--serif); font-size: var(--t-h3); font-weight: 400; line-height: 1.15; letter-spacing: 0; }

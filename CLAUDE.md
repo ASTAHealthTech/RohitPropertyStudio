@@ -98,7 +98,7 @@ Load order matters; `app/layout.tsx` imports them in this order:
 | `styles/home.css` | the homepage acts |
 | `styles/pages.css` | page hero and the inner-page blocks |
 
-**ONE navy.** `--navy: #101a2e` is the only dark ground; `--deep/--carbon/--carbon-2/--carbon-3`
+**ONE navy.** `--navy: #0b1736` (deep luxury blue; the owner rejected black, Nov 2026) is the only dark ground; gold is `--gold: #d4ae62` and headlines take `--head` (gold on navy, navy on the ivory and gold bands); `--deep/--carbon/--carbon-2/--carbon-3`
 are aliases of it and must stay that way — depth comes from hairlines and type, never shades.
 At most ONE ivory `surface-light` band per page; the rest stays navy. Numbered markers
 (01/02) exist only where order is real: course chapters and journey steps. Roughly half the
