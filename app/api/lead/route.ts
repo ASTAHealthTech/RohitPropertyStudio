@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { recordEvent } from "../../lib/analytics";
+import { crmLater } from "../../lib/crm";
 import { notifyLater } from "../../lib/notify";
 
 /**
@@ -111,6 +112,8 @@ export async function POST(request: Request) {
     recordEvent("lead_submitted", kind, sourcePath);
     // The lead is saved. Telling the team by email is extra and can never fail the form.
     await notifyLater({ kind, name, phone, email: email || null, project: clean(body.projectName, 160) || null, answers, sourcePath, source: at("utm_source") || at("referrer", 300), score: scoreLead(kind, answers, Boolean(email)), origin: new URL(request.url).origin });
+    // And into the sales team's CRM, where the lead is assigned and followed up.
+    await crmLater({ kind, name, phone, email: email || null, projectSlug: clean(body.projectSlug, 120) || null, projectName: clean(body.projectName, 160) || null, answers, sourcePath, score: scoreLead(kind, answers, Boolean(email)), attribution: { utm_source: at("utm_source"), utm_campaign: at("utm_campaign"), utm_term: at("utm_term"), gclid: at("gclid", 300), fbclid: at("fbclid", 300), referrer: at("referrer", 300) } });
     return json({ id, message: "Thank you. Our team will call you shortly." }, 201);
   } catch (error) {
     console.error("Lead submission failed", error);

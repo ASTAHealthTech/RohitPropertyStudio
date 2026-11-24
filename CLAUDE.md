@@ -389,3 +389,23 @@ the hero film and skyline start only after the sheet has gone, the door opens on
 `ffmpeg -ss 0.2 -i hero.mp4 -frames:v 1 -vf scale=1600:-2 -q:v 11 hero-still.jpg` if the film
 changes), both grain layers are off under the sheet, the headline rises at 5.0u, and the
 `opening-out` class flips at 5.05u (a class change on <html> restyles the whole page).
+
+## Sysbi CRM link (Nov 2026)
+
+`app/lib/crm.ts` sends each property enquiry to the sales team's CRM (Sysbi, bos.sysbi.com)
+after it is saved in D1, the same way the email alert works: never blocking the form, never
+the record of truth. Switched on by the Worker secret `SYSBI_KEY` (the Integration Key from
+Sysbi's API document — NEVER commit it or put it in chat).
+
+- Sent: ad, project, visit, snapshot, callback, nri, commercial. Not sent: report orders,
+  course sign-ups.
+- Before sending it asks Sysbi's SearchLead whether the phone number exists; if so the message
+  starts with "REPEAT ENQUIRY: already in CRM as #id".
+- The message carries budget, timeline, source (Google Ads / Meta Ads / website), campaign,
+  search term, page and the website's lead score.
+- `pid` is our project slug (or `area-<slug>` / `web-<kind>`), because Sysbi requires one.
+  If Sysbi later needs its own project IDs, map them in `sysbiPayload`.
+- Who gets the lead (e.g. only people clocked in) is a Sysbi-side assignment rule, not ours.
+- Test without touching the form: `GET /api/desk?crm=preview` (shows the body, sends nothing)
+  and `GET /api/desk?crm=test` (sends one lead named "WEBSITE TEST - please ignore"), both
+  with the `x-desk-key` header.

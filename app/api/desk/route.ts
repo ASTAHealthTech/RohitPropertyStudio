@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { sendToCrm, sysbiPayload } from "../../lib/crm";
 
 /**
  * The private lead desk API. Every call must carry the team key
@@ -8,6 +9,8 @@ import { env } from "cloudflare:workers";
  *   GET  /api/desk            → latest leads as JSON
  *   GET  /api/desk?format=csv → the same as a spreadsheet download
  *   POST /api/desk            → { id, status?, note? } updates one lead
+ *   GET  /api/desk?crm=preview → shows what a lead looks like when sent to the Sysbi CRM (sends nothing)
+ *   GET  /api/desk?crm=test    → sends ONE clearly-marked test lead to the CRM and returns its reply
  */
 const statuses = new Set(["new", "junk", "not-now", "qualified", "visit-booked", "visit-done", "booked"]);
 
@@ -35,6 +38,12 @@ export async function GET(request: Request) {
   const auth = authorised(request);
   if (!auth.ok) return auth.response;
   const url = new URL(request.url);
+  const crm = url.searchParams.get("crm");
+  if (crm === "preview" || crm === "test") {
+    const sample = { kind: "ad", name: "WEBSITE TEST - please ignore", phone: "+919000000001", email: null, projectSlug: null, projectName: "homes in Devanahalli", answers: { budget: "Not sure yet", timeline: "Just exploring" }, sourcePath: "/enquire/devanahalli", score: 0, attribution: { utm_source: "website-test" } };
+    if (crm === "preview") return Response.json({ switchedOn: Boolean(process.env.SYSBI_KEY), wouldSend: sysbiPayload(sample) }, { headers: { "Cache-Control": "no-store" } });
+    return Response.json(await sendToCrm(sample), { headers: { "Cache-Control": "no-store" } });
+  }
   try {
     const { results } = await env.ACADEMY_DB.prepare(`SELECT ${columns.join(", ")} FROM leads ORDER BY created_at DESC LIMIT 2000`).all<Record<string, unknown>>();
     if (url.searchParams.get("format") === "csv") {

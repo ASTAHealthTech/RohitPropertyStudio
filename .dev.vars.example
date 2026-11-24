@@ -8,3 +8,6 @@ TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 # RESEND_API_KEY=
 # LEAD_NOTIFY_TO=sales@100yards.in
 # LEAD_NOTIFY_FROM=100 Yards website <enquiries@100yards.in>
+
+# Sysbi CRM link (optional). The Integration Key from Sysbi's API document. Worker secret only.
+# SYSBI_KEY=
