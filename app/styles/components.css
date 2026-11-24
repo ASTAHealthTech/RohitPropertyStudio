@@ -123,6 +123,8 @@
   will-change: transform;
 }
 .backdrop__video.is-ready { opacity: .72; }
+.backdrop__still { position: absolute; inset: 0; background-position: center; background-size: cover; opacity: .72; transition: opacity 1.4s var(--e-out); }
+.backdrop__still.is-gone { opacity: 0; }
 /* the frame never sits perfectly still — a barely-there push-in, back and forth */
 @keyframes backdrop-drift {
   from { transform: scale(1); }

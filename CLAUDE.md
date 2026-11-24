@@ -381,3 +381,11 @@ original 100yards.in. It is the only brand mark: header, ad pages, footer, and t
 (`app/icon.svg`, the house without the wordmark). Do not replace it with a drawn monogram —
 the "100" box was a placeholder and the owner rejected it. Source is 499px wide; ask for the
 designer's original if a larger one is ever needed.
+
+The door is the expensive half-second (sheet and page both on screen). A screen recording on
+the owner's laptop showed it dropping to ~15 fps there, so nothing else may start during it:
+the hero film and skyline start only after the sheet has gone, the door opens onto
+`public/video/hero-still.jpg` (the film's first frame; regenerate with
+`ffmpeg -ss 0.2 -i hero.mp4 -frames:v 1 -vf scale=1600:-2 -q:v 11 hero-still.jpg` if the film
+changes), both grain layers are off under the sheet, the headline rises at 5.0u, and the
+`opening-out` class flips at 5.05u (a class change on <html> restyles the whole page).

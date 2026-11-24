@@ -22,8 +22,13 @@ import type { CSSProperties } from "react";
  * that fade in by group; the door is four panels that slide away. Do not bring back
  * stroke-dashoffset, clip-path or filter animations — those repaint the full screen every
  * frame and stutter (Nov 2026).
+ *
+ * THE DOOR IS THE EXPENSIVE MOMENT: for half a second the sheet and the page are both on
+ * screen. So nothing else may start then — the hero film and skyline begin after the sheet has
+ * gone (AmbientBackdrop), the film grain is off until then, the headline rises once the door is
+ * most of the way open, and the door panels are plain colour with the lamp as its own pieces.
  */
-const decide = `(function(){try{var d=document.documentElement,c=navigator.connection,q=location.search,force=/[?&]intro=1/.test(q);if(matchMedia('(prefers-reduced-motion: reduce)').matches||(c&&c.saveData))return;if(!force&&sessionStorage.getItem('hy_opened'))return;sessionStorage.setItem('hy_opened','1');var s=matchMedia('(max-width: 820px)').matches||/[?&](utm_|gclid|fbclid)/.test(q),u=s?0.55:1;d.style.setProperty('--ou',u+'s');d.classList.add('opening-on');window.__hyHold=4.55*u;setTimeout(function(){d.classList.add('opening-out')},4300*u);setTimeout(function(){d.classList.remove('opening-on','opening-out')},5650*u);}catch(e){}})();`;
+const decide = `(function(){try{var d=document.documentElement,c=navigator.connection,q=location.search,force=/[?&]intro=1/.test(q);if(matchMedia('(prefers-reduced-motion: reduce)').matches||(c&&c.saveData))return;if(!force&&sessionStorage.getItem('hy_opened'))return;sessionStorage.setItem('hy_opened','1');var s=matchMedia('(max-width: 820px)').matches||/[?&](utm_|gclid|fbclid)/.test(q),u=s?0.55:1;d.style.setProperty('--ou',u+'s');d.classList.add('opening-on');window.__hyHold=5.0*u;setTimeout(function(){d.classList.add('opening-out')},5050*u);setTimeout(function(){d.classList.remove('opening-on','opening-out')},5650*u);}catch(e){}})();`;
 
 const at = (d: number, len?: number) => ({ "--d": d, ...(len ? { "--l": len } : {}) }) as CSSProperties;
 
@@ -122,7 +127,7 @@ function Stroke({ d, t, dur, className }: { d: string; t: number; dur: number; c
 }
 
 /** Groups timed items into a few layers, so each layer is one fade instead of many repaints. */
-function layers<T extends { t: number }>(items: T[], step = 0.16) {
+function layers<T extends { t: number }>(items: T[], step = 0.25) {
   const map = new Map<number, T[]>();
   for (const item of items) {
     const key = Math.round(item.t / step);
@@ -151,8 +156,10 @@ export function OpeningSequence() {
         <div className="opening__door">
           <i className="o-pan o-pan--t" />
           <i className="o-pan o-pan--b" />
-          <i className="o-pan o-pan--l"><b className="o-lamp" /></i>
-          <i className="o-pan o-pan--r"><b className="o-lamp" /></i>
+          <i className="o-pan o-pan--l" />
+          <i className="o-pan o-pan--r" />
+          <i className="o-lamp o-lamp--l" />
+          <i className="o-lamp o-lamp--r" />
         </div>
         <div className="opening__grid" />
         <div className="opening__cam">

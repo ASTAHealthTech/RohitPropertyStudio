@@ -146,7 +146,7 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
       frame = window.requestAnimationFrame(loop);
     };
 
-    let held = openingWaitMs(1.25) > 0;
+    let held = openingWaitMs(1.2) > 0;
     const start = () => {
       if (reduced || frame || held) return;
       last = 0;
@@ -163,7 +163,7 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
     // On a first visit the opening sheet covers the page: keep the skyline still until just before the door.
     let waiting = 0;
     if (!reduced) {
-      const wait = openingWaitMs(1.25); // the skyline starts moving only once the door has fully opened
+      const wait = openingWaitMs(1.2); // the skyline starts moving only once the door has fully opened
       if (wait) waiting = window.setTimeout(() => { held = false; if (!document.hidden) start(); }, wait); else start();
     }
 
@@ -203,14 +203,23 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
       if (entry.isIntersecting) void element.play().catch(() => setVideoOk(false));
       else element.pause();
     }, { threshold: 0.05 });
-    // The film starts a moment before the opening's door, not behind the closed sheet.
-    const waiting = window.setTimeout(() => observer.observe(element), openingWaitMs());
-    return () => { window.clearTimeout(waiting); observer.disconnect(); };
+    // The film starts only once the opening's sheet has gone: starting a video while the door
+    // is opening is what made the door stutter. The skyline canvas is what the door opens onto.
+    const wait = openingWaitMs(1.15);
+    // Meanwhile fetch the file quietly (network only, nothing to draw), so it starts at once later.
+    const warming = wait && video
+      ? window.setTimeout(() => void fetch(video, { priority: "low" } as RequestInit).then((r) => r.blob()).catch(() => undefined), wait * 0.45)
+      : 0;
+    const waiting = window.setTimeout(() => observer.observe(element), wait);
+    return () => { window.clearTimeout(waiting); window.clearTimeout(warming); observer.disconnect(); };
   }, [video]);
 
   return (
     <div className="backdrop" ref={hostRef} aria-hidden="true">
       <canvas className="backdrop__canvas" ref={canvasRef} />
+      {/* The film's first frame as a still picture: what the opening's door opens onto, at no
+          cost to the graphics chip. It fades away once the film itself is playing. */}
+      {video && videoOk && <div className={`backdrop__still${videoReady ? " is-gone" : ""}`} style={{ backgroundImage: `url(${video.replace(/\.mp4$/, "-still.jpg")})` }} />}
       {video && videoOk && (
         <video
           className={`backdrop__video${videoReady ? " is-ready" : ""}`}
