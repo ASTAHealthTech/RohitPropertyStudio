@@ -361,3 +361,15 @@ returns or appreciation. 29 guides about investment or market calls are HELD (ti
 Old two-part addresses (`/residential-projects/<slug>`, `/upcoming-projects/<slug>`,
 `/category/*`, `/tag/*`) redirect permanently. Project photos beyond the first set are still
 on the old server; `tools/import-100yards/photos-source.json` lists them.
+
+## Opening sequence: smoothness rule (Nov 2026)
+
+The first-visit opening (`OpeningSequence.tsx` + `styles/opening.css`) stuttered on laptops
+because the plan was drawn with `stroke-dashoffset` and the door with an animated `clip-path`:
+both repaint the full screen every frame and freeze while the page's scripts load. It was
+rebuilt so that ONLY `transform` and `opacity` animate: walls are thin boxes that grow,
+furniture/measures/labels are static SVG layers that fade in by group, the sheet is four
+panels (`.o-pan`) that slide apart with the lit room painted on the two middle ones. The
+hero video and skyline canvas wait for the door (`openingWaitMs` in `AmbientBackdrop.tsx`) and
+the grain is paused under the sheet. Keep it that way: no dashoffset, clip-path, filter or
+custom-property animation in the opening.

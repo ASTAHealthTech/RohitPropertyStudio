@@ -2,101 +2,128 @@
    Opening — "one line, one light, one door"
    CSS only, off one time unit --ou (1s desktop, .55s phones / ad traffic).
    Timeline in units: .2 the line · 1.4 walls · 2.6 detail · 3.3 the lamp ·
-   4.3 the door (html.opening-out) · 5.65 removed.
+   4.3 the door · 5.65 removed.
    --k is the base scale of the drawing; --s is one drawing unit in screen length.
+
+   SMOOTHNESS RULE: only `transform` and `opacity` animate here (see OpeningSequence.tsx).
    ============================================================ */
-@property --o-hw { syntax: "<length>"; initial-value: 0px; inherits: false; }
-@property --o-hh { syntax: "<length>"; initial-value: 0px; inherits: false; }
 @property --opening-n { syntax: "<integer>"; initial-value: 0; inherits: false; }
 
 .opening { display: none; }
 html.opening-on { overflow: hidden; }
 html.opening-on .opening {
-  --k: 1.12; --s: min(100vw / 1600, 100vh / 900);
+  --k: 1.12; --s: min(100vw / 1600, 100vh / 900); --door: calc(var(--ou) * 4.3);
   position: fixed; inset: 0; z-index: 2147483000; display: block; overflow: hidden; color: var(--on-dark);
-  background: radial-gradient(120% 90% at 50% 46%, #17140f 0%, var(--navy) 58%, #070605 100%);
+  animation: o-out calc(var(--ou) * .5) ease calc(var(--ou) * 5.15) forwards;
 }
+
+/* the sheet: four panels in the drawing's own camera, so the doorway stays on the lit room */
+.opening__door, .opening__cam { position: absolute; inset: 0; transform: scale(var(--k)); will-change: transform; }
+html.opening-on .opening__door { animation: o-push calc(var(--ou) * 5.65) linear forwards; }
+html.opening-on .opening__cam { animation: o-push calc(var(--ou) * 5.65) linear forwards, o-out calc(var(--ou) * .45) ease var(--door) forwards; }
+.o-pan { position: absolute; background: var(--navy); will-change: transform; }
+.o-pan--t, .o-pan--b { left: calc(50% - 150vmax); width: 300vmax; height: 150vmax; }
+.o-pan--t { top: calc(50% - var(--s) * 147 - 150vmax); }
+.o-pan--b { top: calc(50% + var(--s) * 147); }
+.o-pan--l, .o-pan--r { top: calc(50% - 150vmax); height: 300vmax; width: calc(150vmax + 1px); }
+.o-pan--l { left: calc(50% - 150vmax); }
+.o-pan--r { left: calc(50% - 1px); }
+html.opening-on .o-pan--l { animation: o-door-l calc(var(--ou) * 1.35) cubic-bezier(.6, 0, .2, 1) var(--door) forwards; }
+html.opening-on .o-pan--r { animation: o-door-r calc(var(--ou) * 1.35) cubic-bezier(.6, 0, .2, 1) var(--door) forwards; }
+html.opening-on .o-pan--t { animation: o-door-t calc(var(--ou) * 1.35) cubic-bezier(.6, 0, .2, 1) var(--door) forwards; }
+html.opening-on .o-pan--b { animation: o-door-b calc(var(--ou) * 1.35) cubic-bezier(.6, 0, .2, 1) var(--door) forwards; }
+
+/* beat 3 — the lamp: the lit room is painted on the two door leaves, half each */
+.o-lamp { position: absolute; top: calc(50% - var(--s) * 147); height: calc(var(--s) * 294); width: calc(var(--s) * 97 + 1px); opacity: 0; will-change: opacity;
+  background-image: radial-gradient(ellipse 62% 62% at 50% 46%, #fff3d6 0%, #f0cf94 45%, rgb(185 138 74 / .55) 100%); background-size: calc(var(--s) * 194) 100%; background-repeat: no-repeat; }
+.o-pan--l .o-lamp { right: 0; background-position: left center; }
+.o-pan--r .o-lamp { left: 0; background-position: right center; }
+html.opening-on .o-lamp { animation: o-fade calc(var(--ou) * 1.05) cubic-bezier(.4, 0, .2, 1) calc(var(--ou) * 3.3) forwards; }
+
 /* drafting-paper grid, strongest in the middle, gone at the edges */
-.opening__grid { position: absolute; inset: -4%; opacity: 0;
+.opening__grid { position: absolute; inset: -4%; opacity: 0; will-change: transform, opacity;
   background-image: linear-gradient(color-mix(in srgb, var(--on-dark) 7%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--on-dark) 7%, transparent) 1px, transparent 1px), linear-gradient(color-mix(in srgb, var(--on-dark) 3.5%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--on-dark) 3.5%, transparent) 1px, transparent 1px);
   background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px; background-position: center;
   -webkit-mask-image: radial-gradient(60% 60% at 50% 48%, #000 0%, transparent 100%); mask-image: radial-gradient(60% 60% at 50% 48%, #000 0%, transparent 100%); }
-html.opening-on .opening__grid { animation: o-fade calc(var(--ou) * 1.6) ease calc(var(--ou) * 1.1) forwards, o-drift calc(var(--ou) * 5.65) linear forwards; }
+html.opening-on .opening__grid { animation: o-fade calc(var(--ou) * 1.6) ease calc(var(--ou) * 1.1) forwards, o-drift calc(var(--ou) * 5.65) linear forwards, o-out calc(var(--ou) * .3) ease var(--door) forwards; }
 
-/* the camera: one slow push, start to finish */
-.opening__cam { position: absolute; inset: 0; transform: scale(var(--k)); will-change: transform, opacity; }
-html.opening-on .opening__cam { animation: o-push calc(var(--ou) * 5.65) linear forwards; }
-html.opening-out .opening__cam { animation: o-push calc(var(--ou) * 5.65) linear forwards, o-out calc(var(--ou) * .8) ease calc(var(--ou) * .45) forwards; }
-.opening svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.opening path { fill: none; stroke: var(--on-dark); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
-html.opening-on .opening path { animation: o-draw calc(var(--ou) * var(--l, .8)) cubic-bezier(.45, 0, .15, 1) calc(var(--ou) * var(--d)) forwards; }
-.o-walls path { stroke: #f1eadc; stroke-width: 2.1; }
-.o-walls path.is-inner { stroke: color-mix(in srgb, var(--on-dark) 50%, transparent); stroke-width: 1; }
-.o-detail path { stroke: color-mix(in srgb, var(--on-dark) 46%, transparent); stroke-width: 1; }
-.o-measure path { stroke: color-mix(in srgb, var(--gold) 80%, transparent); stroke-width: 1; }
+/* soft light in the middle of the sheet, dark at its edges */
+.opening__vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 46%, rgb(255 236 200 / .035) 0%, transparent 58%, rgb(0 0 0 / .42) 100%); }
+html.opening-on .opening__vig { animation: o-out calc(var(--ou) * .35) ease var(--door) forwards; }
+
+/* the drawing: a 1600 × 900 sheet, centred, one unit = --s */
+.o-stage { position: absolute; left: calc(50% - var(--s) * 800); top: calc(50% - var(--s) * 450); width: calc(var(--s) * 1600); height: calc(var(--s) * 900); }
+.o-ln { position: absolute; left: calc(var(--s) * var(--x)); top: calc(var(--s) * var(--y)); background: currentColor; border-radius: 99px; will-change: transform; }
+.o-ln--h { width: calc(var(--s) * var(--w) + var(--sw)); height: var(--sw); margin: calc(var(--sw) / -2) 0 0 calc(var(--sw) / -2); transform: scaleX(0); transform-origin: 0 50%; }
+.o-ln--h.is-rev { transform-origin: 100% 50%; }
+.o-ln--v { width: var(--sw); height: calc(var(--s) * var(--w) + var(--sw)); margin: calc(var(--sw) / -2) 0 0 calc(var(--sw) / -2); transform: scaleY(0); transform-origin: 50% 0; }
+.o-ln--v.is-rev { transform-origin: 50% 100%; }
+html.opening-on .o-ln { animation: o-grow calc(var(--ou) * var(--l)) linear calc(var(--ou) * var(--d)) forwards; }
+html.opening-on .o-ln.is-eased { animation-timing-function: cubic-bezier(.45, 0, .15, 1); }
+.o-walls { color: #f1eadc; --sw: 2.1px; }
+.o-walls .is-inner { color: color-mix(in srgb, var(--on-dark) 50%, transparent); --sw: 1px; }
 
 /* beat 1 — the line, with light at the pen tip */
-.o-first path { stroke: var(--gold-hi); stroke-width: 1.4; }
-html.opening-on .o-first path { animation: o-draw calc(var(--ou) * 1.15) cubic-bezier(.45, 0, .15, 1) calc(var(--ou) * .2) forwards; }
+.o-first { color: var(--gold-hi); --sw: 1.4px; }
 html.opening-on .o-first { animation: o-axis calc(var(--ou) * .9) ease calc(var(--ou) * 1.5) forwards; }
-.o-tip { opacity: 0; }
+.o-tip { position: absolute; left: calc(var(--s) * 324); top: calc(var(--s) * 424); width: calc(var(--s) * 52); height: calc(var(--s) * 52); border-radius: 50%; opacity: 0; will-change: transform, opacity;
+  background: radial-gradient(closest-side, #fff7e6 0%, rgb(240 207 148 / .7) 25%, rgb(240 207 148 / 0) 100%); }
 html.opening-on .o-tip { animation: o-tip calc(var(--ou) * 1.15) cubic-bezier(.45, 0, .15, 1) calc(var(--ou) * .2) forwards; }
-
-/* labels */
-.opening text { fill: color-mix(in srgb, var(--on-dark) 52%, transparent); font-family: var(--sans); font-size: 9.5px; font-weight: 500; letter-spacing: 3.2px; text-anchor: middle; opacity: 0; }
-html.opening-on .opening text { animation: o-fade calc(var(--ou) * .6) ease calc(var(--ou) * var(--d)) forwards; }
-.opening .o-dim { fill: var(--gold); font-size: 11px; letter-spacing: 6px; }
-.opening .o-room { fill: #3a2a12; font-size: 10px; letter-spacing: 5px; }
-
-/* beat 3 — the lamp */
-.o-lamp, .o-spill { opacity: 0; }
-html.opening-on .o-lamp { animation: o-fade calc(var(--ou) * 1.05) cubic-bezier(.4, 0, .2, 1) calc(var(--ou) * 3.3) forwards; }
+.o-spill { position: absolute; left: calc(var(--s) * 370); top: calc(var(--s) * 90); width: calc(var(--s) * 860); height: calc(var(--s) * 720); border-radius: 50%; opacity: 0; will-change: opacity;
+  background: radial-gradient(closest-side, rgb(240 207 148 / .34) 0%, rgb(240 207 148 / 0) 100%); }
 html.opening-on .o-spill { animation: o-fade calc(var(--ou) * 1.3) ease calc(var(--ou) * 3.35) forwards; }
 
+/* furniture, measures, labels: whole layers fade in */
+.o-layer { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: 0; will-change: opacity; }
+html.opening-on .o-layer { animation: o-fade calc(var(--ou) * .55) ease calc(var(--ou) * var(--d)) forwards; }
+.o-layer path { fill: none; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.o-detail path { stroke: color-mix(in srgb, var(--on-dark) 46%, transparent); }
+.o-measure path { stroke: color-mix(in srgb, var(--gold) 80%, transparent); }
+.o-layer text { fill: color-mix(in srgb, var(--on-dark) 52%, transparent); font-family: var(--sans); font-size: 9.5px; font-weight: 500; letter-spacing: 3.2px; text-anchor: middle; }
+.o-layer .o-dim { fill: var(--gold); font-size: 11px; letter-spacing: 6px; }
+.o-layer .o-room { fill: #3a2a12; font-size: 10px; letter-spacing: 5px; }
+
 /* the one sentence */
-.opening__words { position: absolute; left: 0; right: 0; top: calc(50% - var(--s) * 96 * var(--k)); margin: 0; text-align: center; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: clamp(26px, 3.3vw, 54px); line-height: 1.1; letter-spacing: .005em; color: var(--on-dark); opacity: 0; }
+.opening__words { position: absolute; left: 0; right: 0; top: calc(50% - var(--s) * 96 * var(--k)); margin: 0; text-align: center; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: clamp(26px, 3.3vw, 54px); line-height: 1.1; letter-spacing: .005em; color: var(--on-dark); opacity: 0; will-change: transform, opacity; }
 html.opening-on .opening__words { animation: o-words calc(var(--ou) * 2.1) ease calc(var(--ou) * .35) forwards; }
 .opening__words span { display: inline-block; }
 
 /* title block, like the foot of a drawing sheet */
 .opening__sheet { position: absolute; left: clamp(18px, 4vw, 56px); right: clamp(18px, 4vw, 56px); bottom: clamp(18px, 3.4vh, 36px); display: flex; justify-content: space-between; align-items: baseline; gap: 20px; border-top: 1px solid color-mix(in srgb, var(--on-dark) 18%, transparent); padding-top: 14px; font-size: 10.5px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: var(--on-dark-faint); opacity: 0; }
-html.opening-on .opening__sheet { animation: o-fade calc(var(--ou) * .9) ease calc(var(--ou) * .3) forwards; }
+html.opening-on .opening__sheet { animation: o-fade calc(var(--ou) * .9) ease calc(var(--ou) * .3) forwards, o-out calc(var(--ou) * .35) ease var(--door) forwards; }
 .opening__count { color: var(--gold); }
 .opening__num { font-style: normal; counter-reset: n var(--opening-n); font-variant-numeric: tabular-nums; }
 .opening__num::after { content: counter(n); }
 html.opening-on .opening__num { animation: o-count calc(var(--ou) * 3.9) cubic-bezier(.4, 0, .2, 1) calc(var(--ou) * .3) both; }
 .opening__skip { position: absolute; right: clamp(18px, 4vw, 56px); top: clamp(18px, 3.4vh, 32px); border: 1px solid var(--line-dark); padding: 10px 16px; background: transparent; color: var(--on-dark-soft); font-size: 10.5px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; cursor: pointer; opacity: 0; }
-html.opening-on .opening__skip { animation: o-fade calc(var(--ou) * .6) ease calc(var(--ou) * .6) forwards; }
+html.opening-on .opening__skip { animation: o-fade calc(var(--ou) * .6) ease calc(var(--ou) * .6) forwards, o-out calc(var(--ou) * .35) ease var(--door) forwards; }
 .opening__skip:hover { border-color: var(--gold); color: var(--gold); }
-html.opening-out .opening__skip, html.opening-out .opening__sheet { animation: o-out calc(var(--ou) * .35) ease forwards; opacity: 1; }
 
-/* beat 4 — the door: a hole in the sheet, exactly on the lit room, opens from a slit */
-html.opening-out .opening {
-  clip-path: polygon(0 0, 0 100%, calc(50% - var(--o-hw)) 100%, calc(50% - var(--o-hw)) calc(50% - var(--o-hh)), calc(50% + var(--o-hw)) calc(50% - var(--o-hh)), calc(50% + var(--o-hw)) calc(50% + var(--o-hh)), calc(50% - var(--o-hw)) calc(50% + var(--o-hh)), calc(50% - var(--o-hw)) 100%, 100% 100%, 100% 0);
-  animation: o-door calc(var(--ou) * 1.35) cubic-bezier(.6, 0, .2, 1) forwards, o-out calc(var(--ou) * .5) ease calc(var(--ou) * .85) forwards;
-}
+/* while the sheet covers the page, nothing underneath needs to move */
+html.opening-on:not(.opening-out) body::after, html.opening-on:not(.opening-out) .backdrop__grain, html.opening-on:not(.opening-out) .backdrop__video { animation-play-state: paused; }
 
-@keyframes o-draw { to { stroke-dashoffset: 0; } }
+@keyframes o-grow { to { transform: none; } }
 @keyframes o-fade { to { opacity: 1; } }
 @keyframes o-out { to { opacity: 0; } }
 @keyframes o-count { from { --opening-n: 0; } to { --opening-n: 100; } }
 @keyframes o-push { from { transform: scale(var(--k)); } to { transform: scale(calc(var(--k) * 1.16)); } }
 @keyframes o-drift { from { transform: scale(1); } to { transform: scale(1.07); } }
 @keyframes o-axis { to { opacity: .16; } }
-@keyframes o-tip { 0% { opacity: 0; transform: translateX(0); } 12% { opacity: 1; } 82% { opacity: 1; } 100% { opacity: 0; transform: translateX(900px); } }
-@keyframes o-words { 0% { opacity: 0; transform: translateY(10px); filter: blur(6px); } 28% { opacity: 1; transform: none; filter: blur(0); } 72% { opacity: 1; transform: none; filter: blur(0); } 100% { opacity: 0; transform: translateY(-8px); filter: blur(4px); } }
-@keyframes o-door {
-  0% { --o-hw: 0px; --o-hh: calc(var(--s) * 147 * var(--k) * 1.12); }
-  34% { --o-hw: calc(var(--s) * 97 * var(--k) * 1.125); --o-hh: calc(var(--s) * 147 * var(--k) * 1.125); }
-  100% { --o-hw: 80vmax; --o-hh: 80vmax; }
-}
+@keyframes o-tip { 0% { opacity: 0; transform: translateX(0); } 12% { opacity: 1; } 82% { opacity: 1; } 100% { opacity: 0; transform: translateX(calc(var(--s) * 900)); } }
+@keyframes o-words { 0% { opacity: 0; transform: translateY(10px); } 28% { opacity: 1; transform: none; } 72% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-8px); } }
+/* beat 4 — the door: the two lit leaves part to the width of the room, then the whole sheet opens */
+@keyframes o-door-l { 0% { transform: none; } 34% { transform: translateX(calc(var(--s) * -97)); } 100% { transform: translateX(-90vmax); } }
+@keyframes o-door-r { 0% { transform: none; } 34% { transform: translateX(calc(var(--s) * 97)); } 100% { transform: translateX(90vmax); } }
+@keyframes o-door-t { 0%, 34% { transform: none; } 100% { transform: translateY(-90vmax); } }
+@keyframes o-door-b { 0%, 34% { transform: none; } 100% { transform: translateY(90vmax); } }
 
 @media (max-width: 820px) {
   html.opening-on .opening { --k: 1.36; }
-  .opening path { stroke-width: 1; }
-  .o-walls path { stroke-width: 1.4; }
-  .o-detail path, .o-measure path, .o-walls path.is-inner { stroke-width: .6; }
-  .opening text { font-size: 8px; letter-spacing: 2px; }
+  .o-walls { --sw: 1.4px; }
+  .o-walls .is-inner { --sw: .6px; }
+  .o-first { --sw: 1px; }
+  .o-layer path { stroke-width: .6; }
+  .o-layer text { font-size: 8px; letter-spacing: 2px; }
   .opening__words { top: 21%; font-size: clamp(26px, 8vw, 40px); }
   .opening__words span { display: block; }
   .opening__sheet span:first-child, .opening__sheet span:last-child { display: none; }

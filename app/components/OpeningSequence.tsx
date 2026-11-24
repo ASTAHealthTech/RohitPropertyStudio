@@ -15,6 +15,13 @@ import type { CSSProperties } from "react";
  * so it plays before the page's JavaScript arrives. Once per browser session; never under
  * reduced motion or Save-Data. Phones and ad traffic run the same film at about half length.
  * `?intro=1` forces it for review.
+ *
+ * SMOOTHNESS RULE: everything that moves here animates `transform` or `opacity` only, so the
+ * browser's compositor runs it and it keeps moving while the page's scripts load. Walls are
+ * thin boxes that grow (scaleX/scaleY); furniture, measures and labels are static drawings
+ * that fade in by group; the door is four panels that slide away. Do not bring back
+ * stroke-dashoffset, clip-path or filter animations — those repaint the full screen every
+ * frame and stutter (Nov 2026).
  */
 const decide = `(function(){try{var d=document.documentElement,c=navigator.connection,q=location.search,force=/[?&]intro=1/.test(q);if(matchMedia('(prefers-reduced-motion: reduce)').matches||(c&&c.saveData))return;if(!force&&sessionStorage.getItem('hy_opened'))return;sessionStorage.setItem('hy_opened','1');var s=matchMedia('(max-width: 820px)').matches||/[?&](utm_|gclid|fbclid)/.test(q),u=s?0.55:1;d.style.setProperty('--ou',u+'s');d.classList.add('opening-on');window.__hyHold=4.55*u;setTimeout(function(){d.classList.add('opening-out')},4300*u);setTimeout(function(){d.classList.remove('opening-on','opening-out')},5650*u);}catch(e){}})();`;
 
@@ -78,6 +85,61 @@ const labels: Array<[number, number, string, number]> = [
   [800, 664, "BALCONY", 3.42],
 ];
 
+type Seg = { x: number; y: number; len: number; dir: "h" | "v"; rev: boolean };
+
+/** Splits a path made of M/H/V/Z commands into its straight segments, in drawing order. */
+function segments(d: string): Seg[] {
+  const out: Seg[] = [];
+  let cx = 0, cy = 0, sx = 0, sy = 0;
+  const line = (nx: number, ny: number) => {
+    if (nx !== cx) out.push({ x: Math.min(cx, nx), y: cy, len: Math.abs(nx - cx), dir: "h", rev: nx < cx });
+    else if (ny !== cy) out.push({ x: cx, y: Math.min(cy, ny), len: Math.abs(ny - cy), dir: "v", rev: ny < cy });
+    cx = nx; cy = ny;
+  };
+  for (const [, cmd, rest] of d.matchAll(/([MHVZ])([^MHVZ]*)/g)) {
+    const n = rest.trim().split(/[\s,]+/).filter(Boolean).map(Number);
+    if (cmd === "M") { cx = sx = n[0]; cy = sy = n[1]; }
+    else if (cmd === "H") line(n[0], cy);
+    else if (cmd === "V") line(cx, n[0]);
+    else line(sx, sy);
+  }
+  return out;
+}
+
+/** One pen stroke: the segments grow one after another across `dur`, starting at `t`. */
+function Stroke({ d, t, dur, className }: { d: string; t: number; dur: number; className?: string }) {
+  const list = segments(d);
+  const total = list.reduce((sum, s) => sum + s.len, 0);
+  const before = list.map((_, i) => list.slice(0, i).reduce((sum, s) => sum + s.len, 0));
+  return (
+    <>
+      {list.map((s, i) => {
+        const style = { "--x": s.x, "--y": s.y, "--w": s.len, "--d": +(t + (dur * before[i]) / total).toFixed(3), "--l": +((dur * s.len) / total).toFixed(3) } as CSSProperties;
+        return <i key={i} className={`o-ln o-ln--${s.dir}${s.rev ? " is-rev" : ""}${className ? ` ${className}` : ""}`} style={style} />;
+      })}
+    </>
+  );
+}
+
+/** Groups timed items into a few layers, so each layer is one fade instead of many repaints. */
+function layers<T extends { t: number }>(items: T[], step = 0.16) {
+  const map = new Map<number, T[]>();
+  for (const item of items) {
+    const key = Math.round(item.t / step);
+    map.set(key, [...(map.get(key) ?? []), item]);
+  }
+  return [...map.entries()].sort((a, b) => a[0] - b[0]).map(([key, group]) => ({ t: +(key * step).toFixed(2), group }));
+}
+
+const detailLayers = layers(details.map(([d, t]) => ({ d, t })));
+const measureLayers = layers(measures.map(([d, t]) => ({ d, t })));
+const labelLayers = layers([
+  ...labels.map(([x, y, text, t]) => ({ x, y, text, t, cls: "" })),
+  { x: 800, y: 96, text: "100 YARDS", t: 3.1, cls: "o-dim" },
+  { x: 1420, y: 128, text: "N", t: 3.2, cls: "o-dim" },
+  { x: 800, y: 456, text: "LIVING", t: 3.5, cls: "o-room" },
+]);
+
 export function OpeningSequence() {
   const skip = () => document.documentElement.classList.remove("opening-on", "opening-out");
 
@@ -85,54 +147,50 @@ export function OpeningSequence() {
     <>
       <script dangerouslySetInnerHTML={{ __html: decide }} />
       <div className="opening" aria-hidden="true">
+        {/* the sheet itself: four panels that part like a door, the lit room on the two middle ones */}
+        <div className="opening__door">
+          <i className="o-pan o-pan--t" />
+          <i className="o-pan o-pan--b" />
+          <i className="o-pan o-pan--l"><b className="o-lamp" /></i>
+          <i className="o-pan o-pan--r"><b className="o-lamp" /></i>
+        </div>
         <div className="opening__grid" />
         <div className="opening__cam">
-          <svg className="opening__plan" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <radialGradient id="o-lamp" cx="50%" cy="46%" r="62%">
-                <stop offset="0" stopColor="#fff3d6" />
-                <stop offset=".45" stopColor="#f0cf94" />
-                <stop offset="1" stopColor="#b98a4a" stopOpacity=".55" />
-              </radialGradient>
-              <radialGradient id="o-spill" cx="50%" cy="50%" r="50%">
-                <stop offset="0" stopColor="#f0cf94" stopOpacity=".34" />
-                <stop offset="1" stopColor="#f0cf94" stopOpacity="0" />
-              </radialGradient>
-              <radialGradient id="o-tip" cx="50%" cy="50%" r="50%">
-                <stop offset="0" stopColor="#fff7e6" />
-                <stop offset=".25" stopColor="#f0cf94" stopOpacity=".7" />
-                <stop offset="1" stopColor="#f0cf94" stopOpacity="0" />
-              </radialGradient>
-            </defs>
+          <div className="o-stage">
+            <i className="o-spill" />
 
             {/* beat 1 — the line */}
-            <g className="o-first">
-              <path pathLength={1} d="M350 450H1250" />
-              <circle className="o-tip" cx="350" cy="450" r="26" fill="url(#o-tip)" />
-            </g>
+            <div className="o-first">
+              <Stroke d="M350 450H1250" t={0.2} dur={1.15} className="is-eased" />
+              <i className="o-tip" />
+            </div>
 
-            {/* beat 2 — the plan */}
-            <ellipse className="o-spill" cx="800" cy="450" rx="430" ry="360" fill="url(#o-spill)" />
-            <rect className="o-lamp" x="703" y="303" width="194" height="294" fill="url(#o-lamp)" />
-            <g className="o-walls">
-              <path pathLength={1} style={at(1.4, 1.25)} d="M350 170H1250V730H350Z" />
-              <path className="is-inner" pathLength={1} style={at(1.6, 1.25)} d="M359 179H1241V721H359Z" />
-              {innerWalls.map(([d, t]) => <path key={d} pathLength={1} style={at(t, 0.8)} d={d} />)}
-            </g>
-            <g className="o-detail">
-              {details.map(([d, t]) => <path key={d} pathLength={1} style={at(t, 0.8)} d={d} />)}
-            </g>
-            <g className="o-measure">
-              {measures.map(([d, t]) => <path key={d} pathLength={1} style={at(t, 0.7)} d={d} />)}
-            </g>
-            <g className="o-labels">
-              {labels.map(([x, y, text, t]) => <text key={text} x={x} y={y} style={at(t)}>{text}</text>)}
-              <text className="o-dim" x="800" y="96" style={at(3.1)}>100 YARDS</text>
-              <text className="o-dim" x="1420" y="128" style={at(3.2)}>N</text>
-              <text className="o-room" x="800" y="456" style={at(3.5)}>LIVING</text>
-            </g>
-          </svg>
+            {/* beat 2 — the plan: walls grow like one pen stroke */}
+            <div className="o-walls">
+              <Stroke d="M350 170H1250V730H350Z" t={1.4} dur={1.25} />
+              <Stroke d="M359 179H1241V721H359Z" t={1.6} dur={1.25} className="is-inner" />
+              {innerWalls.map(([d, t]) => <Stroke key={d} d={d} t={t} dur={0.8} />)}
+            </div>
+          </div>
+
+          {/* furniture, measures and room names: drawn once, faded in by group */}
+          {detailLayers.map(({ t, group }) => (
+            <svg key={`d${t}`} className="o-layer o-detail" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" style={at(t)}>
+              {group.map(({ d }) => <path key={d} d={d} />)}
+            </svg>
+          ))}
+          {measureLayers.map(({ t, group }) => (
+            <svg key={`m${t}`} className="o-layer o-measure" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" style={at(t)}>
+              {group.map(({ d }) => <path key={d} d={d} />)}
+            </svg>
+          ))}
+          {labelLayers.map(({ t, group }) => (
+            <svg key={`l${t}`} className="o-layer o-labels" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" style={at(t)}>
+              {group.map(({ x, y, text, cls }) => <text key={text} className={cls || undefined} x={x} y={y}>{text}</text>)}
+            </svg>
+          ))}
         </div>
+        <div className="opening__vig" />
         <p className="opening__words"><span>Every home begins</span> <span>as a line.</span></p>
         <div className="opening__sheet">
           <span>Sheet 01 · Residence plan</span>

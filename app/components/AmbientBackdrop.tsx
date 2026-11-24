@@ -14,6 +14,13 @@ import { useEffect, useRef, useState } from "react";
  *   3. scrim   — brand gradient that guarantees text contrast whatever is behind it.
  *   4. grain   — film grain, purely atmospheric.
  */
+/** Milliseconds until shortly before the first-visit opening parts (0 when no opening is playing). */
+function openingWaitMs(part = 0.8) {
+  if (!document.documentElement.classList.contains("opening-on")) return 0;
+  const hold = (window as unknown as { __hyHold?: number }).__hyHold ?? 4.55;
+  return Math.max(0, hold * 1000 * part - performance.now());
+}
+
 export function AmbientBackdrop({ video, poster }: { video?: string; poster?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -139,8 +146,9 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
       frame = window.requestAnimationFrame(loop);
     };
 
+    let held = openingWaitMs(1.25) > 0;
     const start = () => {
-      if (reduced || frame) return;
+      if (reduced || frame || held) return;
       last = 0;
       frame = window.requestAnimationFrame(loop);
     };
@@ -152,7 +160,12 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
 
     resize();
     draw();
-    if (!reduced) start();
+    // On a first visit the opening sheet covers the page: keep the skyline still until just before the door.
+    let waiting = 0;
+    if (!reduced) {
+      const wait = openingWaitMs(1.25); // the skyline starts moving only once the door has fully opened
+      if (wait) waiting = window.setTimeout(() => { held = false; if (!document.hidden) start(); }, wait); else start();
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => (entry.isIntersecting ? start() : stop()),
@@ -167,6 +180,7 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
 
     return () => {
       stop();
+      window.clearTimeout(waiting);
       observer.disconnect();
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
@@ -189,8 +203,9 @@ export function AmbientBackdrop({ video, poster }: { video?: string; poster?: st
       if (entry.isIntersecting) void element.play().catch(() => setVideoOk(false));
       else element.pause();
     }, { threshold: 0.05 });
-    observer.observe(element);
-    return () => observer.disconnect();
+    // The film starts a moment before the opening's door, not behind the closed sheet.
+    const waiting = window.setTimeout(() => observer.observe(element), openingWaitMs());
+    return () => { window.clearTimeout(waiting); observer.disconnect(); };
   }, [video]);
 
   return (
