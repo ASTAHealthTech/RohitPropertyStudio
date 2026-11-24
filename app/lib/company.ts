@@ -113,6 +113,7 @@ export const tracking = {
   metaPixelId: "",
   googleTagId: "", // e.g. "AW-123456789" or "G-XXXXXXX"
   googleLeadLabel: "", // conversion label for a submitted lead, e.g. "AbCdEfGh"
+  googleCallLabel: "", // optional: conversion label for a tap on a phone number on the site
 } as const;
 
 export const organizationJsonLd = {

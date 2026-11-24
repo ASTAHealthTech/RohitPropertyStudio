@@ -12,7 +12,7 @@ export function StickyCta() {
   const [shown, setShown] = useState(false);
   const pathname = usePathname();
   const onProject = /^\/projects\/[^/]+/.test(pathname);
-  const hidden = pathname === "/desk";
+  const hidden = pathname === "/desk" || pathname.startsWith("/enquire");
 
   useEffect(() => {
     const onScroll = () => {

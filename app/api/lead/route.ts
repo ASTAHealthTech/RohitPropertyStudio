@@ -7,7 +7,7 @@ import { notifyLater } from "../../lib/notify";
  * `leads` table with where it came from (page, ad click ids, campaign tags) and
  * a simple 0–100 intent score, so the team can sort good leads from weak ones.
  */
-const kinds = new Set(["project", "visit", "snapshot", "report", "nri", "commercial", "callback"]);
+const kinds = new Set(["ad", "project", "visit", "snapshot", "report", "nri", "commercial", "callback"]);
 
 type Body = Record<string, unknown>;
 
@@ -29,7 +29,7 @@ function normalisePhone(raw: string, allowInternational: boolean) {
 
 /** Higher = more likely a real buyer. Shown on the desk, never to the visitor. */
 function scoreLead(kind: string, answers: Record<string, string>, hasEmail: boolean) {
-  let score = { report: 55, visit: 50, snapshot: 35, project: 30, nri: 35, commercial: 35, callback: 20 }[kind] ?? 20;
+  let score = { ad: 40, report: 55, visit: 50, snapshot: 35, project: 30, nri: 35, commercial: 35, callback: 20 }[kind] ?? 20;
   const when = answers.timeline ?? "";
   if (when === "0-3 months") score += 25;
   else if (when === "3-6 months") score += 15;

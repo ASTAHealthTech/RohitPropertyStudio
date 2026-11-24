@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
+import { ArrowRight, CheckCircle2, MessageCircle, Phone } from "lucide-react";
 
 /**
  * One form component, seven forms. Each `kind` asks only what that visitor
@@ -9,7 +9,7 @@ import { ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
  * (campaign tags and ad click ids captured on arrival) so leads can be traced
  * back to the ad that produced them.
  */
-export type LeadKind = "project" | "visit" | "snapshot" | "report" | "nri" | "commercial" | "callback";
+export type LeadKind = "ad" | "project" | "visit" | "snapshot" | "report" | "nri" | "commercial" | "callback";
 
 type FieldDef = { name: string; label: string; options?: string[]; placeholder?: string; type?: string; full?: boolean; required?: boolean };
 
@@ -18,6 +18,17 @@ const TIMELINE = ["0-3 months", "3-6 months", "6-12 months", "Just exploring"];
 const PURPOSE = ["To live in", "Investment", "Both"];
 
 const CONFIG: Record<LeadKind, { eyebrow: string; title: string; copy: string; submit: string; done: string; fields: FieldDef[]; email?: "required" | "optional" }> = {
+  ad: {
+    eyebrow: "Enquire",
+    title: "Get the price sheet and floor plans.",
+    copy: "Two quick questions, so the advisor who calls already knows what you need.",
+    submit: "Send me the details",
+    done: "An advisor will call you with the current price sheet and floor plans.",
+    fields: [
+      { name: "budget", label: "Budget", options: BUDGET, required: true },
+      { name: "timeline", label: "Planning to buy in", options: TIMELINE, required: true },
+    ],
+  },
   project: {
     eyebrow: "Enquire",
     title: "Get price, plans and availability.",
@@ -214,9 +225,14 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
         <p className="eyebrow">Received</p>
         <h3>Thank you. We have your details.</h3>
         <p>{cfg.done}</p>
-        <a className="button button--gold" href={`https://wa.me/919916866667?text=${encodeURIComponent(text)}`} target="_blank" rel="noreferrer" data-track="whatsapp_clicked">
-          <MessageCircle size={16} aria-hidden="true" /> Continue on WhatsApp
-        </a>
+        <div className="lead-form__next">
+          <a className="button button--gold" href="tel:+919916866667" data-track="call_clicked">
+            <Phone size={16} aria-hidden="true" /> Call +91 99168 66667
+          </a>
+          <a className="button button--outline" href={`https://wa.me/919916866667?text=${encodeURIComponent(text)}`} target="_blank" rel="noreferrer" data-track="whatsapp_clicked">
+            <MessageCircle size={16} aria-hidden="true" /> Continue on WhatsApp
+          </a>
+        </div>
       </div>
     );
   }
@@ -226,7 +242,7 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
       <div className="form__heading">
         <p className="eyebrow">{cfg.eyebrow}</p>
         <h2>{cfg.title}</h2>
-        <p>{projectName && kind !== "report" ? `${projectName}. ` : ""}{cfg.copy}</p>
+        <p>{projectName && kind !== "report" && kind !== "ad" ? `${projectName}. ` : ""}{cfg.copy}</p>
       </div>
       <div className="field">
         <label htmlFor={`${uid}-name`}>Full name</label>

@@ -311,3 +311,88 @@
   .browser__search { border-bottom: 0; }
   .ptable th, .ptable td { padding: 12px 14px; }
 }
+
+/* ============================================================
+   Ad landing pages (/enquire, /enquire/<area>, /enquire/<project>)
+   One job: read the facts, then enquire or call. The site menu,
+   footer map and floating button stand down here.
+   ============================================================ */
+body:has(.adpage) .site-footer { display: none; }
+.adpage { padding-bottom: 0; }
+.adbar { position: sticky; z-index: var(--z-header); top: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: var(--header-h); padding-inline: var(--shell-pad); border-bottom: 1px solid var(--line-dark); background: color-mix(in srgb, var(--carbon) 90%, transparent); backdrop-filter: saturate(140%) blur(14px); }
+.adbar__short { display: none; }
+.adhero { position: relative; isolation: isolate; overflow: clip; padding-block: clamp(36px, 5vw, 72px) clamp(44px, 6vw, 84px); }
+.adhero > .shell { position: relative; z-index: 1; }
+.adhero__facts--rest { display: none; }
+.adhero__grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); grid-template-areas: "copy form" "more form"; gap: clamp(26px, 3.4vw, 48px) clamp(32px, 5vw, 72px); align-items: start; }
+.adhero__copy { grid-area: copy; display: grid; gap: var(--s-5); align-content: start; }
+.adhero__form { grid-area: form; position: sticky; top: calc(var(--header-h) + 20px); display: grid; gap: 14px; scroll-margin-top: calc(var(--header-h) + 16px); }
+.adhero__more { grid-area: more; display: grid; gap: var(--s-5); align-content: start; }
+.adhero__copy h1 { max-width: 15ch; font-size: clamp(38px, 5vw, 76px); font-weight: 300; line-height: 1.02; }
+.adhero__loc { display: flex; align-items: flex-start; gap: 9px; color: var(--ink-soft); }
+.adhero__loc svg { flex: none; margin-top: 5px; color: var(--gold); }
+.adhero__facts { margin-top: 0; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.adhero__facts > div:first-child dd { color: var(--gold); }
+.adhero__form .form { background: color-mix(in srgb, var(--carbon) 92%, transparent); border-color: color-mix(in srgb, var(--gold) 55%, transparent); }
+.adhero__or { color: var(--ink-soft); font-size: 14px; }
+.adhero__or a { color: var(--gold); }
+.adhero__media .frame { display: block; border-color: color-mix(in srgb, var(--gold) 40%, transparent); }
+.adhero__media img { width: 100%; height: auto; }
+.adhero__intro { max-width: 62ch; color: var(--ink-soft); }
+.adhero__rera { display: flex; align-items: flex-start; gap: 10px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
+.adhero__rera svg { flex: none; margin-top: 3px; color: var(--gold); }
+.adhero__rera strong { color: var(--ink); font-weight: 500; overflow-wrap: anywhere; }
+.adhero__rera a { color: var(--gold); }
+
+.lead-form__next { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.lead-form__next svg { color: inherit; }
+
+.adpicks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 32px); margin-top: var(--s-6); list-style: none; padding: 0; }
+.adpicks a { display: grid; gap: 6px; border-top: 1px solid var(--gold); padding-top: 14px; text-decoration: none; color: var(--ink); }
+.adpicks img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; margin-bottom: 8px; }
+.adpicks__name { font-family: var(--serif); font-size: 24px; line-height: 1.15; }
+.adpicks__meta { color: var(--ink-faint); font-size: 13px; }
+.adpicks__price { color: var(--gold); font-size: 15px; font-weight: 500; }
+.adpicks a:hover .adpicks__name { color: var(--gold); }
+
+.adnext { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 72px); align-items: start; }
+.adsteps, .adpromises { display: grid; margin-top: var(--s-5); list-style: none; padding: 0; }
+.adsteps li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; border-top: 1px solid var(--line); padding-block: 18px; }
+.adsteps li > span { color: var(--gold); font-family: var(--serif); font-size: 26px; line-height: 1; }
+.adpromises li { border-top: 1px solid var(--line); padding-block: 18px; }
+.adsteps h3, .adpromises h3 { font-size: 19px; font-weight: 500; line-height: 1.3; }
+.adsteps p, .adpromises p { margin-top: 6px; color: var(--ink-soft); font-size: 15px; }
+
+.adfoot { border-top: 1px solid var(--line); padding-block: 28px 36px; color: var(--ink-faint); font-size: 12.5px; line-height: 1.7; }
+.adfoot .shell { display: grid; gap: 8px; }
+.adfoot strong { color: var(--ink-soft); font-weight: 500; }
+.adfoot a { color: var(--ink-soft); }
+
+.adbarb { display: none; }
+
+@media (max-width: 900px) {
+  .adhero__grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "copy" "form" "more"; }
+  .adhero__form { position: static; }
+  .adpicks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .adnext { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 620px) {
+  .adbar__num { display: none; }
+  .adbar__short { display: inline; }
+  .adhero { padding-top: 26px; }
+  .adhero__copy { gap: 16px; }
+  .adhero__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .adhero__facts > div { padding: 12px 12px 12px 0; }
+  /* Phone: two facts, then the form. The rest of the facts follow below it. */
+  .adhero__facts--top > div:nth-child(n+3) { display: none; }
+  .adhero__facts--rest { display: grid; }
+  .adhero__facts--rest > div:first-child dd { color: inherit; }
+  .js .adpage [data-split] { opacity: 1 !important; }
+  .adhero__copy h1 { font-size: clamp(34px, 10vw, 44px); }
+  .adpicks { grid-template-columns: minmax(0, 1fr); }
+  .adpage { padding-bottom: 62px; }
+  .adbarb { position: fixed; z-index: var(--z-sticky); inset: auto 0 0 0; display: grid; grid-template-columns: 1fr 1fr 1.2fr; border-top: 1px solid var(--gold); background: var(--carbon); }
+  .adbarb a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px; color: var(--ink); font-size: 14px; font-weight: 500; letter-spacing: .04em; text-decoration: none; }
+  .adbarb a + a { border-left: 1px solid var(--line); }
+  .adbarb .adbarb__main { background: var(--gold); color: var(--carbon); }
+}

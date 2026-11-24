@@ -323,3 +323,22 @@ shows on `/desk`. `app/lib/notify.ts` then emails the team through Resend, AFTER
 (`waitUntil`). It is off until the Worker secrets `RESEND_API_KEY` and `LEAD_NOTIFY_TO` exist; `LEAD_NOTIFY_FROM` is
 optional and needs the domain verified in Resend. Email is never the record and can never fail a form. Do not commit
 these values.
+
+## Ad landing pages (`/enquire`)
+
+Where Google and Meta ads send people. `/enquire/<area-slug>` and `/enquire/<project-slug>`
+are built from the catalogue by one component (`components/leads/AdLanding.tsx`), plus a
+general `/enquire`. Rules:
+
+- No site menu, footer map or floating button there: `SiteHeader` and `StickyCta` return
+  nothing on `/enquire*`, the footer is hidden by `body:has(.adpage)`. The page has its own
+  slim bar (logo + call) and, on phones, a fixed Call / WhatsApp / Get price bar.
+- Form is LeadForm kind `ad`: name, phone, budget, timeline. Phone layout shows two facts,
+  then the form; the remaining facts follow below.
+- `noindex` with the canonical pointing at the real project/area page. Never add them to the
+  sitemap. Do not block them in robots.txt (the ad platforms must be able to read them).
+- Same honesty rules: only catalogue facts, the price is labelled "Published starting price",
+  no urgency lines ("only 3 left", "offer ends"), no returns claims.
+- Tracking IDs live in `tracking` in `lib/company.ts` (`googleTagId`, `googleLeadLabel`,
+  optional `googleCallLabel`, `metaPixelId`). Empty = no tags rendered.
+- `.adhero` uses `overflow: clip`, not `hidden` — `hidden` breaks the sticky form.

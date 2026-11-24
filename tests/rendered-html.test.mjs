@@ -205,3 +205,24 @@ test("returns a helpful not-found response", async () => {
   assert.match(html, /That address is not on our map/i);
   assert.match(html, /Browse projects/i);
 });
+
+test("ad landing pages show the facts and the form, with no site menu", async () => {
+  const project = await render("/enquire/lodha-beaumont-estate");
+  assert.equal(project.status, 200);
+  const html = await project.text();
+  assert.match(html, /Lodha Beaumont Estate/);
+  assert.match(html, /Published starting price/);
+  assert.match(html, /id="ad-enquiry"/);
+  assert.match(html, /Planning to buy in/);
+  assert.match(html, /tel:\+919916866667/);
+  assert.match(html, /PRM\/KA\/RERA\/1251\/310\/AG\/231030\/004229/);
+  assert.match(html, /noindex/);
+  assert.doesNotMatch(html, /class="desktop-nav"/);
+  assert.doesNotMatch(html, /guaranteed|assured returns/i);
+
+  const area = await (await render("/enquire/devanahalli")).text();
+  assert.match(area, /New homes in Devanahalli/);
+  assert.match(area, /\/enquire\/[a-z0-9-]+/);
+  assert.equal((await render("/enquire")).status, 200);
+  assert.equal((await render("/enquire/no-such-place")).status, 404);
+});

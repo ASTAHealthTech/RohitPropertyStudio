@@ -11,7 +11,7 @@
  */
 export type LeadNote = { kind: string; name: string; phone?: string | null; email?: string | null; project?: string | null; answers?: Record<string, string>; sourcePath?: string | null; source?: string | null; score?: number | null; origin: string };
 
-const KIND: Record<string, string> = { callback: "Call back", visit: "Site visit", report: "Property report", nri: "NRI desk", brochure: "Brochure", commercial: "Commercial", "course-launch": "Course launch", "team-training": "Team training", "property-enquiry": "Property enquiry", general: "General" };
+const KIND: Record<string, string> = { ad: "Ad enquiry", project: "Project enquiry", snapshot: "Free snapshot", callback: "Call back", visit: "Site visit", report: "Property report", nri: "NRI desk", brochure: "Brochure", commercial: "Commercial", "course-launch": "Course launch", "team-training": "Team training", "property-enquiry": "Property enquiry", general: "General" };
 
 export async function notifyLead(lead: LeadNote): Promise<"sent" | "off" | "failed"> {
   const key = process.env.RESEND_API_KEY, to = (process.env.LEAD_NOTIFY_TO ?? "").split(",").map((s) => s.trim()).filter(Boolean);

@@ -28,6 +28,8 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  // Ad landing pages carry their own slim bar: one job, no menu to wander into.
+  if (pathname.startsWith("/enquire")) return null;
   return (
     <header className={`site-header${stuck ? " is-stuck" : ""}`}>
       <a className="site-brand" href="/" aria-label={`${company.name}, home`}>
