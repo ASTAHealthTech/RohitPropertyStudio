@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight, BadgeCheck, Check, ChevronRight, Clock, FileText, MapPin, MessageCircle } from "lucide-react";
 import { AmbientBackdrop } from "../../components/AmbientBackdrop";
 import { ProjectCard } from "../../components/catalog/ProjectCard";
+import { ProjectExtras, faqOf } from "../../components/catalog/ProjectExtras";
 import { ProjectGallery } from "../../components/catalog/ProjectGallery";
 import { LeadFormSlot } from "../../components/leads/LeadFormSlot";
-import { areaBySlug, projectBySlug, projectsInArea } from "../../lib/catalog";
+import { areaBySlug, detailsFor, projectBySlug, projectsInArea } from "../../lib/catalog";
 import { company, whatsappLink } from "../../lib/company";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -59,6 +60,9 @@ export default async function ProjectPage({ params }: Params) {
   ].filter(([, value]) => value && !/whatsapp|confirm with/i.test(value));
   const snapshot = (project.snap ?? []).slice(1).filter((row) => row.length === 2 && !/whatsapp/i.test(row[1]) && !/^destination$/i.test(row[0]) && !/minutes?$/i.test(row[1]));
 
+  const extras = detailsFor(project.slug);
+  const faq = faqOf(extras);
+
   const jsonLd = JSON.stringify([
     {
       "@context": "https://schema.org",
@@ -79,6 +83,11 @@ export default async function ProjectPage({ params }: Params) {
         { "@type": "ListItem", position: area ? 3 : 2, name: project.name, item: `/projects/${project.slug}` },
       ],
     },
+    ...(faq.length ? [{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })),
+    }] : []),
   ]).replace(/</g, "\\u003c");
 
   return (
@@ -224,6 +233,9 @@ export default async function ProjectPage({ params }: Params) {
           </div>
         </section>
       )}
+
+      {/* ---- everything else the published page says ---- */}
+      <ProjectExtras sections={extras} name={project.name} />
 
       {/* ---- the report ---- */}
       <section className="section surface-deep" id="report">

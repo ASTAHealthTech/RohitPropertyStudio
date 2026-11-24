@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { headers } from "next/headers";
-import { areas, builders, projects } from "./lib/catalog";
+import { areas, builders, hasArticle, posts, projects } from "./lib/catalog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const requestHeaders = await headers();
@@ -18,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...areas.map((a) => page(`/areas/${a.slug}`, 0.8, "weekly")),
     ...projects.map((p) => page(`/projects/${p.slug}`, 0.7, "weekly")),
     ...builders.map((b) => page(`/builders/${b.slug}`, 0.6, "weekly")),
+    ...posts.filter((p) => hasArticle(p.slug)).map((p) => page(`/blog/${p.slug}`, 0.6, "monthly")),
     ...["/about", "/rohitt", "/commercial", "/nri", "/contact", "/learn", "/datalab", "/lab", "/course", "/resources", "/blog", "/stories", "/gallery"].map((path) => page(path, 0.5, "monthly")),
     ...["/privacy", "/terms", "/refund", "/disclaimer"].map((path) => page(path, 0.2, "monthly")),
   ];

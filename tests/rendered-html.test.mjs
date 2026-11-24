@@ -226,3 +226,36 @@ test("ad landing pages show the facts and the form, with no site menu", async ()
   assert.equal((await render("/enquire")).status, 200);
   assert.equal((await render("/enquire/no-such-place")).status, 404);
 });
+
+test("project pages carry the imported sections, without investment pitches", async () => {
+  const html = await (await render("/projects/brigade-wtc-devanahalli")).text();
+  assert.match(html, /Nearby Social Infrastructure/);
+  assert.match(html, /Stonehill International School/);
+  assert.match(html, /Common questions/);
+  assert.match(html, /"@type":"FAQPage"/);
+  assert.doesNotMatch(html, /Investment Potential/);
+  assert.doesNotMatch(html, /good for investment/i);
+  assert.doesNotMatch(html, /wpforms|Paste a YouTube/i);
+});
+
+test("guides with imported text open on this site and old addresses follow them", async () => {
+  const guide = await render("/blog/ifms-in-real-estate-charges-homebuyers-guide");
+  assert.equal(guide.status, 200);
+  const html = await guide.text();
+  assert.match(html, /Interest-Free Maintenance Security/);
+  assert.match(html, /not legal, tax or investment advice/);
+  const old = await render("/ifms-in-real-estate-charges-homebuyers-guide");
+  assert.ok([301, 308].includes(old.status));
+  assert.match(old.headers.get("location") ?? "", /\/blog\/ifms-in-real-estate-charges-homebuyers-guide$/);
+  const list = await (await render("/blog")).text();
+  assert.doesNotMatch(list, /Monroe County|Dynamics 365|Dairygold/i);
+  assert.equal((await render("/blog/no-such-guide")).status, 404);
+});
+
+test("old two-part project addresses redirect to the new project page", async () => {
+  const old = await render("/residential-projects/summers-at-orchid-nirvana-devanahalli");
+  assert.ok([301, 308].includes(old.status));
+  assert.match(old.headers.get("location") ?? "", /\/projects\/summers-at-orchid-nirvana-devanahalli$/);
+  assert.ok([301, 308].includes((await render("/upcoming-projects/sattva-lumina-2")).status));
+  assert.ok([301, 308].includes((await render("/category/blog")).status));
+});

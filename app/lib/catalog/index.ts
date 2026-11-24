@@ -4,6 +4,8 @@ import buildersData from "./builders.json";
 import postsData from "./posts.json";
 import reviewsData from "./reviews.json";
 import galleryData from "./gallery.json";
+import detailsData from "./details.json";
+import articlesData from "./articles.json";
 
 /**
  * The 100 Yards catalogue. Source: the published 100yards.in listings (Nov 2026),
@@ -31,6 +33,27 @@ export const posts = postsData as { slug: string; title: string; date: string; e
 export const reviews = reviewsData as { quote: string; name: string; when: string }[];
 export const builderLogos = buildersData as { name: string; slug: string; img: string }[];
 export const gallery = galleryData as { images: string[]; groups: { title: string; items: number[] }[] };
+
+/** Text imported from the published 100yards.in pages by tools/import-100yards. Regenerate, do not hand-edit. */
+export type Block =
+  | { t: "p" | "h" | "h2"; x: string }
+  | { t: "list"; items: string[] }
+  | { t: "table"; rows: string[][] }
+  | { t: "qa"; q: string; a: string };
+export type DetailSection = { title: string; kind: string; blocks: Block[] };
+const details = detailsData as unknown as Record<string, { sections: DetailSection[] }>;
+const articles = articlesData as unknown as Record<string, { desc: string; blocks: Block[]; words: number }>;
+
+export function detailsFor(slug: string): DetailSection[] {
+  return details[slug]?.sections ?? [];
+}
+/** A guide whose full text is on this site. Others are listed by title only. */
+export function articleBySlug(slug: string) {
+  const post = posts.find((p) => p.slug === slug);
+  const body = articles[slug];
+  return post && body ? { ...post, ...body } : undefined;
+}
+export const hasArticle = (slug: string) => Boolean(articles[slug]);
 
 export function projectBySlug(slug: string) {
   return projects.find((p) => p.slug === slug);
@@ -136,6 +159,8 @@ export const legacyPaths: Record<string, string> = {
   "contact-us": "/contact",
   "residential-properties": "/projects",
   "residential": "/projects",
+  "residential-projects": "/projects",
+  "upcoming-projects": "/projects",
   "commercial-properties": "/commercial",
   "career": "/contact",
   "careers": "/contact",

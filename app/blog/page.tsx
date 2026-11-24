@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { AmbientBackdrop } from "../components/AmbientBackdrop";
-import { posts } from "../lib/catalog";
+import { hasArticle, posts } from "../lib/catalog";
 
 export const metadata: Metadata = {
   title: "Buyer guides: deeds, charges, khata and the paperwork of buying property",
@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * The article bodies still live on the current 100yards.in WordPress site. Until
- * they are exported and moved here, each card opens the published article.
+ * Guides whose text has been moved here open on this site. The rest still open the
+ * published article on the old site until the owner decides which of them to carry over.
  */
 export default function BlogPage() {
   return (
@@ -29,8 +29,8 @@ export default function BlogPage() {
       </section>
       <section className="section section--tight surface-dark">
         <div className="shell postgrid" data-reveal-group>
-          {posts.map((post) => (
-            <a className="post" href={post.url} key={post.slug} target="_blank" rel="noreferrer">
+          {[...posts].sort((a, b) => Number(hasArticle(b.slug)) - Number(hasArticle(a.slug))).map((post) => (
+            <a className="post" href={hasArticle(post.slug) ? `/blog/${post.slug}` : post.url} key={post.slug} {...(hasArticle(post.slug) ? {} : { target: "_blank", rel: "noreferrer" })}>
               {post.img && <span className="post__media"><img src={post.img} alt="" loading="lazy" decoding="async" /></span>}
               <span className="post__meta">{post.date} · {post.minutes} min read</span>
               <strong>{post.title}</strong>

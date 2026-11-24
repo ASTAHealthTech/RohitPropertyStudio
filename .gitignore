@@ -47,4 +47,6 @@ yarn-error.log*
 
 _claude_transfer/
 _to_delete/
+
+# raw pages saved from the old site by scripts/collect-100yards.mjs
 scripts/collected-100yards/

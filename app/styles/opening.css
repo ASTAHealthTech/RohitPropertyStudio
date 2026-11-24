@@ -128,3 +128,6 @@ html.opening-out .opening {
 .surface-gold .signature__ink { color: var(--ink); }
 .instructor__copy p.instructor__habit { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 1.7vw, 26px); color: var(--ink); }
 .header__call, .site-header .button { white-space: nowrap; }
+/* the header sits in its own layer above the page; keep it out of the film until the door opens */
+html.opening-on:not(.opening-out) .site-header { opacity: 0; }
+html.opening-out .site-header { transition: opacity calc(var(--ou) * .9) ease calc(var(--ou) * .5); }

@@ -1,5 +1,5 @@
 import { notFound, permanentRedirect } from "next/navigation";
-import { legacyPaths, posts, projectBySlug } from "../lib/catalog";
+import { hasArticle, legacyPaths, posts, projectBySlug } from "../lib/catalog";
 
 /**
  * Old 100yards.in addresses. The WordPress site served every project at
@@ -11,7 +11,8 @@ export default async function LegacyPage({ params }: { params: Promise<{ legacy:
   const slug = legacy.toLowerCase();
   if (projectBySlug(slug)) permanentRedirect(`/projects/${slug}`);
   if (legacyPaths[slug]) permanentRedirect(legacyPaths[slug]);
-  // Guides keep their old address until the article bodies are moved over.
+  // Guides whose text is on this site keep their ranking at /blog/<slug>; the rest go to the list.
+  if (hasArticle(slug)) permanentRedirect(`/blog/${slug}`);
   if (posts.some((post) => post.slug === slug)) permanentRedirect("/blog");
   notFound();
 }

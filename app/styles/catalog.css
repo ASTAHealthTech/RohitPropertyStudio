@@ -396,3 +396,47 @@ body:has(.adpage) .site-footer { display: none; }
   .adbarb a + a { border-left: 1px solid var(--line); }
   .adbarb .adbarb__main { background: var(--gold); color: var(--carbon); }
 }
+
+/* ============================================================
+   Imported page text: project extras and guide articles
+   ============================================================ */
+.pblocks { display: grid; gap: var(--s-4); }
+.pblocks p { max-width: 74ch; color: var(--ink-soft); font-size: 15.5px; line-height: 1.75; }
+.pblocks h2 { margin-top: var(--s-6); font-size: clamp(25px, 2.6vw, 36px); }
+.pblocks h3 { margin-top: var(--s-4); color: var(--gold); font-family: var(--sans); font-size: 12.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+.pblocks ul { display: grid; list-style: none; padding: 0; }
+.pblocks li { border-top: 1px solid var(--line); padding: 11px 0; color: var(--ink-soft); font-size: 15px; line-height: 1.55; }
+.pblocks__cols { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); column-gap: 28px; }
+.pblocks details { border-bottom: 1px solid var(--line); }
+.pblocks details summary { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; cursor: pointer; list-style: none; font-weight: 500; }
+.pblocks details summary::-webkit-details-marker { display: none; }
+.pblocks details summary span { color: var(--gold); }
+.pblocks details > p { padding-bottom: 18px; }
+.pblocks .ptable__wrap { margin-bottom: 0; }
+
+.pextras { display: grid; gap: clamp(44px, 6vw, 84px); }
+.pextra { display: grid; grid-template-columns: minmax(0, .36fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 64px); align-items: start; border-top: 1px solid var(--gold); padding-top: var(--s-5); }
+.pextra > header { display: grid; gap: var(--s-4); position: sticky; top: calc(var(--header-h) + 20px); }
+.pextra > header h2 { font-size: clamp(25px, 2.6vw, 38px); line-height: 1.1; }
+.pextra--pros .pblocks { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(20px, 3vw, 44px); }
+.pextra--pros .pblocks > h3 { grid-row: 1; }
+.pextra--pros .pblocks > ul { grid-row: 2; align-content: start; }
+.pextra--pros .pblocks > p { grid-column: 1 / -1; }
+
+.guide { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .42fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.guide__head h1 { max-width: 20ch; font-size: clamp(36px, 4.6vw, 68px); }
+.guide__body { display: grid; gap: var(--s-6); min-width: 0; }
+.guide__cover { width: 100%; height: auto; border: 1px solid var(--line); }
+.guide__side { position: sticky; top: calc(var(--header-h) + 20px); display: grid; gap: var(--s-6); }
+.guide__more ul { display: grid; gap: 12px; margin-top: var(--s-4); list-style: none; padding: 0; }
+
+@media (max-width: 900px) {
+  .pextra { grid-template-columns: minmax(0, 1fr); }
+  .pextra > header { position: static; }
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .guide__side { position: static; }
+}
+@media (max-width: 620px) {
+  .pextra--pros .pblocks { grid-template-columns: minmax(0, 1fr); }
+  .pextra--pros .pblocks > h3, .pextra--pros .pblocks > ul { grid-row: auto; }
+}

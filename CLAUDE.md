@@ -342,3 +342,22 @@ general `/enquire`. Rules:
 - Tracking IDs live in `tracking` in `lib/company.ts` (`googleTagId`, `googleLeadLabel`,
   optional `googleCallLabel`, `metaPixelId`). Empty = no tags rendered.
 - `.adhero` uses `overflow: clip`, not `hidden` — `hidden` breaks the sticky form.
+
+## Text imported from the old site (Nov 2026)
+
+`tools/import-100yards/build.py` reads the raw pages saved by `scripts/collect-100yards.mjs`
+(`scripts/collected-100yards/`, git-ignored, 31 MB) and writes three catalogue files:
+
+- `details.json` — per project, the published sections the short record lacks. Rendered by
+  `components/catalog/ProjectExtras.tsx` (sections) and as the FAQ accordion + FAQPage JSON-LD.
+- `articles.json` — guide bodies, served at `/blog/<slug>`; old `/<slug>/` addresses redirect there.
+- `posts.json` — guide list with the ten WordPress theme demo posts removed.
+
+Never hand-edit these; change the rules in build.py and regenerate (README in that folder).
+The import copies text as published and only LEAVES THINGS OUT: Investment Potential,
+Conclusion/verdict sections, enquiry prompts, placeholders, and any bullet or question about
+returns or appreciation. 29 guides about investment or market calls are HELD (title-only on
+/blog) until the Managing Director decides — do not import them without that yes.
+Old two-part addresses (`/residential-projects/<slug>`, `/upcoming-projects/<slug>`,
+`/category/*`, `/tag/*`) redirect permanently. Project photos beyond the first set are still
+on the old server; `tools/import-100yards/photos-source.json` lists them.
