@@ -469,3 +469,8 @@
   .guide__starters { grid-template-columns: minmax(0, 1fr); }
   .guide__form { flex-direction: column; }
 }
+
+/* the company logo (gold on transparent, as on the original 100yards.in) */
+.site-brand__logo { display: block; height: 64px; width: auto; }
+.site-footer__logo { display: block; height: 96px; width: auto; margin-bottom: var(--s-5); }
+@media (max-width: 760px) { .site-brand__logo { height: 50px; } .site-footer__logo { height: 80px; } }

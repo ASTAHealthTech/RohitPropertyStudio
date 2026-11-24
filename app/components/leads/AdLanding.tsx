@@ -38,8 +38,7 @@ export function AdLanding({ eyebrow, title, place, intro, facts, cover, coverAlt
     <main id="main-content" className="adpage">
       <header className="adbar">
         <div className="site-brand" aria-label={company.name}>
-          <span className="site-brand__mark" aria-hidden="true">100</span>
-          <span className="site-brand__text"><strong>100 Yards</strong><small>Real estate advisory</small></span>
+          <img className="site-brand__logo" src="/brand/logo.png" alt="100 Yards" width={416} height={259} />
         </div>
         <a className="button button--gold button--sm" href={company.phoneHref} data-track="call_clicked">
           <Phone size={15} aria-hidden="true" /> <span className="adbar__num">{company.phoneDisplay}</span><span className="adbar__short">Call</span>

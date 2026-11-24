@@ -33,11 +33,8 @@ export function SiteHeader() {
   return (
     <header className={`site-header${stuck ? " is-stuck" : ""}`}>
       <a className="site-brand" href="/" aria-label={`${company.name}, home`}>
-        <span className="site-brand__mark" aria-hidden="true">100</span>
-        <span className="site-brand__text">
-          <strong>100 Yards</strong>
-          <small>Real estate advisory</small>
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="site-brand__logo" src="/brand/logo.png" alt="100 Yards" width={416} height={259} />
       </a>
 
       <nav className="desktop-nav" aria-label="Primary">

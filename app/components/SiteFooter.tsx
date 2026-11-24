@@ -8,7 +8,8 @@ export function SiteFooter() {
     <footer className="site-footer surface-deep">
       <div className="site-footer__main shell">
         <div data-reveal>
-          <p className="eyebrow">100 Yards</p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="site-footer__logo" src="/brand/logo.png" alt="100 Yards" width={416} height={259} loading="lazy" />
           <h2>The last hundred yards,<br />walked with you.</h2>
           <p className="site-footer__addr">{company.legal}<br />{company.address}<br />{company.hours}</p>
         </div>

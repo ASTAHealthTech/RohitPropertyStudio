@@ -373,3 +373,11 @@ panels (`.o-pan`) that slide apart with the lit room painted on the two middle o
 hero video and skyline canvas wait for the door (`openingWaitMs` in `AmbientBackdrop.tsx`) and
 the grain is paused under the sheet. Keep it that way: no dashoffset, clip-path, filter or
 custom-property animation in the opening.
+
+## Logo
+
+`public/brand/logo.png` is the company's own logo (gold house + "100 Yards"), taken from the
+original 100yards.in. It is the only brand mark: header, ad pages, footer, and the tab icon
+(`app/icon.svg`, the house without the wordmark). Do not replace it with a drawn monogram —
+the "100" box was a placeholder and the owner rejected it. Source is 499px wide; ask for the
+designer's original if a larger one is ever needed.
