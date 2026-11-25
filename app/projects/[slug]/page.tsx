@@ -146,7 +146,7 @@ export default async function ProjectPage({ params }: Params) {
                 <p>This is the Karnataka RERA registration number listed for the project. Check it yourself on the official register before you decide.</p>
               </>
             ) : (
-              <p>The RERA registration number for this project is not on our listing yet. Ask us for it, and check it on the official register before you decide.</p>
+              <p>{project.reraNote ?? "The RERA registration number for this project is not on our listing yet. Ask us for it, and check it on the official register before you decide."}</p>
             )}
             <a className="text-link" href={company.reraVerifyUrl} target="_blank" rel="noreferrer">Verify on rera.karnataka.gov.in <ArrowUpRight size={14} aria-hidden="true" /></a>
           </div>

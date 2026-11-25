@@ -60,7 +60,7 @@ export default async function EnquirePage({ params }: Params) {
   const project = projectBySlug(slug);
   if (!project) notFound();
   const facts = [
-    ["Published starting price", clean(project.price)],
+    [project.reraNote ? "Indicative starting price" : "Published starting price", clean(project.price)],
     ["Homes", clean(project.config)],
     ["Sizes", clean(project.sizes)],
     ["Status", clean(project.status)],
@@ -76,6 +76,7 @@ export default async function EnquirePage({ params }: Params) {
       cover={project.images[0] ?? null}
       coverAlt={`${project.name} by ${project.dev}`}
       rera={project.rera}
+      reraNote={project.reraNote}
       topic={project.name}
       slug={project.slug}
     />

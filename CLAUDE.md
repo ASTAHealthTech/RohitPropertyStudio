@@ -426,3 +426,13 @@ upscalers on them: they invent detail in renders and master plans.
 MotionLayer sets up the first screen at once and everything below it in idle slots
 (`later` queue). Keep new motion groups in that queue; one long setup task cost about
 20 points of desktop PageSpeed.
+
+## Pre-launch projects (Sobha Parq City, Nov 2026)
+
+A project with no RERA number carries `reraNote` in `projects.json`; the project page and the
+ad page show that note in place of the number, and the ad page labels the price "Indicative".
+Rules for these entries: say plainly that registration is awaited and the date it was checked,
+call the pictures artist's impressions, take prices only from the sheet the team was given,
+leave out growth, jobs and appreciation claims, and never say or imply that 100 Yards takes
+booking money. When the number is issued: fill `rera`, delete `reraNote`, set `"rera": true`
+in `projects-lite.json`, and update the FAQ in `details.json`.

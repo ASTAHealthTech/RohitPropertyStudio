@@ -20,6 +20,8 @@ export type Project = {
   land: string; units: string; poss: string; rera: string;
   about: string[]; snap: string[][] | null; pt: string[][] | null; ct: string[][] | null;
   am: string[]; la: string[][]; images: Img[];
+  /** Shown in place of the RERA number when a project has none yet (e.g. pre-launch). */
+  reraNote?: string;
 };
 export type ProjectLite = {
   slug: string; name: string; dev: string; devSlug: string; loc: string; corr: string; corrSlug: string;

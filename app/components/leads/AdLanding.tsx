@@ -21,6 +21,8 @@ export type AdLandingProps = {
   cover?: Img | null;
   coverAlt?: string;
   rera?: string;
+  /** Used in place of the stock line when a project has no RERA number yet. */
+  reraNote?: string;
   /** What the enquiry is about, as it should read in "I just enquired about …". */
   topic: string;
   slug?: string;
@@ -34,7 +36,7 @@ const steps = [
   { title: "You visit, if you want to", copy: "We walk the site with you. There is no charge and no pressure to book." },
 ];
 
-export function AdLanding({ eyebrow, title, place, intro, facts, cover, coverAlt, rera, topic, slug, picks, picksTitle }: AdLandingProps) {
+export function AdLanding({ eyebrow, title, place, intro, facts, cover, coverAlt, rera, reraNote, topic, slug, picks, picksTitle }: AdLandingProps) {
   const wa = whatsappLink(`Hi, I would like details of ${topic}.`);
   return (
     <main id="main-content" className="adpage">
@@ -87,7 +89,9 @@ export function AdLanding({ eyebrow, title, place, intro, facts, cover, coverAlt
                 <BadgeCheck size={16} aria-hidden="true" />
                 {rera
                   ? <span>RERA registration listed for this project: <strong>{rera}</strong>. Check it on <a href={company.reraVerifyUrl} target="_blank" rel="noreferrer">rera.karnataka.gov.in</a> before you decide.</span>
-                  : <span>The RERA registration number is not on our listing yet. Ask us for it, and check it on <a href={company.reraVerifyUrl} target="_blank" rel="noreferrer">rera.karnataka.gov.in</a> before you decide.</span>}
+                  : reraNote
+                    ? <span>{reraNote} Official register: <a href={company.reraVerifyUrl} target="_blank" rel="noreferrer">rera.karnataka.gov.in</a>.</span>
+                    : <span>The RERA registration number is not on our listing yet. Ask us for it, and check it on <a href={company.reraVerifyUrl} target="_blank" rel="noreferrer">rera.karnataka.gov.in</a> before you decide.</span>}
               </p>
             )}
           </div>
