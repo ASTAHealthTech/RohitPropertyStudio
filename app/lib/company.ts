@@ -111,8 +111,8 @@ export const commercialTypes = [
  */
 export const tracking = {
   metaPixelId: "",
-  googleTagId: "", // e.g. "AW-123456789" or "G-XXXXXXX"
-  googleLeadLabel: "", // conversion label for a submitted lead, e.g. "AbCdEfGh"
+  googleTagId: "AW-18592672661", // e.g. "AW-123456789" or "G-XXXXXXX"
+  googleLeadLabel: "BRITCLufpb8dEJXX1qFF", // conversion label for a submitted lead, e.g. "AbCdEfGh"
   googleCallLabel: "", // optional: conversion label for a tap on a phone number on the site
 } as const;
 
