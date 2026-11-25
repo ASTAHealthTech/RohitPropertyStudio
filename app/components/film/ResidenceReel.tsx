@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { ProjectLite } from "../../lib/catalog";
+import { photoSet } from "../../lib/catalog/photo";
 
 /**
  * A reel of residences. By default it is a native sideways scroller (touch,
@@ -54,7 +55,7 @@ export function ResidenceReel({ projects, total }: { projects: ProjectLite[]; to
       <div className="reel__track">
         {projects.map((p) => (
           <a className="reel__card" href={`/projects/${p.slug}`} key={p.slug}>
-            <span className="reel__img">{p.cover && <img src={p.cover.src} alt={`${p.name} by ${p.dev}`} width={p.cover.w} height={p.cover.h} loading="lazy" decoding="async" />}</span>
+            <span className="reel__img">{p.cover && <img src={p.cover.src} {...photoSet(p.cover, "(max-width: 700px) 86vw, 40vw")} alt={`${p.name} by ${p.dev}`} width={p.cover.w} height={p.cover.h} loading="lazy" decoding="async" />}</span>
             <span className="reel__meta"><strong>{p.name}</strong><span>{p.price.replace(/\*/g, "")}</span></span>
             <span className="reel__sub"><span>{p.dev} · {p.loc}</span><span>{p.kind}</span></span>
           </a>

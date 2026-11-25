@@ -1,17 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import { BadgeCheck, MapPin } from "lucide-react";
 import type { ProjectLite } from "../../lib/catalog";
+import { photoSet } from "../../lib/catalog/photo";
 
 /**
- * Catalogue photos are small pre-sized WebP files, so they are served as plain
- * <img> — no image-transform quota is spent on them.
+ * Catalogue photos are pre-sized WebP files in two widths, so they are served as
+ * plain <img> with a srcset — no image-transform quota is spent on them.
  */
 export function ProjectCard({ project, eager = false }: { project: ProjectLite; eager?: boolean }) {
   return (
     <a className="pcard" href={`/projects/${project.slug}`}>
       <span className="pcard__media">
         {project.cover ? (
-          <img src={project.cover.src} alt={`${project.name} by ${project.dev}`} width={project.cover.w} height={project.cover.h} loading={eager ? "eager" : "lazy"} decoding="async" />
+          <img src={project.cover.src} {...photoSet(project.cover, "(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 30vw")} alt={`${project.name} by ${project.dev}`} width={project.cover.w} height={project.cover.h} loading={eager ? "eager" : "lazy"} decoding="async" />
         ) : (
           <span className="pcard__blank" aria-hidden="true">100<i>YARDS</i></span>
         )}

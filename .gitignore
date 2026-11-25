@@ -50,3 +50,5 @@ _to_delete/
 
 # raw pages saved from the old site by scripts/collect-100yards.mjs
 scripts/collected-100yards/
+
+scripts/collected-photos/

@@ -147,13 +147,13 @@ html.opening-on .dock { display: none; }
   animation: backdrop-drift 34s ease-in-out infinite alternate;
   will-change: transform;
 }
-.backdrop__video.is-ready { opacity: .72; }
-.backdrop__still { position: absolute; inset: 0; background-position: center; background-size: cover; opacity: .72; transition: opacity 1.4s var(--e-out); }
+.backdrop__video.is-ready { opacity: .86; }
+.backdrop__still { position: absolute; inset: 0; background-position: center; background-size: cover; opacity: .86; transition: opacity 1.4s var(--e-out); }
 .backdrop__still.is-gone { opacity: 0; }
 /* the frame never sits perfectly still — a barely-there push-in, back and forth */
 @keyframes backdrop-drift {
   from { transform: scale(1); }
-  to { transform: scale(1.07); }
+  to { transform: scale(1.03); }
 }
 @media (prefers-reduced-motion: reduce) { .backdrop__video { animation: none; } }
 .backdrop__scrim {

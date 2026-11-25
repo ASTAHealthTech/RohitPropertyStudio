@@ -5,6 +5,7 @@ import { LeadFormSlot } from "./LeadFormSlot";
 import { assurances, company, whatsappLink } from "../../lib/company";
 import { WaIcon } from "../WaIcon";
 import type { Img } from "../../lib/catalog";
+import { photoSet } from "../../lib/catalog/photo";
 
 /**
  * The page an ad lands on. One job: the visitor reads the facts and enquires or calls.
@@ -71,7 +72,7 @@ export function AdLanding({ eyebrow, title, place, intro, facts, cover, coverAlt
             {cover && (
               <figure className="adhero__media">
                 <span className="frame frame--corner">
-                  <img src={cover.src} alt={coverAlt ?? title} width={cover.w} height={cover.h} fetchPriority="high" />
+                  <img src={cover.src} {...photoSet(cover, "(max-width: 1000px) 92vw, 44vw")} alt={coverAlt ?? title} width={cover.w} height={cover.h} fetchPriority="high" />
                 </span>
               </figure>
             )}
@@ -101,7 +102,7 @@ export function AdLanding({ eyebrow, title, place, intro, facts, cover, coverAlt
               {picks.map((p) => (
                 <li key={p.href}>
                   <a href={p.href}>
-                    {p.cover && <img src={p.cover.src} alt="" width={p.cover.w} height={p.cover.h} loading="lazy" />}
+                    {p.cover && <img src={p.cover.src} {...photoSet(p.cover, "(max-width: 700px) 92vw, 30vw")} alt="" width={p.cover.w} height={p.cover.h} loading="lazy" />}
                     <span className="adpicks__name">{p.name}</span>
                     <span className="adpicks__meta">{p.meta}</span>
                     <span className="adpicks__price">{p.price}</span>

@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { Img } from "../../lib/catalog";
+import { photoSet } from "../../lib/catalog/photo";
 
 /** Photo strip that opens a full-screen viewer. Keyboard: arrows and Escape. */
 export function ProjectGallery({ images, name }: { images: Img[]; name: string }) {
@@ -28,7 +29,7 @@ export function ProjectGallery({ images, name }: { images: Img[]; name: string }
       <div className="pgallery" data-reveal-group>
         {images.slice(1).map((img, i) => (
           <button type="button" className="pgallery__item" key={img.src} onClick={() => setOpen(i + 1)} aria-label={`Open photo ${i + 2} of ${images.length}`}>
-            <img src={img.src} alt={`${name}, view ${i + 2}`} width={img.w} height={img.h} loading="lazy" decoding="async" />
+            <img src={img.src} {...photoSet(img, "(max-width: 700px) 92vw, 300px")} alt={`${name}, view ${i + 2}`} width={img.w} height={img.h} loading="lazy" decoding="async" />
           </button>
         ))}
       </div>

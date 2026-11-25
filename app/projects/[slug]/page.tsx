@@ -9,6 +9,7 @@ import { ProjectGallery } from "../../components/catalog/ProjectGallery";
 import { LeadFormSlot } from "../../components/leads/LeadFormSlot";
 import { areaBySlug, detailsFor, projectBySlug, projectsInArea } from "../../lib/catalog";
 import { company, whatsappLink } from "../../lib/company";
+import { photoSet } from "../../lib/catalog/photo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -121,7 +122,7 @@ export default async function ProjectPage({ params }: Params) {
             {cover && (
               <figure className="phero__media" data-enter>
                 <span className="frame frame--corner">
-                  <img src={cover.src} alt={`${project.name} by ${project.dev}`} width={cover.w} height={cover.h} fetchPriority="high" />
+                  <img src={cover.src} {...photoSet(cover, "(max-width: 1000px) 92vw, 48vw")} alt={`${project.name} by ${project.dev}`} width={cover.w} height={cover.h} fetchPriority="high" />
                 </span>
               </figure>
             )}

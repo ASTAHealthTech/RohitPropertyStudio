@@ -409,3 +409,20 @@ Sysbi's API document — NEVER commit it or put it in chat).
 - Test without touching the form: `GET /api/desk?crm=preview` (shows the body, sends nothing)
   and `GET /api/desk?crm=test` (sends one lead named "WEBSITE TEST - please ignore"), both
   with the `x-desk-key` header.
+
+## Photo quality (Nov 2026)
+
+Project photos in `public/p/<slug>/<n>.webp` are rebuilt from the best source available:
+the old site's full-size copies fetched by `scripts/collect-photos.mjs` (run on a machine
+with open internet; output in `scripts/collected-photos/`, never committed), matched to the
+existing photos by `tools/import-100yards/photos-match.py` and written by `photos-build.py`
+(paths inside those two are the sandbox's; adjust before re-running). Each photo is at most
+1920px wide; any photo wider than 900px also has an 800px `-s.webp` copy, and
+`app/lib/catalog/photo.ts` (`photoSet`) gives the `srcset`. About half the old site's photos
+were small to begin with (under 960px); those are only resized up with light sharpening, so
+they cannot look truly sharp until the builder's own image replaces them. Do not run AI
+upscalers on them: they invent detail in renders and master plans.
+
+MotionLayer sets up the first screen at once and everything below it in idle slots
+(`later` queue). Keep new motion groups in that queue; one long setup task cost about
+20 points of desktop PageSpeed.

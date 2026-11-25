@@ -116,6 +116,8 @@ export function MotionLayer() {
     // over the hero; hold the hero's own entrance until that overlay lifts.
     const hold = document.documentElement.classList.contains("opening-on") ? ((window as unknown as { __hyHold?: number }).__hyHold ?? 4.55) : 0;
 
+    const later: (() => void)[] = [];
+
     const context = gsap.context(() => {
       /* --- soft fade-through on route change --- */
       gsap.fromTo("main", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power1.out" });
@@ -125,7 +127,7 @@ export function MotionLayer() {
       // simply there when you reach it, so nothing is ever waiting on a scroll trigger.
       const phone = window.matchMedia("(max-width: 760px)").matches;
 
-      document.querySelectorAll<HTMLElement>("[data-split]").forEach((element) => {
+      const headline = (element: HTMLElement) => {
         if (phone && !element.closest(".hero, .page-hero")) { gsap.set(element, { autoAlpha: 1 }); return; }
         const inners = splitWords(element);
         if (!inners.length) return;
@@ -142,7 +144,13 @@ export function MotionLayer() {
             scrollTrigger: { trigger: element, start: "top 92%", once: true },
           },
         );
-      });
+      };
+      // The first screen is set up at once. Everything below it waits for a quiet
+      // moment, so the page becomes usable without one long blocking task.
+      const allHeadlines = Array.from(document.querySelectorAll<HTMLElement>("[data-split]"));
+      const isFirstScreen = (element: HTMLElement) => Boolean(element.closest(".hero, .page-hero, .adhero"));
+      allHeadlines.filter(isFirstScreen).forEach(headline);
+      later.push(() => allHeadlines.filter((element) => !isFirstScreen(element)).forEach(headline));
 
       /* --- hero entrance chrome --- */
       gsap.fromTo(
@@ -152,7 +160,7 @@ export function MotionLayer() {
       );
 
       /* --- counters --- */
-      document.querySelectorAll<HTMLElement>("[data-count]").forEach((element) => {
+      later.push(() => document.querySelectorAll<HTMLElement>("[data-count]").forEach((element) => {
         const target = Number(element.dataset.count || "0");
         const suffix = element.dataset.countSuffix || "";
         const counter = { value: 0 };
@@ -169,10 +177,10 @@ export function MotionLayer() {
             });
           },
         });
-      });
+      }));
 
       /* --- self-drawing lines (charts) --- */
-      document.querySelectorAll<SVGPathElement>("path[data-draw]").forEach((element) => {
+      later.push(() => document.querySelectorAll<SVGPathElement>("path[data-draw]").forEach((element) => {
         const length = element.getTotalLength();
         gsap.fromTo(
           element,
@@ -184,10 +192,10 @@ export function MotionLayer() {
             scrollTrigger: { trigger: element, start: "top 82%", once: true },
           },
         );
-      });
+      }));
 
       /* --- media wipes --- */
-      document.querySelectorAll<HTMLElement>("[data-clip]").forEach((element) => {
+      later.push(() => document.querySelectorAll<HTMLElement>("[data-clip]").forEach((element) => {
         if (phone) return;
         gsap.fromTo(
           element,
@@ -199,10 +207,10 @@ export function MotionLayer() {
             scrollTrigger: { trigger: element, start: "top 88%", once: true },
           },
         );
-      });
+      }));
 
       /* --- statement: words brighten through the scroll --- */
-      document.querySelectorAll<HTMLElement>("[data-scrub-words]").forEach((element) => {
+      later.push(() => document.querySelectorAll<HTMLElement>("[data-scrub-words]").forEach((element) => {
         const inners = splitWords(element);
         if (!inners.length) return;
         if (phone) { inners.forEach((inner) => inner.classList.add("is-lit")); return; }
@@ -216,23 +224,38 @@ export function MotionLayer() {
             inners.forEach((inner, index) => inner.classList.toggle("is-lit", index < lit));
           },
         });
-      });
+      }));
 
       /* --- desktop-only parallax on media --- */
       if (window.matchMedia("(min-width: 900px) and (pointer: fine)").matches) {
-        document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((element) => {
+        later.push(() => document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((element) => {
           gsap.to(element, {
             yPercent: Number(element.dataset.parallax || "5"),
             ease: "none",
             scrollTrigger: { trigger: element.parentElement ?? element, start: "top bottom", end: "bottom top", scrub: 0.7 },
           });
-        });
+        }));
       }
     });
 
-    const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 320);
+    // Run the deferred groups one per idle slot, then measure once at the end.
+    let cancelled = false;
+    let refresh = 0;
+    const idle = (run: () => void) => {
+      const w = window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+      if (w.requestIdleCallback) w.requestIdleCallback(run, { timeout: 1200 }); else window.setTimeout(run, 60);
+    };
+    const next = () => {
+      if (cancelled) return;
+      const job = later.shift();
+      if (!job) { refresh = window.setTimeout(() => ScrollTrigger.refresh(), 200); return; }
+      context.add(job);
+      idle(next);
+    };
+    idle(next);
 
     return () => {
+      cancelled = true;
       window.clearTimeout(refresh);
       revealObserver?.disconnect();
       context.revert();
