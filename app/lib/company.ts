@@ -113,7 +113,8 @@ export const tracking = {
   metaPixelId: "",
   googleTagId: "AW-18592672661", // e.g. "AW-123456789" or "G-XXXXXXX"
   googleLeadLabel: "BRITCLufpb8dEJXX1qFF", // conversion label for a submitted lead, e.g. "AbCdEfGh"
-  googleCallLabel: "", // optional: conversion label for a tap on a phone number on the site
+  googleCallLabel: "ih9iCOuQqL8dEJXX1qFF", // optional: conversion label for a tap on a phone number on the site
+  googleWhatsappLabel: "j1uqCM7lo78dEJXX1qFF", // optional: conversion label for a tap on a WhatsApp link on the site
 } as const;
 
 export const organizationJsonLd = {
