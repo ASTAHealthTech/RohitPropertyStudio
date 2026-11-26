@@ -245,11 +245,11 @@ export default async function ProjectPage({ params }: Params) {
             <p className="eyebrow"><FileText size={15} aria-hidden="true" /> Before you commit</p>
             <h2 data-split>Read this project&apos;s record first.</h2>
             <p>
-              The free snapshot gives you the registration record and key facts for {project.name} on two pages.
-              The full Property Intelligence Report adds the builder&apos;s track record, the ownership trail and the
-              complete cost framework, reviewed and signed by {company.md}.
+              The free snapshot gives you the key facts for {project.name} on two pages. The full
+              Property Intelligence Report adds the complete price working, sample EMIs, the metro
+              and road projects on the way, and how prices nearby have moved.
             </p>
-            <p className="preport__price"><strong>₹{company.reportPrice.toLocaleString("en-IN")}</strong> for the full signed report</p>
+            <p className="preport__price"><strong>₹{company.reportPrice.toLocaleString("en-IN")}</strong> for the full report</p>
             <a className="text-link" href="/reports">See what the full report contains <ChevronRight size={15} aria-hidden="true" /></a>
           </div>
           <div data-reveal><LeadFormSlot kind="snapshot" projectSlug={project.slug} projectName={project.name} id="snapshot" compact /></div>

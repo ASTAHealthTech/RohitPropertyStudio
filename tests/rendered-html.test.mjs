@@ -36,7 +36,7 @@ test("server-renders the 100 Yards home page without depending on JavaScript", a
 test("makes no guarantee or advice claim, and takes no payment on the site", async () => {
   const html = await (await render()).text();
   assert.doesNotMatch(html, /Buy now|Proceed to payment|guaranteed (returns|outcome)|assured returns/i);
-  assert.match(html, /never says buy or don(&#x27;|')t buy/i);
+  assert.match(html, /Every number names its source/i);
 });
 
 test("homepage rupee figures are labelled as published listing prices", async () => {
@@ -118,9 +118,9 @@ test("server-renders the reports page and the homepage pillar", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Property Intelligence Report/i);
-  assert.match(html, /lodha-beaumont-estate-specimen\.pdf/);
-  assert.match(html, /woodland-forest-bangalore-specimen\.pdf/);
-  assert.match(html, /never says buy/i);
+  assert.match(html, /sobha-parq-city-report-preview\.pdf/);
+  assert.match(html, /never promises a return/i);
+  assert.doesNotMatch(html, /r-7f3c9a1e5b2d4c86/);
   assert.match(html, /₹1,000/);
   assert.match(html, /id="order-form"/);
   assert.match(html, /No money is taken for a request/i);

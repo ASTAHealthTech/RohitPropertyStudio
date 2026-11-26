@@ -1,0 +1,108 @@
+{
+  "checked": "26 November 2026",
+  "corridor": "sarjapur",
+  "headline": "A low-density Prestige address on Sarjapur Road.",
+  "pitch": "Prestige Eaton Park is at Yamare, off Sarjapur Road. With 366 homes on about 7 acres, it is a smaller, quieter Prestige community close to the tech corridor.",
+  "reasons": [
+    {
+      "title": "A metro line is planned for this road",
+      "text": "The Red Line (Hebbal to Sarjapura, 37 km, 28 stations) was approved by the Karnataka Cabinet in December 2024. The revised project report targets 2033.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "Close to the tech corridor",
+      "text": "Sarjapur Road feeds the Outer Ring Road offices. The Blue Line's Silk Board to KR Pura stretch (19.75 km) runs through Bellandur and Marathahalli.",
+      "source": "Business Today, 6 Aug 2026; Square Yards, 2026"
+    },
+    {
+      "title": "A new ring road is planned",
+      "text": "The Bengaluru Business Corridor (Peripheral Ring Road) is a 73 km road with a reported 2029 deadline, linking the Devanahalli side with the Sarjapur side.",
+      "source": "Sattva Group market note, 2026"
+    },
+    {
+      "title": "New launches are holding their price",
+      "text": "Asking prices for new launches on Sarjapur Road rose 3.1% while the wider average stayed flat at about ₹12,250 per sq.ft.",
+      "source": "Square Yards, Nov 2026"
+    }
+  ],
+  "upcoming": [
+    {
+      "what": "Red Line metro (Hebbal to Sarjapura)",
+      "status": "Proposed 37 km line with 28 stations. Karnataka Cabinet approved it in December 2024; central approval was awaited. The revised project report targets April 2033.",
+      "why": "It would give Sarjapur Road its own metro line through Koramangala to Hebbal. Treat the date as a target, not a promise.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "what": "Blue Line metro, Silk Board to KR Pura",
+      "status": "19.75 km along the Outer Ring Road through Bellandur and Marathahalli. Trial runs were expected from late 2026.",
+      "why": "Puts the main office belt that Sarjapur Road residents work in onto the metro.",
+      "source": "Business Today, 6 Aug 2026; Square Yards, 2026"
+    },
+    {
+      "what": "Bengaluru Business Corridor (Peripheral Ring Road)",
+      "status": "73 km ring road with a reported 2029 deadline.",
+      "why": "Takes through-traffic off the Outer Ring Road and shortens cross-city trips.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Dec 2024",
+      "what": "Red Line approved by State Cabinet"
+    },
+    {
+      "when": "Late 2026",
+      "what": "ORR metro trial runs expected"
+    },
+    {
+      "when": "2029",
+      "what": "Ring road, reported deadline"
+    },
+    {
+      "when": "2033",
+      "what": "Red Line, project report target"
+    }
+  ],
+  "timelineSource": "Wikipedia (Namma Metro line pages), read 26 Nov 2026; Square Yards, 2026; Sattva Group market note, 2026. Government target dates can move.",
+  "band": "Sarjapur Road has no metro today. The buyers choosing it now are buying the offices nearby first and the metro plan second.",
+  "area": {
+    "name": "Sarjapur Road",
+    "series": [
+      [
+        "Dec 2025",
+        12250
+      ],
+      [
+        "Mar 2026",
+        12200
+      ],
+      [
+        "Jun 2026",
+        12250
+      ],
+      [
+        "Sep 2026",
+        12200
+      ]
+    ],
+    "now": 12250,
+    "source": "Square Yards property rates page, read 26 Nov 2026. Asking prices from listings, not registered sale prices.",
+    "short": "Square Yards, Nov 2026",
+    "yield": 3.92,
+    "rent": 40
+  },
+  "movers": {
+    "up": [
+      "The Red Line getting central approval and starting work",
+      "Outer Ring Road offices staying full",
+      "The ring road being delivered",
+      "Good schools continuing to open on this road"
+    ],
+    "down": [
+      "The Red Line slipping beyond its target",
+      "Heavy peak-hour traffic on Sarjapur Road",
+      "A large number of projects launching on the same road",
+      "Higher home-loan rates cooling demand"
+    ]
+  }
+}

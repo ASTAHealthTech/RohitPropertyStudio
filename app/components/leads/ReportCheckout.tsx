@@ -90,8 +90,8 @@ export function ReportCheckout({ projects, price, preset }: { projects: ShopProj
         <h3>Thank you. Your report for {done.project} is confirmed.</h3>
         <p>
           {done.download
-            ? "Your report is ready. Download it now; we have also noted your email for a copy."
-            : `Rohitt reviews and signs each report before it leaves. Yours reaches ${done.email} within 24–48 hours.`}
+            ? "Your report is ready. Download it now and keep the file. If the download fails, message us with the payment reference and we will send it."
+            : `Your report is being prepared and will reach ${done.email} within 24–48 hours.`}
         </p>
         <p className="annot">Payment reference: {done.paymentId}</p>
         <div className="lead-form__next">
@@ -111,7 +111,7 @@ export function ReportCheckout({ projects, price, preset }: { projects: ShopProj
       <div className="form__heading">
         <p className="eyebrow">Order online</p>
         <h2>Choose the project and pay {price}.</h2>
-        <p>One report per project, written from its current record. {price} is the full price; nothing is added at payment.</p>
+        <p>One report per project, with instant download after payment. {price} is the full price; nothing is added at payment.</p>
       </div>
       <div className="field field--full">
         <label htmlFor="rc-project">Project</label>

@@ -174,22 +174,22 @@ export default function HomePage() {
         <div className="shell record__grid">
           <div className="record__copy">
             <p className="eyebrow">The record</p>
-            <h2 data-split>Eighteen questions. Answered before you sign.</h2>
+            <h2 data-split>Know the project before you visit it.</h2>
             <p>
-              For the home you are serious about, we prepare a Property Intelligence Report written
-              as the questions a careful buyer asks. Each answer names its official source and
-              date. It never says buy or don&apos;t buy. It shows you what is on file.
+              For the home you are serious about, the Property Intelligence Report sets out the
+              full price, what you really pay, the metro and roads on the way, how prices nearby
+              have moved, and what to ask before you book. Every number names its source.
             </p>
-            <p className="record__price"><strong>₹{company.reportPrice.toLocaleString("en-IN")}</strong><span>per property · reviewed and signed by {company.md}</span></p>
+            <p className="record__price"><strong>₹{company.reportPrice.toLocaleString("en-IN")}</strong><span>per project · instant download</span></p>
             <div className="hero__actions">
-              <a className="button button--gold" href="/reports#order" data-track="report_order_cta">Order a report <ArrowUpRight size={15} aria-hidden="true" /></a>
-              <a className="button button--outline" href="/reports/lodha-beaumont-estate-specimen.pdf" target="_blank" rel="noreferrer" data-track="report_sample_opened">Read a sample</a>
+              <a className="button button--gold" href="/reports#order" data-track="report_order_cta">Get a report <ArrowUpRight size={15} aria-hidden="true" /></a>
+              <a className="button button--outline" href="/reports/sobha-parq-city-report-preview.pdf" target="_blank" rel="noreferrer" data-track="report_sample_opened">See sample pages</a>
             </div>
           </div>
           <div className="record__pages" data-reveal aria-hidden="true">
-            <div className="rpage rpage--a"><small>Question 9 of 18</small><b>What do I pay on top of the quoted price?</b><i /><span>Stamp duty, registration, cess, surcharge and GST, worked out on the quoted price, with the rate and source for each line.</span><em>Source: Karnataka Stamps &amp; Registration</em></div>
-            <div className="rpage rpage--b"><small>Question 1 of 18</small><b>Is the project registered with RERA, and until when?</b><i /><span>The registration number, promoter on the register, validity date and any extensions, as read from the register.</span><em>Source: K-RERA register</em></div>
-            <div className="rpage rpage--cover"><small>Property Intelligence Report</small><b>Lodha Beaumont Estate</b><span>Sadahalli, North Bengaluru</span><span className="rpage__line">18 questions, answered from the official record.</span><em>Signed: {company.md}</em></div>
+            <div className="rpage rpage--a"><small>What you really pay</small><b>The price, plus what the government adds.</b><i /><span>Stamp duty, registration, cess and surcharge worked out on the listed price for three home sizes.</span><em>Source: Karnataka Stamps &amp; Registration</em></div>
+            <div className="rpage rpage--b"><small>What is coming to this area</small><b>The projects that can change this address.</b><i /><span>The metro and road projects nearby, where each one stands today, and when it is due.</span><em>Sources named on every line</em></div>
+            <div className="rpage rpage--cover"><small>Property Intelligence Report</small><b>Sobha Parq City</b><span>Hennur–Bagalur Road, North Bengaluru</span><span className="rpage__line">Seventeen pages, with every number drawn.</span><em>Prepared by 100 Yards</em></div>
           </div>
         </div>
       </section>

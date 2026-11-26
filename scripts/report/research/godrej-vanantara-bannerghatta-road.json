@@ -1,0 +1,104 @@
+{
+  "checked": "26 November 2026",
+  "corridor": "bannerghatta",
+  "headline": "A 36-acre Godrej community off Bannerghatta Road.",
+  "pitch": "Godrej Vanantara is at Hommadevanahalli, off Bannerghatta Road in South Bengaluru. It is a large gated community from a national builder, on the side of the city where the Pink Line has just opened.",
+  "reasons": [
+    {
+      "title": "The metro has just opened here",
+      "text": "The Pink Line's elevated section from Kalena Agrahara to S.G. Palya (7.5 km, 6 stations) opened on 14 November 2026. Kalena Agrahara is on Bannerghatta Road.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "It will reach MG Road and Nagawara",
+      "text": "The rest of the Pink Line, underground to Nagawara, is expected around March to May 2027. At Nagawara it meets the airport line.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "More metro is approved",
+      "text": "The Orange Line (Kempapura to JP Nagar 4th Phase, 32.15 km) was approved by the Union Cabinet in August 2024.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "Prices have moved up this year",
+      "text": "Asking prices on Bannerghatta Road went from about ₹11,950 to about ₹12,450 per sq.ft. between December 2025 and June 2026.",
+      "source": "Square Yards, Nov 2026"
+    }
+  ],
+  "upcoming": [
+    {
+      "what": "Pink Line metro (Kalena Agrahara to Nagawara)",
+      "status": "21.25 km, 18 stations. The elevated Kalena Agrahara to S.G. Palya section opened on 14 November 2026. The underground section to Nagawara is expected around March to May 2027.",
+      "why": "Connects the Bannerghatta Road side to MG Road and on to Nagawara, where it meets the airport line.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "what": "Orange Line metro (Kempapura to JP Nagar 4th Phase)",
+      "status": "32.15 km, 22 stations. Approved by the Union Cabinet in August 2024; scheduled completion 2031.",
+      "why": "A western ring of metro that links Hebbal, Peenya and JP Nagar without going through the centre.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "what": "Bengaluru Business Corridor (Peripheral Ring Road)",
+      "status": "73 km ring road with a reported 2029 deadline.",
+      "why": "Takes through-traffic off the Outer Ring Road and shortens cross-city trips.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Aug 2024",
+      "what": "Orange Line approved by Cabinet"
+    },
+    {
+      "when": "Nov 2026",
+      "what": "Pink Line opens to S.G. Palya"
+    },
+    {
+      "when": "2027",
+      "what": "Pink Line to Nagawara, expected"
+    },
+    {
+      "when": "2031",
+      "what": "Orange Line, scheduled completion"
+    }
+  ],
+  "timelineSource": "Wikipedia (Namma Metro line pages), read 26 Nov 2026. Government target dates can move.",
+  "band": "The first Pink Line trains started this month. Bannerghatta Road is no longer waiting for its metro.",
+  "area": {
+    "name": "Bannerghatta Road",
+    "series": [
+      [
+        "Dec 2025",
+        11950
+      ],
+      [
+        "Mar 2026",
+        12850
+      ],
+      [
+        "Jun 2026",
+        12450
+      ]
+    ],
+    "now": 12450,
+    "source": "Square Yards property rates page, read 26 Nov 2026. Asking prices from listings, not registered sale prices.",
+    "short": "Square Yards, Nov 2026",
+    "yield": 3.76,
+    "rent": 39
+  },
+  "movers": {
+    "up": [
+      "The Pink Line opening all the way to Nagawara",
+      "The Orange Line moving into construction",
+      "Offices and hospitals along Bannerghatta Road",
+      "Forest-side land being limited"
+    ],
+    "down": [
+      "Traffic on Bannerghatta Road at peak hours",
+      "Delays to the underground metro section",
+      "Several large projects in the same stretch",
+      "Higher home-loan rates cooling demand"
+    ]
+  }
+}

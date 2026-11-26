@@ -1,0 +1,106 @@
+{
+  "checked": "26 November 2026",
+  "corridor": "kadugodi",
+  "headline": "A 40-acre Brigade township at the Whitefield end of the metro.",
+  "pitch": "Brigade Granada is on the Whitefield to Kadugodi Road, in East Bengaluru. It is a large township from one of the city's most established builders, close to the Purple Line's last stations.",
+  "reasons": [
+    {
+      "title": "The metro is already running",
+      "text": "The Purple Line reaches Whitefield (Kadugodi). The Whitefield end opened on 26 March 2023, and the line runs 43.49 km across the city.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "It meets the airport line",
+      "text": "The Purple Line interchanges with the Blue Line at KR Pura. Blue Line trial runs began in November 2026.",
+      "source": "Housing.com metro guide, 2026; IANS, 11 Nov 2026"
+    },
+    {
+      "title": "One of the city's biggest job hubs",
+      "text": "Whitefield is home to ITPL and a long line of tech parks. Demand here comes from people who work a short drive away.",
+      "source": "Location as listed by 100 Yards"
+    },
+    {
+      "title": "A new ring road is planned",
+      "text": "The Bengaluru Business Corridor (Peripheral Ring Road) is a 73 km road with a reported 2029 deadline, linking the Devanahalli side with the Sarjapur side.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "upcoming": [
+    {
+      "what": "Purple Line metro (Whitefield to Challaghatta)",
+      "status": "Open. 43.49 km, 37 stations; the Whitefield (Kadugodi) end opened on 26 March 2023.",
+      "why": "Whitefield already has a working metro across the city, and it meets the airport line at KR Pura.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "what": "Airport metro (Blue Line, Phase 2B)",
+      "status": "Trial runs began November 2026. 38.44 km from KR Puram to the airport via Hebbal and Yelahanka. Overall construction was 72% in August 2026; completion is reported for December 2027.",
+      "why": "A metro within reach turns a car-only address into a commuter address.",
+      "source": "IANS, 11 Nov 2026; Business Today, 6 Aug 2026; Oneindia, 2026"
+    },
+    {
+      "what": "Bengaluru Business Corridor (Peripheral Ring Road)",
+      "status": "73 km ring road with a reported 2029 deadline.",
+      "why": "Takes through-traffic off the Outer Ring Road and shortens cross-city trips.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Mar 2023",
+      "what": "Metro reaches Whitefield (Kadugodi)"
+    },
+    {
+      "when": "Nov 2026",
+      "what": "Airport line trial runs begin"
+    },
+    {
+      "when": "Dec 2027",
+      "what": "Airport line, reported target"
+    },
+    {
+      "when": "2029",
+      "what": "Ring road, reported deadline"
+    }
+  ],
+  "timelineSource": "Wikipedia (Namma Metro line pages), read 26 Nov 2026; IANS, 11 Nov 2026; Oneindia, 2026; Sattva Group market note, 2026. Government target dates can move.",
+  "band": "Whitefield's metro is running today. That is the difference between a plan and an address that already works.",
+  "area": {
+    "name": "Kadugodi",
+    "series": [
+      [
+        "Dec 2025",
+        9250
+      ],
+      [
+        "Mar 2026",
+        9600
+      ],
+      [
+        "Jun 2026",
+        10250
+      ],
+      [
+        "Sep 2026",
+        10050
+      ]
+    ],
+    "now": 10050,
+    "source": "Square Yards property rates page, read 26 Nov 2026. Asking prices from listings, not registered sale prices.",
+    "short": "Square Yards, Nov 2026"
+  },
+  "movers": {
+    "up": [
+      "The airport line opening and linking at KR Pura",
+      "Tech parks continuing to hire",
+      "The ring road being delivered",
+      "Limited large land parcels left in Whitefield"
+    ],
+    "down": [
+      "Heavy traffic inside Whitefield",
+      "Many projects competing for the same buyers",
+      "Slower hiring in technology",
+      "Higher home-loan rates cooling demand"
+    ]
+  }
+}

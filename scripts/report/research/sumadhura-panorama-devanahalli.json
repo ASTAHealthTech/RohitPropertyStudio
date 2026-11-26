@@ -1,0 +1,114 @@
+{
+  "checked": "26 November 2026",
+  "corridor": "north_airport",
+  "headline": "Sumadhura homes at Devanahalli, close to the airport.",
+  "pitch": "Sumadhura Panorama is at Devanahalli in North Bengaluru. Sumadhura is known in Bengaluru for finishing projects on time, and this one sits in the airport growth belt.",
+  "reasons": [
+    {
+      "title": "The airport metro is in trial runs",
+      "text": "Trial runs on the Blue Line began in November 2026. Its 38.44 km airport stretch runs from KR Puram through Hebbal and Yelahanka to the airport.",
+      "source": "IANS, 11 Nov 2026"
+    },
+    {
+      "title": "Jobs are moving north",
+      "text": "The KIADB Aerospace Park covers nearly 950 acres of aerospace manufacturing and testing next to the airport.",
+      "source": "The Realty Today, 2026"
+    },
+    {
+      "title": "The airport is the neighbour",
+      "text": "Kempegowda International Airport keeps adding capacity and an Airport City business district. Market reports name it as the main engine of housing demand in North Bengaluru.",
+      "source": "NoBroker infrastructure guide, 2026; Square Yards, 2026"
+    },
+    {
+      "title": "A new ring road is planned",
+      "text": "The Bengaluru Business Corridor (Peripheral Ring Road) is a 73 km road with a reported 2029 deadline, linking the Devanahalli side with the Sarjapur side.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "upcoming": [
+    {
+      "what": "Airport metro (Blue Line, Phase 2B)",
+      "status": "Trial runs began November 2026. 38.44 km from KR Puram to the airport via Hebbal and Yelahanka. Overall construction was 72% in August 2026; completion is reported for December 2027.",
+      "why": "A metro within reach turns a car-only address into a commuter address.",
+      "source": "IANS, 11 Nov 2026; Business Today, 6 Aug 2026; Oneindia, 2026"
+    },
+    {
+      "what": "KIADB Aerospace Park",
+      "status": "Operating, nearly 950 acres beside the airport.",
+      "why": "New factories and offices bring tenants and buyers who want to live close by.",
+      "source": "The Realty Today, 2026"
+    },
+    {
+      "what": "Airport growth",
+      "status": "Kempegowda International Airport keeps adding capacity, with an Airport City business district around it.",
+      "why": "Market reports name airport expansion as the main engine of housing demand in North Bengaluru.",
+      "source": "NoBroker infrastructure guide, 2026; Square Yards, 2026"
+    },
+    {
+      "what": "Bengaluru Business Corridor (Peripheral Ring Road)",
+      "status": "73 km ring road with a reported 2029 deadline.",
+      "why": "Takes through-traffic off the Outer Ring Road and shortens cross-city trips.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Aug 2026",
+      "what": "Airport metro crosses 72% built"
+    },
+    {
+      "when": "Nov 2026",
+      "what": "Metro trial runs begin"
+    },
+    {
+      "when": "Dec 2027",
+      "what": "Metro to airport, reported target"
+    },
+    {
+      "when": "2029",
+      "what": "Ring road, reported deadline"
+    }
+  ],
+  "timelineSource": "Business Today, 6 Aug 2026; IANS, 11 Nov 2026; Oneindia, 2026; Sattva Group market note, 2026. Government target dates can move.",
+  "progress": {
+    "label": "Airport metro (Blue Line) overall construction",
+    "pct": 72,
+    "asOf": "August 2026",
+    "source": "Business Today, 6 Aug 2026"
+  },
+  "band": "The metro is in trial runs, not yet open. Buyers who come in now choose before the line changes how this address is reached.",
+  "area": {
+    "name": "Devanahalli",
+    "series": [
+      [
+        "Dec 2025",
+        9050
+      ],
+      [
+        "Mar 2026",
+        9250
+      ],
+      [
+        "Jun 2026",
+        9600
+      ]
+    ],
+    "now": 9600,
+    "source": "Square Yards property rates page, read 26 Nov 2026. Asking prices from listings, not registered sale prices.",
+    "short": "Square Yards, Nov 2026"
+  },
+  "movers": {
+    "up": [
+      "The airport metro opening on schedule",
+      "The Aerospace Park and Airport City adding jobs",
+      "The ring road being delivered",
+      "Few large branded projects close to the airport"
+    ],
+    "down": [
+      "Delays to the metro or ring road",
+      "Many projects launching in Devanahalli together",
+      "Long drive to the city centre until the metro runs",
+      "Higher home-loan rates cooling demand"
+    ]
+  }
+}

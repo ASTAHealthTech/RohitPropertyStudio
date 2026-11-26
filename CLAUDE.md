@@ -450,8 +450,18 @@ moves by itself). Any other project uses the request form (`#request`, no paymen
   `RAZORPAY_WEBHOOK_SECRET`. With none set the order route answers "off" and nothing breaks.
 - Table `report_orders` (migration 0003; also created on first use). Spreadsheet:
   `GET /api/desk?orders=csv` with the desk key.
-- Delivery is by email from the team within 24–48h. Instant download switches on per project
-  only when its FINAL reviewed PDF is at `public/<VAULT>/<slug>.pdf` and the slug is in `READY`.
-  Never put a report with "Pending official pull" lines or a specimen in the vault.
+- The report sold is the Buyer's edition: `node scripts/report/make-brief.mjs <slug>` (15–17 pages with
+  SVG charts). It needs `scripts/report/research/<slug>.json`; corridor facts for the 19 are generated
+  by `scripts/report/build-research.py`, Sobha Parq City's file is hand-written. It sells the project
+  but every number is the developer's figure or a named, dated source; it never promises a return or
+  invents a figure, and the last page carries the method note. Chart colours (#2f5fa8 / #b8893a) were
+  checked with the dataviz palette validator on the ivory surface.
+- Delivery: instant download when the slug is in `READY` and its PDF is at `public/<VAULT>/<slug>.pdf`
+  (all 20 as of 26 Nov 2026). Otherwise the team emails it within 48h. The vault folder name must never
+  appear in rendered HTML (a test checks) and the repo must stay private.
+- When a project's price or facts change, or a new project enters the newest 20, regenerate its PDF,
+  copy it into the vault and update `READY`. Free preview: `public/reports/sobha-parq-city-report-preview.pdf`.
+- The older 18-question generator (`make-question-report.mjs`) prints "Pending official pull" lines and
+  is NOT sold; keep it for commissioned, team-filled reports only.
 - The gateway is approved for report/consulting fees only. Never take booking or token money.
 - `/refund` and `/terms` describe this sale; keep them true if price or delivery changes.

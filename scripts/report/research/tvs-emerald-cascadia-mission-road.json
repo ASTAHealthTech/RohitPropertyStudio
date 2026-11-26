@@ -1,0 +1,103 @@
+{
+  "checked": "26 November 2026",
+  "corridor": "central",
+  "headline": "Large residences in the centre of Bengaluru.",
+  "pitch": "TVS Emerald Cascadia is on Mission Road, in the central district. Homes of this size in the middle of the city are rare, and this one comes from the TVS group.",
+  "reasons": [
+    {
+      "title": "The centre of the city",
+      "text": "Mission Road is minutes from MG Road, Richmond Town and the main business district. Land for new homes here almost never comes up.",
+      "source": "Location as listed by 100 Yards"
+    },
+    {
+      "title": "A metro line is arriving",
+      "text": "The Pink Line's underground section has stations at MG Road and Langford Town and is expected around March to May 2027. Its first section opened on 14 November 2026.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "Central prices have been rising",
+      "text": "Asking prices in neighbouring Richmond Town moved from about ₹19,500 to about ₹20,600 per sq.ft. between December 2025 and September 2026.",
+      "source": "Square Yards, Nov 2026"
+    }
+  ],
+  "upcoming": [
+    {
+      "what": "Pink Line metro (Kalena Agrahara to Nagawara)",
+      "status": "21.25 km, 18 stations. The elevated Kalena Agrahara to S.G. Palya section opened on 14 November 2026. The underground section to Nagawara is expected around March to May 2027.",
+      "why": "Connects the Bannerghatta Road side to MG Road and on to Nagawara, where it meets the airport line.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "what": "Airport metro (Blue Line, Phase 2B)",
+      "status": "Trial runs began November 2026. 38.44 km from KR Puram to the airport via Hebbal and Yelahanka. Overall construction was 72% in August 2026; completion is reported for December 2027.",
+      "why": "A metro within reach turns a car-only address into a commuter address.",
+      "source": "IANS, 11 Nov 2026; Business Today, 6 Aug 2026; Oneindia, 2026"
+    },
+    {
+      "what": "Orange Line metro (Kempapura to JP Nagar 4th Phase)",
+      "status": "32.15 km, 22 stations. Approved by the Union Cabinet in August 2024; scheduled completion 2031.",
+      "why": "A western ring of metro that links Hebbal, Peenya and JP Nagar without going through the centre.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Nov 2026",
+      "what": "Pink Line first section opens"
+    },
+    {
+      "when": "Nov 2026",
+      "what": "Airport line trial runs begin"
+    },
+    {
+      "when": "2027",
+      "what": "Pink Line underground, expected"
+    },
+    {
+      "when": "Dec 2027",
+      "what": "Airport line, reported target"
+    }
+  ],
+  "timelineSource": "Wikipedia (Namma Metro line pages), read 26 Nov 2026; IANS, 11 Nov 2026; Oneindia, 2026. Government target dates can move.",
+  "band": "A central address does not wait for infrastructure. The Pink Line adds to a location that already has everything.",
+  "area": {
+    "name": "Richmond Town (next to Mission Road)",
+    "series": [
+      [
+        "Dec 2025",
+        19500
+      ],
+      [
+        "Mar 2026",
+        19750
+      ],
+      [
+        "Jun 2026",
+        21500
+      ],
+      [
+        "Sep 2026",
+        20600
+      ]
+    ],
+    "now": 20600,
+    "source": "Square Yards property rates page, read 26 Nov 2026. Asking prices from listings, not registered sale prices.",
+    "short": "Square Yards, Nov 2026",
+    "yield": 3.85,
+    "rent": 69
+  },
+  "movers": {
+    "up": [
+      "The Pink Line underground section opening",
+      "Almost no new land in the city centre",
+      "Steady demand from business owners and senior professionals",
+      "Strong rents in the central district"
+    ],
+    "down": [
+      "A small pool of buyers at this price",
+      "Traffic in the central district",
+      "Delays to the underground metro section",
+      "Higher home-loan rates cooling demand"
+    ]
+  }
+}

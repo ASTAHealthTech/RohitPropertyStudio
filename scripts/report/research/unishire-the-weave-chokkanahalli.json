@@ -1,0 +1,120 @@
+{
+  "checked": "26 November 2026",
+  "corridor": "north_thanisandra",
+  "headline": "Ready homes from ₹80 lakh near Jakkur.",
+  "pitch": "Unishire The Weave is at Chokkanahalli, near Jakkur and Thanisandra. It is ready to move in, so you see the finished home before you pay.",
+  "reasons": [
+    {
+      "title": "On the airport metro corridor",
+      "text": "Trial runs on the Blue Line began in November 2026. Its station list includes Hebbal, Kodigehalli, Jakkur Cross and Yelahanka on the way to the airport.",
+      "source": "IANS, 11 Nov 2026; Oneindia station list, 2026"
+    },
+    {
+      "title": "Between the city and the airport",
+      "text": "This stretch of Bellary Road sits between Hebbal and the airport, close to the Manyata office district. Buyers get airport access without leaving the city.",
+      "source": "Location as listed by 100 Yards"
+    },
+    {
+      "title": "More metro is approved",
+      "text": "The Orange Line (Kempapura to JP Nagar, 32.15 km) was approved by the Union Cabinet in August 2024 and meets the airport line near Hebbal.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "Jobs are moving north",
+      "text": "The KIADB Aerospace Park covers nearly 950 acres of aerospace manufacturing and testing next to the airport.",
+      "source": "The Realty Today, 2026"
+    }
+  ],
+  "upcoming": [
+    {
+      "what": "Airport metro (Blue Line, Phase 2B)",
+      "status": "Trial runs began November 2026. 38.44 km from KR Puram to the airport via Hebbal and Yelahanka. Overall construction was 72% in August 2026; completion is reported for December 2027.",
+      "why": "A metro within reach turns a car-only address into a commuter address.",
+      "source": "IANS, 11 Nov 2026; Business Today, 6 Aug 2026; Oneindia, 2026"
+    },
+    {
+      "what": "Orange Line metro (Kempapura to JP Nagar 4th Phase)",
+      "status": "32.15 km, 22 stations. Approved by the Union Cabinet in August 2024; scheduled completion 2031.",
+      "why": "A western ring of metro that links Hebbal, Peenya and JP Nagar without going through the centre.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "what": "Airport growth",
+      "status": "Kempegowda International Airport keeps adding capacity, with an Airport City business district around it.",
+      "why": "Market reports name airport expansion as the main engine of housing demand in North Bengaluru.",
+      "source": "NoBroker infrastructure guide, 2026; Square Yards, 2026"
+    },
+    {
+      "what": "Bengaluru Business Corridor (Peripheral Ring Road)",
+      "status": "73 km ring road with a reported 2029 deadline.",
+      "why": "Takes through-traffic off the Outer Ring Road and shortens cross-city trips.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Aug 2026",
+      "what": "Airport metro crosses 72% built"
+    },
+    {
+      "when": "Nov 2026",
+      "what": "Metro trial runs begin"
+    },
+    {
+      "when": "Dec 2027",
+      "what": "Metro to airport, reported target"
+    },
+    {
+      "when": "2029",
+      "what": "Ring road, reported deadline"
+    }
+  ],
+  "timelineSource": "Business Today, 6 Aug 2026; IANS, 11 Nov 2026; Oneindia, 2026; Sattva Group market note, 2026. Government target dates can move.",
+  "progress": {
+    "label": "Airport metro (Blue Line) overall construction",
+    "pct": 72,
+    "asOf": "August 2026",
+    "source": "Business Today, 6 Aug 2026"
+  },
+  "band": "The metro is in trial runs, not yet open. Buyers who come in now choose before the line changes how this address is reached.",
+  "area": {
+    "name": "Thanisandra",
+    "series": [
+      [
+        "Dec 2025",
+        10850
+      ],
+      [
+        "Mar 2026",
+        10700
+      ],
+      [
+        "Jun 2026",
+        11200
+      ],
+      [
+        "Sep 2026",
+        11600
+      ]
+    ],
+    "now": 11600,
+    "source": "Square Yards property rates page, read 26 Nov 2026. Asking prices from listings, not registered sale prices.",
+    "short": "Square Yards, Nov 2026",
+    "yield": 4.07,
+    "rent": 38
+  },
+  "movers": {
+    "up": [
+      "The airport metro opening on schedule",
+      "Offices at Manyata and along Bellary Road filling up",
+      "The Orange Line moving from approval to construction",
+      "Limited land left for large projects inside the city limits"
+    ],
+    "down": [
+      "Delays to the metro",
+      "Peak-hour traffic on Bellary Road and at Hebbal",
+      "Several premium launches competing in the same stretch",
+      "Higher home-loan rates cooling demand"
+    ]
+  }
+}

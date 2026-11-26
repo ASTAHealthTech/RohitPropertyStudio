@@ -1,0 +1,106 @@
+{
+  "checked": "26 November 2026",
+  "corridor": "attibele",
+  "headline": "Homes from ₹56.7 lakh near Electronic City.",
+  "pitch": "Shriram 107 South East is at Attibele, off Hosur Road. It is a large community at a price that lets a first-time buyer own a home near one of the city's biggest job hubs.",
+  "reasons": [
+    {
+      "title": "Electronic City now has a metro",
+      "text": "The Yellow Line (RV Road to Bommasandra, 19.15 km, 16 stations) opened on 11 August 2025 and runs beside Hosur Road.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "title": "An entry price few areas still offer",
+      "text": "Attibele asking prices average about ₹6,850 per sq.ft., well below most of Bengaluru.",
+      "source": "Square Yards, Nov 2026"
+    },
+    {
+      "title": "Close to a major job hub",
+      "text": "Electronic City and the Bommasandra and Attibele industrial areas are a short drive up Hosur Road.",
+      "source": "Location as listed by 100 Yards"
+    },
+    {
+      "title": "A new ring road is planned",
+      "text": "The Bengaluru Business Corridor (Peripheral Ring Road) is a 73 km road with a reported 2029 deadline, linking the Devanahalli side with the Sarjapur side.",
+      "source": "Sattva Group market note, 2026"
+    }
+  ],
+  "upcoming": [
+    {
+      "what": "Yellow Line metro (RV Road to Bommasandra)",
+      "status": "Open since 11 August 2025. 19.15 km, 16 stations, running beside Hosur Road through Electronic City.",
+      "why": "Electronic City now has a working metro to the city, which supports both rents and resale.",
+      "source": "Wikipedia (Namma Metro line pages), read 26 Nov 2026"
+    },
+    {
+      "what": "Bengaluru Business Corridor (Peripheral Ring Road)",
+      "status": "73 km ring road with a reported 2029 deadline.",
+      "why": "Takes through-traffic off the Outer Ring Road and shortens cross-city trips.",
+      "source": "Sattva Group market note, 2026"
+    },
+    {
+      "what": "Blue Line metro at Silk Board",
+      "status": "The Blue Line starts at Central Silk Board, where it meets the Yellow Line. Trial runs on the Silk Board to KR Pura stretch were expected from late 2026.",
+      "why": "One change of train links the Hosur Road side to the Outer Ring Road offices and, later, the airport.",
+      "source": "Housing.com metro guide, 2026; Square Yards, 2026"
+    }
+  ],
+  "timeline": [
+    {
+      "when": "Aug 2025",
+      "what": "Yellow Line metro opens"
+    },
+    {
+      "when": "Late 2026",
+      "what": "ORR metro trial runs expected"
+    },
+    {
+      "when": "Dec 2027",
+      "what": "Airport line, reported target"
+    },
+    {
+      "when": "2029",
+      "what": "Ring road, reported deadline"
+    }
+  ],
+  "timelineSource": "Wikipedia (Namma Metro line pages), read 26 Nov 2026; Square Yards, 2026; Oneindia, 2026; Sattva Group market note, 2026. Government target dates can move.",
+  "band": "The Yellow Line is open. Buyers here are paying an entry price for an area that already has its metro a short drive away.",
+  "area": {
+    "name": "Attibele",
+    "series": [
+      [
+        "Dec 2025",
+        6500
+      ],
+      [
+        "Mar 2026",
+        6200
+      ],
+      [
+        "Jun 2026",
+        6350
+      ],
+      [
+        "Sep 2026",
+        6850
+      ]
+    ],
+    "now": 6850,
+    "source": "Square Yards property rates page, read 26 Nov 2026. Asking prices from listings, not registered sale prices.",
+    "short": "Square Yards, Nov 2026"
+  },
+  "movers": {
+    "up": [
+      "More offices and factories around Electronic City",
+      "The metro being extended further down Hosur Road, if approved",
+      "The ring road being delivered",
+      "Buyers priced out of the city looking south"
+    ],
+    "down": [
+      "Distance from the city centre",
+      "The metro ending at Bommasandra, short of Attibele",
+      "Plenty of land, so supply can rise quickly",
+      "Higher home-loan rates cooling demand"
+    ]
+  }
+}
