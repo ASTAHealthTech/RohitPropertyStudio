@@ -40,7 +40,12 @@ export const READY: ReadonlySet<string> = new Set<string>([
   "amberstone-ventara-residences-sarjapur-road",
 ]);
 
+/** Newer projects whose report has not been written yet. They stay out of the shop until the PDF is in the vault;
+ * then remove the slug here and add it to READY. */
+export const REPORT_PENDING: ReadonlySet<string> = new Set<string>(["divyasree-quiet-side-yelahanka"]);
+
 export const shopProjects = [...projects]
+  .filter((p) => !REPORT_PENDING.has(p.slug))
   .sort((a, b) => Number(b.id) - Number(a.id))
   .slice(0, SHOP_SIZE)
   .map((p) => ({ slug: p.slug, name: p.name, loc: p.loc, instant: READY.has(p.slug) }));

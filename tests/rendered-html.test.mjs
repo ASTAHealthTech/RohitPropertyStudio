@@ -273,3 +273,16 @@ test("the report shop sells the twenty newest projects and states its refund pol
   assert.match(refund, /not been delivered within 48 hours/);
   assert.doesNotMatch(refund, /does not collect payments/);
 });
+
+test("the newest project, DivyaSree Quiet Side, leads the catalogue with its RERA number", async () => {
+  const page = await render("/projects/divyasree-quiet-side-yelahanka");
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.match(html, /PRM\/KA\/RERA\/1251\/472\/PR\/291026\/009050/);
+  assert.match(html, /2\.99 Cr/);
+  const list = await (await render("/projects")).text();
+  assert.ok(list.indexOf("divyasree-quiet-side-yelahanka") > -1);
+  assert.ok(list.indexOf("divyasree-quiet-side-yelahanka") < list.indexOf("sobha-parq-city-hennur"));
+  const shop = await (await render("/reports")).text();
+  assert.doesNotMatch(shop, /value="divyasree-quiet-side-yelahanka"/);
+});
