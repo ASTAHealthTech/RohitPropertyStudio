@@ -17,6 +17,7 @@ import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { StickyCta } from "./components/StickyCta";
 import { Tracking } from "./components/Tracking";
+import { WhatsAppTap } from "./components/WhatsAppTap";
 import { company, organizationJsonLd } from "./lib/company";
 import { personJsonLd } from "./lib/siteContent";
 
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <SiteFooter />
         <StickyCta />
+        <WhatsAppTap />
         <Tracking />
       </body>
     </html>

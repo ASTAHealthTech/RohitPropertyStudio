@@ -46,6 +46,14 @@ export async function GET(request: Request) {
     if (crm === "preview") return Response.json({ switchedOn: Boolean(process.env.SYSBI_KEY), wouldSend: sysbiPayload(sample) }, { headers: { "Cache-Control": "no-store" } });
     return Response.json(await sendToCrm(sample), { headers: { "Cache-Control": "no-store" } });
   }
+  if (url.searchParams.get("wa")) {
+    // WhatsApp button taps: when, which page, which ad. The number itself is only in the WhatsApp chat.
+    const cols = ["at", "path", "project", "utm_source", "utm_campaign", "gclid"];
+    try {
+      const { results } = await env.ACADEMY_DB.prepare(`SELECT ${cols.join(", ")} FROM wa_taps ORDER BY at DESC LIMIT 2000`).all<Record<string, unknown>>();
+      return new Response([cols.join(","), ...results.map((row) => cols.map((c) => csvCell(row[c])).join(","))].join("\r\n"), { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="100yards-whatsapp-taps.csv"`, "Cache-Control": "no-store" } });
+    } catch { return Response.json({ message: "No WhatsApp taps recorded yet." }, { status: 404 }); }
+  }
   if (url.searchParams.get("orders")) {
     // Paid and attempted report orders, newest first, as a spreadsheet.
     const cols = ["created_at", "status", "paid_at", "project_name", "name", "phone", "email", "amount_paise", "rzp_payment_id", "rzp_order_id", "source_path", "utm_source", "utm_campaign", "gclid"];
