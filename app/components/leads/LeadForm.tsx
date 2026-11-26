@@ -22,13 +22,10 @@ const CONFIG: Record<LeadKind, { eyebrow: string; title: string; copy: string; s
   ad: {
     eyebrow: "Enquire",
     title: "Get the price sheet and floor plans.",
-    copy: "Two quick questions, so the advisor who calls already knows what you need.",
+    copy: "Just your name and number. An advisor calls you with the current price sheet.",
     submit: "Send me the details",
     done: "An advisor will call you with the current price sheet and floor plans.",
-    fields: [
-      { name: "budget", label: "Budget", options: BUDGET, required: true },
-      { name: "timeline", label: "Planning to buy in", options: TIMELINE, required: true },
-    ],
+    fields: [],
   },
   project: {
     eyebrow: "Enquire",
@@ -199,7 +196,7 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           kind, name: form.get("name"), phone: form.get("phone"), email: form.get("email") ?? "",
-          projectSlug, projectName, answers, consent: form.get("consent") === "on", website: form.get("website"),
+          projectSlug, projectName, answers, consent: kind === "ad" ? true : form.get("consent") === "on", website: form.get("website"),
           sourcePath: window.location.pathname, attribution: readAttribution(), turnstileToken: token,
         }),
       });
@@ -239,7 +236,7 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
   }
 
   return (
-    <form className={`form lead-form${compact ? " lead-form--compact" : ""}`} onSubmit={submit} id={uid} onFocus={() => setArmed(true)}>
+    <form className={`form lead-form${compact ? " lead-form--compact" : ""}${kind === "ad" ? " lead-form--ad" : ""}`} onSubmit={submit} id={uid} onFocus={() => setArmed(true)}>
       <div className="form__heading">
         <p className="eyebrow">{cfg.eyebrow}</p>
         <h2>{cfg.title}</h2>
@@ -276,10 +273,12 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
         <label htmlFor={`${uid}-website`}>Website</label>
         <input id={`${uid}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
-      <label className="form__consent">
-        <input name="consent" type="checkbox" required />
-        <span>I agree that 100 Yards may call or WhatsApp me about this enquiry. See the <a href="/privacy">privacy notice</a>.</span>
-      </label>
+      {kind !== "ad" && (
+        <label className="form__consent">
+          <input name="consent" type="checkbox" required />
+          <span>I agree that 100 Yards may call or WhatsApp me about this enquiry. See the <a href="/privacy">privacy notice</a>.</span>
+        </label>
+      )}
       {siteKey && armed && <div className="turnstile-slot" ref={slot} />}
       <div className="form__submit">
         <button className="button button--gold" type="submit" disabled={status === "submitting"}>
@@ -287,6 +286,8 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
         </button>
         <p>{kind === "report" ? "No payment is taken for a request." : "No spam. One advisor, one call."}</p>
       </div>
+      {/* Ad visitors get the shortest possible form: sending it is the consent, said in plain words under the button. */}
+      {kind === "ad" && <p className="form__consent form__consent--note">By sending this, you agree that 100 Yards may call or WhatsApp you about this enquiry. See the <a href="/privacy">privacy notice</a>.</p>}
       {status === "error" && <p className="form__message form__message--error" role="alert">{message}</p>}
     </form>
   );

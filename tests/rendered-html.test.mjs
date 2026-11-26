@@ -213,7 +213,8 @@ test("ad landing pages show the facts and the form, with no site menu", async ()
   assert.match(html, /Lodha Beaumont Estate/);
   assert.match(html, /Published starting price/);
   assert.match(html, /id="ad-enquiry"/);
-  assert.match(html, /Planning to buy in/);
+  assert.match(html, /Just your name and number/);
+  assert.doesNotMatch(html.slice(html.indexOf("lead-form--ad")), /name="budget"/);
   assert.match(html, /tel:\+919916866667/);
   assert.match(html, /PRM\/KA\/RERA\/1251\/310\/AG\/231030\/004229/);
   assert.match(html, /noindex/);
