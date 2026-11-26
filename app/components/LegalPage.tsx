@@ -1,11 +1,11 @@
 type LegalSection = { title: string; paragraphs?: string[]; bullets?: string[] };
 
-export function LegalPage({ title, intro, sections }: { title: string; intro: string; sections: LegalSection[] }) {
+export function LegalPage({ title, intro, sections, eyebrow = "Pre-launch information", updated = "21 August 2026" }: { title: string; intro: string; sections: LegalSection[]; eyebrow?: string; updated?: string }) {
   return (
     <main id="main-content">
       <section className="page-hero surface-deep">
         <div className="shell page-hero__copy">
-          <p className="eyebrow" data-enter>Pre-launch information</p>
+          <p className="eyebrow" data-enter>{eyebrow}</p>
           <h1 data-split>{title}</h1>
           <p data-enter>{intro}</p>
         </div>
@@ -20,7 +20,7 @@ export function LegalPage({ title, intro, sections }: { title: string; intro: st
               {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
             </section>
           ))}
-          <p><strong>Last updated:</strong> 21 August 2026</p>
+          <p><strong>Last updated:</strong> {updated}</p>
         </div>
       </section>
     </main>

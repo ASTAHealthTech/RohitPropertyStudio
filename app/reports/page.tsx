@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ArrowUpRight, FileText, ShieldCheck } from "lucide-react";
 import { AmbientBackdrop } from "../components/AmbientBackdrop";
 import { LeadFormSlot } from "../components/leads/LeadFormSlot";
+import { ReportCheckout } from "../components/leads/ReportCheckout";
+import { shopProjects } from "../lib/reportShop";
 import { company } from "../lib/company";
 
 const price = `₹${company.reportPrice.toLocaleString("en-IN")}`;
@@ -31,8 +33,8 @@ const sections = [
 ] as const;
 
 const steps = [
-  ["You name the property", "Project, tower or plot, and where you are in the decision."],
-  ["We confirm and send a payment link", `${price}, by UPI or card, on WhatsApp. Nothing is charged on this website.`],
+  ["You choose the project", "Pick it from the list of projects on sale. A project not on the list can be requested below."],
+  ["You pay online", `${price}, by UPI, card or net banking, in Razorpay's secure window. That is the full price.`],
   ["We pull the official records", "RERA, Kaveri and company records, read on the date shown in the report."],
   ["Rohitt reviews and signs", "The report reaches you as a PDF within 24–48 hours of payment."],
 ] as const;
@@ -155,13 +157,27 @@ export default function ReportsPage() {
         <div className="shell pforms pforms--single">
           <div>
             <p className="eyebrow">Order</p>
-            <h2 data-split>Commission a report for {price}.</h2>
+            <h2 data-split>{`Order a report for ${price}.`}</h2>
             <p className="head__note" data-reveal>
-              Send the request here. We confirm the property on WhatsApp and share a payment link.
-              No money is taken on this page.
+              Reports are on sale for our {shopProjects.length} newest projects. Pay here and the
+              signed report is emailed to you within 24–48 hours.
             </p>
           </div>
-          <div data-reveal><LeadFormSlot kind="report" id="order-form" /></div>
+          <div data-reveal><ReportCheckout projects={shopProjects} price={price} /></div>
+        </div>
+      </section>
+
+      <section className="section surface-dark" id="request">
+        <div className="shell pforms pforms--single">
+          <div>
+            <p className="eyebrow">Any other project</p>
+            <h2 data-split>Not on the list? Ask for it.</h2>
+            <p className="head__note" data-reveal>
+              Tell us the property. The team confirms whether a report can be prepared and by
+              when. No money is taken for a request.
+            </p>
+          </div>
+          <div data-reveal><LeadFormSlot kind="report" id="request-form" /></div>
         </div>
       </section>
     </main>

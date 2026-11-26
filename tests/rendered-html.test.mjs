@@ -123,7 +123,7 @@ test("server-renders the reports page and the homepage pillar", async () => {
   assert.match(html, /never says buy/i);
   assert.match(html, /₹1,000/);
   assert.match(html, /id="order-form"/);
-  assert.match(html, /No money is taken on this page/i);
+  assert.match(html, /No money is taken for a request/i);
   const home = await (await render()).text();
   assert.match(home, /Bengaluru Datalab/i);
   assert.match(home, /href="\/reports#order"/);
@@ -258,4 +258,17 @@ test("old two-part project addresses redirect to the new project page", async ()
   assert.match(old.headers.get("location") ?? "", /\/projects\/summers-at-orchid-nirvana-devanahalli$/);
   assert.ok([301, 308].includes((await render("/upcoming-projects/sattva-lumina-2")).status));
   assert.ok([301, 308].includes((await render("/category/blog")).status));
+});
+
+test("the report shop sells the twenty newest projects and states its refund policy", async () => {
+  const html = await (await render("/reports")).text();
+  const shop = html.slice(html.indexOf('id="rc-project"'), html.indexOf("</select>", html.indexOf('id="rc-project"')));
+  assert.equal((shop.match(/<option /g) ?? []).length, 21);
+  assert.match(shop, /value="sobha-parq-city-hennur"/);
+  assert.match(html, /href="\/refund"/);
+  assert.match(html, /id="request-form"/);
+  const refund = await (await render("/refund")).text();
+  assert.match(refund, /Refund and cancellation policy/);
+  assert.match(refund, /not been delivered within 48 hours/);
+  assert.doesNotMatch(refund, /does not collect payments/);
 });

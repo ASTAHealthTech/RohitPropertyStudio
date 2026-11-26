@@ -436,3 +436,22 @@ call the pictures artist's impressions, take prices only from the sheet the team
 leave out growth, jobs and appreciation claims, and never say or imply that 100 Yards takes
 booking money. When the number is issued: fill `rera`, delete `reraNote`, set `"rera": true`
 in `projects-lite.json`, and update the FAQ in `details.json`.
+
+## Report shop and Razorpay (Nov 2026)
+
+`/reports#order` sells the Property Intelligence Report online for `company.reportPrice`
+(all-inclusive). On sale: the 20 newest catalogue projects (`app/lib/reportShop.ts`, by id,
+moves by itself). Any other project uses the request form (`#request`, no payment).
+
+- Flow: `POST /api/report/order` (saves the buyer, opens a Razorpay order) → Razorpay's own
+  checkout window → `POST /api/report/verify` (HMAC signature check, marks paid once, emails
+  the team + CRM) with `POST /api/report/webhook` as the safety net if the tab closes.
+- Secrets (Worker secrets, never in Git or chat): `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`,
+  `RAZORPAY_WEBHOOK_SECRET`. With none set the order route answers "off" and nothing breaks.
+- Table `report_orders` (migration 0003; also created on first use). Spreadsheet:
+  `GET /api/desk?orders=csv` with the desk key.
+- Delivery is by email from the team within 24–48h. Instant download switches on per project
+  only when its FINAL reviewed PDF is at `public/<VAULT>/<slug>.pdf` and the slug is in `READY`.
+  Never put a report with "Pending official pull" lines or a specimen in the vault.
+- The gateway is approved for report/consulting fees only. Never take booking or token money.
+- `/refund` and `/terms` describe this sale; keep them true if price or delivery changes.

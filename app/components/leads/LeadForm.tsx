@@ -63,11 +63,11 @@ const CONFIG: Record<LeadKind, { eyebrow: string; title: string; copy: string; s
     fields: [{ name: "timeline", label: "Planning to buy in", options: TIMELINE, required: true, full: true }],
   },
   report: {
-    eyebrow: "Order a report",
-    title: "Commission the full report.",
-    copy: "Tell us the property. We confirm scope and send a payment link on WhatsApp; the signed report follows in 24–48 hours.",
+    eyebrow: "Request a report",
+    title: "Request a report for another project.",
+    copy: "Tell us the property. We confirm whether a report can be prepared, and by when, before any payment.",
     submit: "Request my report",
-    done: "We will WhatsApp you a payment link and confirm the delivery time.",
+    done: "We will WhatsApp you to confirm whether this report can be prepared, and by when.",
     email: "required",
     fields: [
       { name: "property", label: "Project or property name", placeholder: "e.g. project name, tower, locality", full: true, required: true },
@@ -285,7 +285,7 @@ export function LeadForm({ kind, projectSlug, projectName, siteKey, id, compact 
         <button className="button button--gold" type="submit" disabled={status === "submitting"}>
           {status === "submitting" ? "Sending…" : cfg.submit} <ArrowRight size={17} aria-hidden="true" />
         </button>
-        <p>{kind === "report" ? "No payment is taken on this page." : "No spam. One advisor, one call."}</p>
+        <p>{kind === "report" ? "No payment is taken for a request." : "No spam. One advisor, one call."}</p>
       </div>
       {status === "error" && <p className="form__message form__message--error" role="alert">{message}</p>}
     </form>
