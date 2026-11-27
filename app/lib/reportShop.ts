@@ -42,7 +42,7 @@ export const READY: ReadonlySet<string> = new Set<string>([
 
 /** Newer projects whose report has not been written yet. They stay out of the shop until the PDF is in the vault;
  * then remove the slug here and add it to READY. */
-export const REPORT_PENDING: ReadonlySet<string> = new Set<string>(["divyasree-quiet-side-yelahanka"]);
+export const REPORT_PENDING: ReadonlySet<string> = new Set<string>(["divyasree-quiet-side-yelahanka", "assetz-naru-and-nami-hoskote"]);
 
 export const shopProjects = [...projects]
   .filter((p) => !REPORT_PENDING.has(p.slug))

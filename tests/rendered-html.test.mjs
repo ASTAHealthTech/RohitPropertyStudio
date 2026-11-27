@@ -286,3 +286,16 @@ test("the newest project, DivyaSree Quiet Side, leads the catalogue with its RER
   const shop = await (await render("/reports")).text();
   assert.doesNotMatch(shop, /value="divyasree-quiet-side-yelahanka"/);
 });
+
+test("Assetz Naru & Nami is the newest project and shows its RERA note, not a number", async () => {
+  const page = await render("/projects/assetz-naru-and-nami-hoskote");
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.match(html, /1\.99 Cr/);
+  assert.match(html, /not yet shared/i);
+  const list = await (await render("/projects")).text();
+  assert.ok(list.indexOf("assetz-naru-and-nami-hoskote") > -1);
+  assert.ok(list.indexOf("assetz-naru-and-nami-hoskote") < list.indexOf("divyasree-quiet-side-yelahanka"));
+  const shop = await (await render("/reports")).text();
+  assert.doesNotMatch(shop, /value="assetz-naru-and-nami-hoskote"/);
+});
