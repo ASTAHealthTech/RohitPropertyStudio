@@ -299,3 +299,16 @@ test("Assetz Naru & Nami is the newest project and shows its RERA note, not a nu
   const shop = await (await render("/reports")).text();
   assert.doesNotMatch(shop, /value="assetz-naru-and-nami-hoskote"/);
 });
+
+test("Birla Evara is the newest project and shows its RERA number and price", async () => {
+  const page = await render("/projects/birla-evara-sarjapur-road");
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.match(html, /PRM\/KA\/RERA\/1251\/446\/PR\/060225\/007487/);
+  assert.match(html, /2\.04 Cr/);
+  const list = await (await render("/projects")).text();
+  assert.ok(list.indexOf("birla-evara-sarjapur-road") > -1);
+  assert.ok(list.indexOf("birla-evara-sarjapur-road") < list.indexOf("assetz-naru-and-nami-hoskote"));
+  const shop = await (await render("/reports")).text();
+  assert.doesNotMatch(shop, /value="birla-evara-sarjapur-road"/);
+});
