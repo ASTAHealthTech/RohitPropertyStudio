@@ -312,3 +312,16 @@ test("Birla Evara is the newest project and shows its RERA number and price", as
   const shop = await (await render("/reports")).text();
   assert.doesNotMatch(shop, /value="birla-evara-sarjapur-road"/);
 });
+
+test("Codename Deco Forest is the newest project, with a RERA note and no price", async () => {
+  const page = await render("/projects/goyal-hariyana-deco-forest-soukya-road");
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.match(html, /expression-of-interest stage/i);
+  assert.match(html, /Price on request/i);
+  const list = await (await render("/projects")).text();
+  assert.ok(list.indexOf("goyal-hariyana-deco-forest-soukya-road") > -1);
+  assert.ok(list.indexOf("goyal-hariyana-deco-forest-soukya-road") < list.indexOf("birla-evara-sarjapur-road"));
+  const shop = await (await render("/reports")).text();
+  assert.doesNotMatch(shop, /value="goyal-hariyana-deco-forest-soukya-road"/);
+});
