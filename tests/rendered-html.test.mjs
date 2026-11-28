@@ -325,3 +325,16 @@ test("Codename Deco Forest is the newest project, with a RERA note and no price"
   const shop = await (await render("/reports")).text();
   assert.doesNotMatch(shop, /value="goyal-hariyana-deco-forest-soukya-road"/);
 });
+
+test("compare page lines up published facts and never ranks", async () => {
+  const empty = await render("/compare");
+  assert.equal(empty.status, 200);
+  assert.match(await empty.text(), /Choose a first project/);
+  const html = await (await render("/compare?p=birla-evara-sarjapur-road,assetz-naru-and-nami-hoskote,not-a-project")).text();
+  assert.match(html, /Birla Evara/);
+  assert.match(html, /Assetz Naru/);
+  assert.match(html, /PRM\/KA\/RERA\/1251\/446\/PR\/060225\/007487/);
+  assert.match(html, /Not yet shared by the builder/); // a missing RERA number is said plainly
+  assert.match(html, /does not rank the projects/);
+  assert.match(await (await render("/projects/birla-evara-sarjapur-road")).text(), /\/compare\?p=birla-evara-sarjapur-road/);
+});

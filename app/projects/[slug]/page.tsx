@@ -149,6 +149,7 @@ export default async function ProjectPage({ params }: Params) {
               <p>{project.reraNote ?? "The RERA registration number for this project is not on our listing yet. Ask us for it, and check it on the official register before you decide."}</p>
             )}
             <a className="text-link" href={company.reraVerifyUrl} target="_blank" rel="noreferrer">Verify on rera.karnataka.gov.in <ArrowUpRight size={14} aria-hidden="true" /></a>
+            <a className="text-link" href={`/compare?p=${project.slug}`} data-track="compare_open">Compare with another project <ChevronRight size={14} aria-hidden="true" /></a>
           </div>
           <div className="precord__about">
             <p className="eyebrow">About the project</p>

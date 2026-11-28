@@ -38,6 +38,7 @@ export default async function ProjectsPage({ searchParams }: Search) {
 
       <section className="section section--tight surface-dark">
         <div className="shell">
+          <p className="pcompare">Down to two or three? <a className="text-link" href="/compare" data-track="compare_open">Compare projects side by side</a></p>
           <ProjectBrowser projects={projectsLite} areas={areas.map((a) => ({ slug: a.slug, name: a.name }))} initialArea={initialArea} initialKind={initialKind} />
         </div>
       </section>
